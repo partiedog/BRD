@@ -6,11 +6,17 @@
         <p>Synopsys GitLab Template supports both self-hosted (on-prem) and Synopsys-hosted Black
             Duck Hub instances.</p>
         <p>In the default Black Duck Hub permission model, projects and project versions are created
-            on the fly as needed.</p>
-        <p>Before running a pipeline using the Synopsys GitLab Template and Black Duck, add
-                <codeph>.gitlab-ci.yml</codeph> to your project by adding an
-                <codeph>include</codeph> entry, as in the example
-            below.<codeblock>include:
+            on the fly as needed. Ensure that permissions needed to create projects and project
+            versions are granted on Black Duck Hub.</p>
+        <p>Synopsys Template requires that you run full “intelligent” Black Duck scans for SCM push
+            events and “rapid” ephemeral scans for SCM pull request events as shown in the example
+                below.<note id="note_cxx_kqv_gyb">Detect specific options can be passed to Synopsys
+                Bridge thru Detect environment variables.</note>
+        </p>
+        <p>To use Synopsys GitLab Template with Black Duck, add <codeph>.gitlab-ci.yml </codeph>to
+            your project using an <codeph>include</codeph> entry as shown the example below.</p>
+        <p>
+            <codeblock id="codeblock_ocn_jrv_gyb">include:
   - project: synopsys/synopsys-template
     ref: v1.1.0
     file: templates/synopsys-template.yml
@@ -56,46 +62,96 @@ synopsys_template_execution:
     - linux # Name of your Gitlab runner
   extends: .run-synopsys-tools # Used for bash.        
   #extends: .run-synopsys-tools-powershell # Used for powershell
-</codeblock></p>
-        <section id="section_ycg_t34_cyb">
-            <title>Optional Parameters for Black Duck</title>
-            <p>
-                <ul id="ul_snw_t3f_nxb">
-                    <li><codeph>BRIDGE_BLACKDUCK_SCAN_FULL</codeph>: To enable full scan set it as
-                            <codeph>true</codeph>. By default, pushes will initiate a full
-                        "intelligent" scan and pull requests will initiate a rapid scan.</li>
-                    <li><codeph>BRIDGE_BLACKDUCK_INSTALL_DIRECTORY</codeph>: Pass the directory path
-                        to install Black Duck on the runner.</li>
-                    <li><codeph>BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES</codeph>: Values are
-                            <codeph>ALL|NONE|BLOCKER|CRITICAL|MAJOR|MINOR|OK|TRIVIAL|UNSPECIFIED</codeph>.
-                        Single parameter as <codeph>ALL</codeph> and multiple parameters as
-                            <codeph>BLOCKER</codeph>, <codeph>CRITICAL</codeph>,
-                            <codeph>TRIVIAL</codeph>.</li>
-                    <li><codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph>: Set
-                            <codeph>true</codeph> to enable feedback from Black Duck testing as pull
-                        request comment.</li>
-                    <li><codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph>: Set
-                            <codeph>true</codeph> to enable automatc fix pull request creation.</li>
-                    <li><codeph>BRIDGE_GITLAB_USER_TOKEN</codeph>: It is mandatory when
-                            <codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph> is set to
-                            <codeph>true</codeph>, or when
-                            <codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph> is set to
-                            <codeph>true</codeph>. Generate Personal Access Token (PAT) from GitLab
-                        and store it as secret variable or store and fetch it from vault. The PAT
-                        must have api scope. For more info, see - <xref
-                            href="https://docs.gitlab.com/ee/ci/secrets/index.html" format="html"
-                            scope="external"
-                        >https://docs.gitlab.com/ee/ci/secrets/index.html</xref>"</li>
-                </ul>
-                <note><b>About Detect command line parameters</b>. Any command line parameters
-                    passed to detect can be passed through variables. This is a standard capability
-                    of Detect. For example, if you want to only report newly found policy violations
-                    on rapid scans, you would normally use the command line
-                        <codeph>--detect.blackduck.rapid.compare.mode=BOM_COMPARE_STRICT</codeph>.
-                    You can replace this by setting the
-                        <codeph>DETECT_BLACKDUCK_RAPID_COMPARE_MODE</codeph> variable to
-                        <codeph>BOM_COMPARE_STRICT</codeph>.</note>
-            </p>
-        </section>
+</codeblock>
+        </p>
+        <p>
+            <table frame="all" rowsep="1" colsep="1" id="table_ap5_1m4_gyb">
+                <title><b>List of mandatory and optional parameters for Black Duck</b></title>
+                <tgroup cols="3">
+                    <colspec colname="c1" colnum="1" colwidth="1*"/>
+                    <colspec colname="c2" colnum="2" colwidth="1*"/>
+                    <colspec colname="c3" colnum="3" colwidth="1*"/>
+                    <thead>
+                        <row>
+                            <entry>Input Parameter</entry>
+                            <entry>Description</entry>
+                            <entry>Mandatory/Optional</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_URL</codeph></entry>
+                            <entry>Black Duck server URL</entry>
+                            <entry>Mandatory</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_TOKEN</codeph></entry>
+                            <entry>Black Duck API token</entry>
+                            <entry>Mandatory</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_INSTALL_DIRECTORY</codeph></entry>
+                            <entry>Installation directory for Black Duck</entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_SCAN_FULL</codeph></entry>
+                            <entry>
+                                <p>Specifies whether full scan is required or not. </p>
+                                <p>Must be set to <codeph>true</codeph> for push events and
+                                        <codeph>false</codeph> for pull request events.</p>
+                                <p>Default: <codeph>false</codeph></p>
+                            </entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES</codeph></entry>
+                            <entry>
+                                <p>Black Duck scan failure severities used to decide if build should
+                                    be broken.. </p>
+                                <p>Supported values: <codeph>ALL, NONE, BLOCKER, CRITICAL, MAJOR,
+                                        MINOR, OK, TRIVIAL, UNSPECIFIED</codeph>
+                                </p>
+                            </entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph></entry>
+                            <entry>
+                                <p>Option to enable automatic creation for fix pull requests for
+                                    vulnerable direct dependencies. </p>
+                                <p> Default: <codeph>false</codeph>
+                                </p>
+                                <p>Note: Black Duck automation fixpull request is currently
+                                    supported for NPM projects only.</p>
+                            </entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph></entry>
+                            <entry><p>Option to enable automatic creation pull request comments for
+                                    new issues found in the pull request.</p><p>Baseline full scan
+                                    results must exist on the server for this feature to work.</p>
+                                Default: <codeph>false</codeph></entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_GITLAB_USER_TOKEN</codeph></entry>
+                            <entry>
+                                <p>Gitlab User Access Token </p>
+                                <p>Example: <codeph>BRIDGE_GITLAB_USER_TOKEN:
+                                        $GITLAB_ACCESS_TOKEN</codeph></p>
+                            </entry>
+                            <entry>Mandatory when
+                                    <codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph> or
+                                    <codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph> is set as
+                                    <codeph>true</codeph>.</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+            <note id="note_qxx_mjp_gyb">Detect specific options can be passed to Synopsys Bridge
+                thru Detect environment variables.</note>
+        </p>
     </body>
 </topic>
