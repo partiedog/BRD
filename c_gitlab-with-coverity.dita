@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ss3_yh4_cyb">
+    <title>Using the Synopsys GitLab Template for Coverity Cloud Deployment with Thin Client</title>
+    <body>
+        <p>Before running Coverity using the Synopsys Template, ensure the appropriate project and
+      stream are set in your Coverity Connect server environment, as in the example
+        below.<note>Currently, Synopsys Template only supports the Coverity thin client/cloud
+        deployment model, which removes the need for a large footprint GitLab Runner
+        installation.</note></p>
+        <p>
+      <codeblock>include:
+  - project: synopsys/synopsys-template
+    ref: v1.1.0
+    file: templates/synopsys-template.yml
+  ### Use below configuration for accessing synopsys-template in Gitlab self-managed 
+  # - remote: 'https://gitlab.com/synopsys/synopsys-template/-/raw/v1.1.0/templates/synopsys-template.yml'  
+
+stages:
+  - coverity_scan
+
+variables:
+  SCAN_BRANCHES: "/^(main|master|develop|stage|release|feature_branch)$/" # Add branches where you want to run Coverity scan
+
+synopsys_template_execution:
+  stage: coverity_scan
+  variables:
+    BRIDGE_COVERITY_CONNECT_URL: <varname>$COVERITY_URL
+</varname>    BRIDGE_COVERITY_CONNECT_USER_NAME: <varname>$COVERITY_USER</varname>
+    BRIDGE_COVERITY_CONNECT_USER_PASSWORD: <varname>$COVERITY_PASSWORD</varname>
+    BRIDGE_COVERITY_CONNECT_PROJECT_NAME: <varname>$CI_PROJECT_NAME
+</varname>    ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+  #   INCLUDE_DIAGNOSTICS: 'true'
+  # artifacts:
+  #   when: always
+  #   paths:
+  #   - .bridge
+  rules:
+    - if: (<varname>$CI_COMMIT_BRANCH</varname> =~ <varname>$SCAN_BRANCHES</varname> &amp;&amp; <varname>$CI_PIPELINE_SOURCE</varname> != 'merge_request_event')
+      variables:
+        BRIDGE_COVERITY_CONNECT_STREAM_NAME: <varname>$CI_PROJECT_NAME</varname>-<varname>$CI_COMMIT_BRANCH
+</varname>        BRIDGE_COVERITY_CONNECT_POLICY_VIEW: 'Outstanding Issues'
+    ### Use below configuration to run Coverity PR scan       
+    - if: (<varname>$CI_MERGE_REQUEST_TARGET_BRANCH_NAME</varname> =~ <varname>$SCAN_BRANCHES</varname> &amp;&amp; <varname>$CI_PIPELINE_SOURCE</varname> == 'merge_request_event')
+      variables:
+        BRIDGE_COVERITY_CONNECT_STREAM_NAME: <varname>$CI_PROJECT_NAME</varname>-<varname>$CI_MERGE_REQUEST_TARGET_BRANCH_NAME</varname>
+        ### Below configuration is used to enable feedback from Coverity security testing as pull request comment
+        BRIDGE_COVERITY_AUTOMATION_PRCOMMENT: 'true' 
+        BRIDGE_GITLAB_USER_TOKEN: <varname>$GITLAB_USER_TOKEN</varname> # Mandatory when BRIDGE_COVERITY_AUTOMATION_PRCOMMENT is set to 'true'
+  tags: 
+    - linux # Name of your Gitlab runner
+  extends: .run-synopsys-tools # Used for bash.        
+  #extends: .run-synopsys-tools-powershell # Used for powershell</codeblock>
+    </p>
+        <section id="section_rv4_d34_cyb">
+            <title>Optional Parameters for Cloud Coverity</title>
+            <p>
+                <ul id="ul_fl1_3sd_nxb">
+          <li><codeph>BRIDGE_COVERITY_INSTALL_DIRECTORY</codeph>: Specifies an install directory
+            other than the default to install Coverity.</li>
+          <li><codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW</codeph>: Policy view in Coverity. ID
+            number/Name of a saved view to apply as a break the build policy. If any defects are
+            found within this view when applied to the project, the build fails with an exit code.
+            Example: <codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW: '100001'</codeph> or
+              <codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW:'Outstanding Issues'</codeph>.</li>
+          <li><codeph>BRIDGE_COVERITY_AUTOMATION_PRCOMMENT</codeph>: Enables feedback from Coverity
+            security testing as pull request comment. Merge request must be created first from
+            feature branch to main branch to run Coverity PR Comment. Values are
+              <codeph>true</codeph> or <codeph>false</codeph>.</li>
+          <li><codeph>BRIDGE_GITLAB_USER_TOKEN</codeph>: Gitlab User Access Token Example:
+              <codeph>BRIDGE_GITLAB_USER_TOKEN: $GITLAB_USER_TOKEN</codeph>. Mandatory when
+              <codeph>BRIDGE_COVERITY_AUTOMATION_PRCOMMENT</codeph> is set as
+            <codeph>true</codeph>.</li>
+                </ul>
+            </p>
+        </section>
+    </body>
+</topic>

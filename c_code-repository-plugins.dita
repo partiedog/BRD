@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_l23_xqr_kxb">
+    <title>Code Repository Plugins</title>
+    <body>
+        <p>Synopsys offers several repository plugins that leverage Bridge in the background to
+            integrate code repositories with Synopsys scanning tools. These include:<ul
+                id="ul_cgj_msr_kxb">
+                <li>GitHub Actions</li>
+                <li>GitLab Template</li>
+            </ul></p>
+    </body>
+</topic>

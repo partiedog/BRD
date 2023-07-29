@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_chr_mtw_cyb">
+    <title>GitLab Prerequisites</title>
+    <body>
+        <p>Before configuring Synopsys Template into your GitLab pipeline, set up the following.</p>
+        <section id="section_izv_t2h_2yb">
+            <title>GitLab Runner Setup</title>
+            <p>
+                <ul id="ul_ttv_bfh_2yb">
+                    <li>GitLab Runner is an application that works with GitLab CI/CD to run jobs in
+                        a pipeline. To use GitLab Runner in your project, you must have the
+                        maintainer or owner role for the project.</li>
+                    <li>A GitLab runner can be self-managed or SaaS runners managed by GitLab.</li>
+                    <li>A GitLab self-managed runner can be installed and used on GNU/Linux, macOS
+                        and Windows. For more details refer: <xref
+                            href="https://docs.gitlab.com/runner/install/" format="html"
+                            scope="external">Install GitLab Runner</xref></li>
+                    <li>To set up project specific self-managed runner, go to (<b>Project
+                            Settings</b> → <b>CI/CD</b> → <b>Runners</b>) and configure.</li>
+                    <li>During runner registration, choose executor as <codeph>shell</codeph>.</li>
+                    <li>Make sure you have curl and unzip package tools installed in
+                        self-managed/SaaS runner (Linux/Mac).</li>
+                    <li>Synopsys Template supports both Project runners and Shared runners (except
+                        Shared Mac Runners).</li>
+                </ul>
+            </p>
+        </section>
+        <section id="section_sh2_cjh_2yb">
+            <title>Configure GitLab Variables</title>
+            <p>
+                <ul id="ul_ujg_2jh_2yb">
+                    <li>Sensitive data such as access tokens, user names, passwords and even URLs
+                        must be configured using GitLab variables.</li>
+                    <li> These can be added at the Project, Group or Global scopes (Global for
+                        self-managed GitLab instances only). </li>
+                    <li>To add variables, go to <b>Settings</b> → <b>CI/CD</b> → <b>Variables</b>.
+                        Be sure to mask passwords and tokens to avoid them being exposed in logs.
+                        For more details see <xref href="https://docs.gitlab.com/ee/ci/variables"
+                            format="html" scope="external">GitLab CI/CD variables</xref>.</li>
+                </ul>
+            </p>
+        </section>
+        <section id="section_n3p_hjh_2yb">
+            <title>Configure Gitlab User Token</title>
+            <p>
+                <ul id="ul_uf1_wjh_2yb">
+                    <li><codeph>BRIDGE_GITLAB_USER_TOKEN</codeph> is required as input when running
+                        Black Duck Fix PR, Black Duck/Coverity PR Comment.</li>
+                    <li>Generate a Personal Access Token (PAT) from GitLab (<b>User Settings</b>
+                            →<b> Access Tokens</b>) and store it as secret variable or store and
+                        fetch it from vault. </li>
+                    <li>PAT must have <b>api</b> scope to perform Black Duck Fix PR or Black
+                        Duck/Coverity PR Comment. For more details, see: <xref
+                            href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html"
+                            format="html" scope="external">Personal access tokens</xref></li>
+                </ul>
+            </p>
+        </section>
+        <section id="section_ddv_nlh_2yb">
+            <title>Create a .gitlab-ci.yml file</title>
+            <p>
+                <ul id="ul_bhm_qlh_2yb">
+                    <li>Before running a pipeline using the Synopsys Template, add a
+                            <codeph>.gitlab-ci.yml</codeph> file to your project by adding an
+                            <codeph>include</codeph> entry.</li>
+                    <li>Push those changes and a GitLab runner picks up the job and initiates the
+                        pipeline.</li>
+                </ul>
+            </p>
+        </section>
+    </body>
+</topic>

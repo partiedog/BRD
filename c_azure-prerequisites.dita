@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_lr5_l5x_dyb">
+    <title>Azure Prerequisites</title>
+    <body>
+        <p>Before configuring Synopsys Security Scan into your azure pipeline, note the following
+            prerequisites: </p>
+        <section id="section_gfr_5wx_dyb">
+            <title>Azure Agent Setup</title>
+            <p>Agents can be installed and used on GNU/Linux, macOS, Windows and Docker. See <xref
+                    href="https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops&amp;tabs=browser"
+                    format="html" scope="external"/> for details. You can use Microsoft-hosted
+                agents as well to scan your code using Azure Pipelines.</p>
+        </section>
+        <section id="section_d5m_w5x_dyb">
+            <title>Configure Variables</title>
+            <p>Sensitive data such as access tokens, user names, passwords and even URLs must be
+                configured using variable groups (<b>Project</b> → <b>Pipelines</b> → <b>Library</b>
+                → <b>New Variable Group</b>).</p>
+            <p><codeph>AZURE_TOKEN</codeph> is required as input when running Black Duck Fix PR,
+                Black Duck/Coverity PR Comment. There are two different types of tokens to pass to
+                    <codeph>AZURE_TOKEN</codeph>:<ul id="ul_iry_rvx_dyb">
+                    <li>To use <codeph>AZURE_TOKEN: $(System.AccessToken)</codeph>, you must enable
+                        this in the Azure interface. Go to <b>Project</b> → <b>Project Settings</b>
+                        → <b>Repository</b> → <b>Security</b> → <b>Build Service</b> and set
+                            <b>Contribute to pull requests</b>, <b>Create branch</b> and <b>Delete
+                            or disable repository</b> to <b>Allow</b>. Confirm
+                            <codeph>System.AccessToken</codeph> has <b>Contribute to PR</b>
+                        permissions (<b>Project</b> → <b>Project Settings</b> → <b>Repositories</b>
+                        → <b>Security</b> → <b>Build Service User</b>).</li>
+                    <li>To use <codeph>AZURE_TOKEN: $(PAT_TOKEN)</codeph>, PAT token should have
+                        minimum permissions <b>Code - Full</b> and <b>Pull Request Threads - Read
+                            &amp; write</b>. See <xref
+                            href="https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&amp;tabs=Windows"
+                            format="html" scope="external">Use personal access tokens</xref> for
+                        more details. </li>
+                </ul>For Black Duck and Coverity PR comments, enable <b>Build validation policy</b>
+                    (<b>Project</b> → <b>Project Settings</b> → <b>Repositories</b> → <b>Branch
+                    Policy</b> → <b>Add branch protection</b>) to trigger the pipeline on raising PR
+                or any push event to existing branch (usually on main or master branch). See <xref
+                    href="https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&amp;tabs=browser#build-validation"
+                    format="html" scope="external">Build Validation</xref> for more details.</p>
+        </section>
+        <section id="section_r5l_zwn_2yb">
+            <title><b>Configure Azure Pipeline</b></title>
+            <p>Create a new pipeline or use existing pipeline (<b>Project</b> → <b>Pipelines</b> →
+                    <b>New Pipeline</b>) and configure required fields. Push those changes and agent
+                will pick up the job and initiate the pipeline.</p>
+        </section>
+    </body>
+</topic>

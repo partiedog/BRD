@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_c3j_1gr_dyb">
+    <title>To run Synopsys Security Scan</title>
+    <body>
+        <p>
+            <ul id="ul_msy_5py_wxb">
+                <li>Validate Scanning platform-related parameters like <codeph>project</codeph> and
+                        <codeph>stream</codeph>.</li>
+                <li>Download Synopsys Bridge and related adapters.</li>
+                <li>Integrate with and run one or more corresponding Synopsys security testing
+                    solutions (Polaris, Coverity, or Black Duck).</li>
+                <li>Run corresponding Synopsys security testing solutions (Polaris, Coverity, or
+                    Black Duck).</li>
+            </ul>
+        </p>
+    </body>
+</topic>

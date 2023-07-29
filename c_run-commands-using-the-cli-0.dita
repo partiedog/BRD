@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_jcm_rfg_lxb">
+    <title>Passing Arguments using the CLI</title>
+    <body>
+        <p>Instead of a JSON file, you can pass arguments on the command line.</p>
+        <p>The example shown in <xref href="c_run-commands-using-a-json-file.dita">Passing Arguments
+                using a JSON file</xref> is the same as passing the following arguments written out
+            on the command line (both examples from
+            Polaris):<codeblock>export BRIDGE_POLARIS_ACCESSTOKEN="<codeph>&lt;POLARIS_ACCESSTOKEN></codeph>"
+synopsys-bridge --stage polaris polaris.project.name="<codeph>&lt;PROJECT_NAME></codeph>" \
+polaris.application.name="<codeph>&lt;APPLICATION_NAME></codeph>" \
+polaris.assessment.types=SAST,SCA \
+polaris.serverUrl="<codeph>&lt;POLARIS_SERVERURL></codeph>"</codeblock></p>
+        <p>
+            <note>Your OS may use a different syntax from <codeph>export</codeph>.</note>
+        </p>
+        <p><codeph>export BRIDGE_POLARIS_ACCESSTOKEN</codeph> indicates setting the token as an
+            environmental variable for security best practices. Once passed, Synopsys Bridge will
+            automatically reference those variables on subsequent passed arguments. </p>
+        <p><codeph>synopsys-bridge</codeph> indicates you're running the Synopsys Bridge CLI. The
+                <codeph>--stage</codeph> flag specifies a group of adapters to run. Each adapter has
+            a stage assigned in its configuration. More complex use cases require a few more
+            arguments.</p>
+        <p><codeph>polaris</codeph> indicates scans are being run by Polaris.</p>
+        <p>You can set any resource known to Synopsys Bridge as a command line argument. Simply
+            provide the entire namespace of the resource and its corresponding value in the format
+                <codeph>key=value</codeph>. The command example above sets the
+                <codeph>project.name</codeph> resource to the value
+                <codeph>central-scm-proj</codeph>, loads the proper adapters to run scans with, and
+            lists the proper scanning server URL. </p>
+        <p>Pass arrays using comma separated values (CSV). For example:
+                <codeph>polaris.assessment.types=SAST,SCA</codeph>.</p>
+        <p><codeph>polaris.assessment.types</codeph> specifies whether to run Coverity
+                (<codeph>SAST</codeph>) or Black Duck (<codeph>SCA</codeph>) scans. </p>
+        <p>For a complete list of Synopsys Bridge arguments, see <xref
+                href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of Synopsys
+                Bridge Arguments</xref>.</p>
+        <p>See <xref href="c_schema.dita">Schema Resources And Extensions</xref> for Synopsys Bridge
+            resources.</p>
+        <p>Synopsys Bridge automatically looks for any environment variables that begin with the
+            string <codeph>synopsys-bridge</codeph> and takes the rest of the name as a
+                <codeph>Resource</codeph> key. </p>
+        <p>Because authentication tokens can contain sensitive information, it is unwise to provide
+            them as command line arguments, so set them as environment variables instead.</p>
+        <p>For tool specific information and examples, see:<ul id="ul_v3q_rnh_cyb">
+                <li><xref href="c_using-synopsys-bridge-with-polaris.dita">Using Synopsys Bridge
+                        with Polaris</xref></li>
+                <li><xref href="c_using-synopsys-bridge-with-black-duck.dita">Using Synopsys Bridge
+                        with Black Duck</xref></li>
+                <li><xref href="c_using-synopsys-bridge-with-coverity-connect.dita">Using Synopsys
+                        Bridge with Coverity Connect</xref></li>
+            </ul></p>
+    </body>
+</topic>

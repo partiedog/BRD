@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_khx_ctk_kxb">
+    <title>Files and Directories</title>
+    <body>
+        <p>By default, the Synopsys Bridge Bridge writes logs and temporary files to
+                <codeph>&lt;current_working_directory>/.bridge</codeph>. You may change this default
+            directory by using the <codeph>--home &lt;directory_path></codeph> option. </p>
+        <p>The following files and directories are found under the Synopsys Bridge home
+                directory:<ul id="ul_unb_qxq_rwb">
+                <li><codeph>bridge.log</codeph></li>
+                <li><codeph>diagnostics.json </codeph>file with <codeph>--diagnostics</codeph>
+                    option. See <xref href="c_logging-and-diagnostics.dita">Logging and
+                        Diagnostics</xref>for details.</li>
+                <li>Adapter directories and the corresponding  <codeph>stdout</codeph> and
+                        <codeph>stderr</codeph> log files.</li>
+                <li>Additional temporary files.</li>
+            </ul></p>
+    </body>
+</topic>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ed2_y3f_lxb">
+    <title>Passing Arguments using a JSON file</title>
+    <body>
+        <p>Passing arguments using a JSON file greatly simplifies the command line and promotes
+			reuse. Here are the steps:</p>
+		<ol id="ol_ajl_dk3_gyb">
+			<li dir="ltr">
+				<p dir="ltr">Create an access token in the web interface of the Synopsys security
+					product you are integrating with.</p>
+			</li>
+			<li dir="ltr">
+				<p dir="ltr">Use environment variable(s) to pass sensitive information such as password or
+					access token to Synopsys Bridge (recommended for security purposes). Synopsys
+					Bridge automatically picks up values passed through these variables. Example:
+						<codeph>export
+						BRIDGE_POLARIS_ACCESSTOKEN=&lt;<i>POLARIS_ACCESSTOKEN></i></codeph>.</p>
+			</li>
+		
+			<li dir="ltr">
+				<p dir="ltr">Pass the JSON file to Synopsys Bridge using the <codeph>--input
+					</codeph>command line option.</p>
+			</li>
+			<li dir="ltr">
+				<p dir="ltr">Pass the Synopsys security product you are integrating using the
+						<codeph>--stage</codeph> option.</p>
+			</li>
+		</ol>
+		<p dir="ltr">Here are the example commands:</p>
+    	
+    	
+    	
+		<p>
+			<codeblock>export BRIDGE_POLARIS_ACCESSTOKEN=&lt;POLARIS_ACCESSTOKEN>
+synopsys-bridge --stage polaris --input input.json</codeblock>
+		</p>
+        <p>Here is the <codeph>input.json</codeph> file:<codeblock>{
+	"data": {
+		"polaris": {
+			"application": {
+				"name": "&lt;APPLICATION_NAME>"
+			},
+			"project": {
+				"name": "&lt;PROJECT_NAME>"
+			},
+			"assessment": {
+				"types":  ["SAST", "SCA"]
+
+			},
+			"serverUrl": "&lt;SERVER_URL>"
+		}
+	}
+}</codeblock></p>
+		<p>For tool specific information and examples, see:<ul id="ul_v3q_rnh_cyb">
+				<li><xref href="c_using-synopsys-bridge-with-polaris.dita">Using Synopsys Bridge
+						with Polaris</xref></li>
+				<li><xref href="c_using-synopsys-bridge-with-black-duck.dita">Using Synopsys Bridge
+						with Black Duck</xref></li>
+				<li><xref href="c_using-synopsys-bridge-with-coverity-connect.dita">Using Synopsys
+						Bridge with Coverity Connect</xref></li>
+			</ul></p>
+    </body>
+</topic>

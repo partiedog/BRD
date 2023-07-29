@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_dfh_1cz_kxb">
+    <title>Download Synopsys Bridge</title>
+    <body>
+        <p>There are multiple ways to download Synopsys Bridge<ul id="ul_hb3_vdz_kxb">
+                <li>Download the latest version of Synopsys Bridge from the Synopsys Artifactory:
+                        <xref
+                        href="https://sig-repo.synopsys.com/artifactory/bds-integrations-release/com/synopsys/integration/synopsys-bridge/"
+                        format="html" scope="external"/></li>
+                <li>Polaris users can download Synopsys Bridge from the Polaris user interface:<ol
+                        id="ol_kps_ys3_yxb">
+                        <li>Click <b>username</b> at the top right.</li>
+                        <li>Select <b>Accounts</b>.</li>
+                        <li>Select <b>Downloads</b>.</li>
+                        <li>Choose the appropriate package for your operating system.</li>
+                    </ol></li>
+            </ul></p>
+        <p>Install Synopsys Bridge in the directory of your choice using the appropriate unzip tool
+            for your OS.</p>
+        <p>If you need to install a new version of Synopsys Bridge, delete the old version if using
+            the same install directory.</p>
+    </body>
+</topic>

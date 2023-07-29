@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_smd_zg3_cyb">
+    <title>Using Synopsys GitHub Action for Coverity Cloud Deployment with Thin Client</title>
+    <body>
+        <p>Synopsys GitHub Action only supports the Kubernetes-based Coverity cloud
+          deployment model, which uses a small footprint thin client to capture the source code and
+          submit an analysis job running on the server. This removes the need for a multi-gigabyte
+          software installation in your GitHub Runner.</p>
+        <p>On push events, a full Coverity scan will be run and results are committed to
+          the Coverity Connect database. </p>
+        <p>On pull request events, comments are added to pull requests for new issues
+          found by the scan if <codeph>coverity_automation_prcomment</codeph> is set to <codeph>true</codeph> (see example below).
+          Note that scan results are not committed to Coverity Connect database in this case.</p>
+        <p>Before running the pipeline with Synopsys Action, make sure the specified
+          project and stream exist in your Coverity Connect server environment.</p>
+        <p>Below is an example of a <codeph><varname>workflow</varname>.yml</codeph> file configured
+      for Coverity Cloud
+      Deployment.<codeblock>name: cnc-sig-action
+on:
+  push:
+    branches: [ main, master, develop, stage, release ]
+  pull_request:
+    branches: [ main, master, develop, stage, release ]
+  workflow_dispatch:  
+jobs:
+  build:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+
+      - name: Coverity Full Scan
+        if: <varname>${{ github.event_name != 'pull_request' }}
+</varname>        uses: synopsys-sig/synopsys-action@v1.2.0
+        with:
+          coverity_url: <varname>${{ secrets.COVERITY_URL }}
+</varname>          coverity_user: <varname>${{ secrets.COVERITY_USER }}
+</varname>          coverity_passphrase: <varname>${{ secrets.COVERITY_PASSPHRASE }}
+</varname>          coverity_project_name: <varname>${{ github.event.repository.name }}
+</varname>          coverity_stream_name: <varname>${{ github.event.repository.name }}</varname>-<varname>${{ github.ref_name }}
+</varname>          coverity_policy_view: 'Outstanding Issues'
+          ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+          # include_diagnostics: true  
+          
+      - name: Coverity PR Scan
+        if: <varname>${{ github.event_name == 'pull_request' }}
+</varname>        uses: synopsys-sig/synopsys-action@v1.2.0
+        with:
+          coverity_url: <varname>${{ secrets.COVERITY_URL }}
+</varname>          coverity_user: <varname>${{ secrets.COVERITY_USER }}
+</varname>          coverity_passphrase: <varname>${{ secrets.COVERITY_PASSPHRASE }}
+</varname>          coverity_project_name: <varname>${{ github.event.repository.name }}
+</varname>          coverity_stream_name: <varname>${{ github.event.repository.name }}</varname>-<varname>${{ github.base_ref }}
+</varname>          ### Below configuration is used to enable feedback from Coverity security testing as pull request comment
+          coverity_automation_prcomment: true
+          github_token: <varname>${{ secrets.GITHUB_TOKEN }}</varname> # Mandatory when coverity_automation_prcomment is set to 'true'   
+          ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+          # include_diagnostics: true  
+        </codeblock></p>
+      <p>   <table frame="all" rowsep="1" colsep="1" id="table_c2d_5yn_gyb">
+        <title><b>List of mandatory and optional parameters for Coverity</b></title>
+        <tgroup cols="3">
+          <colspec colname="c1" colnum="1" colwidth="1*"/>
+          <colspec colname="c2" colnum="2" colwidth="1*"/>
+          <colspec colname="c3" colnum="3" colwidth="1*"/>
+          <thead>
+            <row>
+              <entry>Input Parameter</entry>
+              <entry>Description</entry>
+              <entry>Mandatory / Optional</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><codeph>coverity_url</codeph></entry>
+              <entry>Coverity URL</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_user</codeph></entry>
+              <entry>Coverity username</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_passphrase</codeph></entry>
+              <entry>Coverity passphrase</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_project_name</codeph></entry>
+              <entry>
+                <p>Coverity project name. </p>
+                <p>Tip: Many customers prefer to set their Coverity project and stream
+                  names to match the GitHub repository name </p>
+              </entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_stream_name</codeph></entry>
+              <entry>Coverity stream name</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_install_directory</codeph></entry>
+              <entry>Installation directory of Coverity</entry>
+              <entry>Optional</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_policy_view</codeph></entry>
+              <entry>
+                <p>ID or name of policy view to be used to enforce the “break the build”
+                  policy.</p>
+                <p>If issues are found in the specified this view, build will be failed. </p>
+                <p>Example: <codeph>coverity_policy_view: '100001'</codeph> or <codeph>coverity_policy_view:
+                  'Outstanding Issues'</codeph></p>
+              </entry>
+              <entry>Optional</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_automation_prcomment</codeph></entry>
+              <entry>
+                <p>Option to enable automatic creation pull request comments for new
+                  issues found in the pull request.</p>
+                <p>Merge Request must be created first from feature branch to main branch
+                  to run Coverity PR Comment. </p>
+                <p>Default: false</p>
+              </entry>
+              <entry>Optional</entry>
+            </row>
+            <row>
+              <entry><codeph>github_token</codeph></entry>
+              <entry>
+                <p>GitHub Access Token </p>
+                <p>Example: <codeph>github_token: ${{ secrets.GITHUB_TOKEN }}</codeph></p>
+              </entry>
+              <entry>Mandatory if coverity_automation_prcomment is set as true</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table></p>
+    </body>
+</topic>

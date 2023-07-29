@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_bqs_5rw_txb">
+    <title>Using Synopsys Bridge CLI with Polaris</title>
+    <body>
+        <p dir="ltr">As a Polaris customer, you can use Synopsys Bridge to automate SAST and SCA
+            scanning in your CI/CD pipeline. You can use Synopsys Bridge to run Polaris scans in the
+            following two ways:</p>
+        <p>
+            <ul id="ul_ut3_ljn_cyb">
+                <li><xref href="#topic_bqs_5rw_txb/section_ypr_2tw_txb" format="dita">Running
+                        Polaris scans with a JSON file</xref></li>
+                <li><xref href="#topic_bqs_5rw_txb/section_nm3_czd_5xb" format="dita">Running
+                        Polaris scans on the command line</xref></li>
+            </ul>
+        </p>
+        <p>In addition to running scans, you can also optionally configure Synopsys Bridge to create
+            fix pull requests for SCA issues. Currently, only NPM is supported. For more
+            information, see see <xref href="c_complete-list-of-synopsys-bridge-commands.dita"
+                >Complete List of Synopsys Bridge Arguments</xref>.</p>
+        <section id="section_ypr_2tw_txb">
+            <title>Running Polaris scans with a JSON file</title>
+            <p>
+                <div><p dir="ltr">Synopsys Bridge for Polaris uses Coverity for SAST scans and Black
+                        Duck for SCA scans under the hood. Depending on the task, you may need to
+                        pass additional SAST and SCA configurations.</p>After passing sensitive
+                    access token and password information using the
+                        <codeph>BRIDGE_POLARIS_ACCESSTOKEN</codeph> environment variable, run
+                    Synopsys Bridge and pass the JSON file using the <codeph>--input</codeph>
+                    command line option. Here is a command line example for Polaris:</div>
+            </p>
+            <p>
+                <codeblock>export BRIDGE_POLARIS_ACCESSTOKEN=&lt;POLARIS_ACCESSTOKEN>
+synopsys-bridge --stage connect --input input.json</codeblock>
+            </p>
+            <p>The above example uses the following:</p>
+            <p>
+                <ul id="ul_hrd_hbj_gyb">
+                    <li dir="ltr">
+                        <p dir="ltr"><codeph>BRIDGE_POLARIS_ACCESSTOKEN</codeph> environment
+                            variable to pass sensitive information such as password or access token
+                            to Synopsys Bridge (recommended for security purposes). Note that
+                            Synopsys Bridge automatically picks up values passed thru these
+                            environment variables.</p>
+                    </li>
+                    <li dir="ltr">
+                        <p dir="ltr"><codeph>--stage </codeph>argument to specify the Synopsys
+                            security product in use</p>
+                    </li>
+                </ul>
+            </p>
+            <p>Here is the <codeph>input.json</codeph> file::<codeblock>{
+    "data": {
+        "polaris": {
+            "application": {
+                "name": "<varname>&lt;APPLICATION_NAME></varname>"
+            },
+            "project": {
+                "name": "<varname>&lt;PROJECT_NAME></varname>"
+            },         
+            "assessment": {
+                "types":  ["SCA", "SAST"]
+ 
+            },
+            "serverUrl": "&lt;<varname>POLARIS_URL></varname>"
+        }
+    }
+}</codeblock></p>
+            
+                
+                    <p dir="ltr">The above example uses the following schema resources:</p>
+                    <ul id="ul_f2n_mbj_gyb">
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>polaris.serverUrl</codeph> for Polaris URL</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>polaris.application.name</codeph> for Polaris
+                                Application to use. Note that the specified application must exist
+                                on Polaris with appropriate entitlements.</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>polaris.project.name </codeph>for Polaris Project
+                                to use. Note that the specified project must exist on Polaris. You
+                                can set polaris.onboarding to true if you want Synopsys Bridge to
+                                automatically create the project in case it doesn’t yet exist on
+                                Polaris.</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>polaris.assessment.types </codeph>specifies the
+                                type of scan to be run: SAST or SCA or SAST,SCA</p>
+                        </li>
+                    </ul>
+                    <p>For the required minimum set of arguments that you need to pass to
+                        integrate Synopsys Bridge with Polaris, refer to the Polaris specific
+                        resources page under <xref href="c_schema.dita" format="dita">Schema
+                            Resources And Extensions</xref>.</p>
+                    <p>For a complete list of environment variables and command line
+                        arguments, see <xref href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of Synopsys Bridge Arguments</xref>.</p>
+                
+                <p>For additional SAST-specific details, see <xref
+                        href="#topic_bqs_5rw_txb/section_igg_jky_dyb" format="dita">Additional SAST
+                    configuration requirements</xref></p>
+            
+                
+        </section>
+        <section id="section_nm3_czd_5xb">
+            <title>Running Polaris scans on the command line</title>
+            <p dir="ltr">Instead of using a JSON file, you can pass all arguments via the command
+                line. Here is a command line example for Polaris:</p>
+            <p>
+                <codeblock>export BRIDGE_POLARIS_ACCESSTOKEN=<varname>&lt;POLARIS_ACCESSTOKEN></varname>
+synopsys-bridge --stage polaris polaris.project.name="<varname>&lt;PROJECT_NAME></varname>" \
+polaris.application.name="<varname>&lt;APPLICATION_NAME></varname>" \
+polaris.assessment.types=SAST,SCA \
+polaris.serverUrl="<varname>&lt;SERVERURL>"</varname></codeblock>
+            </p>
+            
+                <p dir="ltr">The above example uses the following:</p><ul id="ul_hg1_rbj_gyb">
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>BRIDGE_POLARIS_ACCESSTOKEN</codeph> environment
+                                variable to pass sensitive information such as password or access
+                                token to Synopsys Bridge (recommended for security purposes). Note
+                                that Synopsys Bridge automatically picks up values passed thru these
+                                environment variables.</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>--stage</codeph> argument to specify the Synopsys
+                                security product in use</p>
+                        </li>
+                    </ul><ul id="ul_ig1_rbj_gyb">
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>polaris.serverUrl</codeph> for Polaris URL</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>polaris.application.name</codeph> for Polaris
+                                Application to use. Note that the specified application must exist
+                                on Polaris with appropriate entitlements.</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>polaris.project.name</codeph> for Polaris Project
+                                to use. Note that the specified project must exist on Polaris. You
+                                can set polaris.onboarding to true if you want Synopsys Bridge to
+                                automatically create the project in case it doesn’t yet exist on
+                                Polaris.</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>polaris.assessment.types</codeph> specifies the
+                                type of scan to be run: SAST or SCA or SAST,SCA.</p>
+                        </li>
+                    </ul>
+                    <p dir="ltr">For the required minimum set of arguments that you need to
+                        pass to integrate Synopsys Bridge with Polaris, refer to Polaris specific
+                        resources page under <xref href="c_schema.dita" format="dita">Schema
+                            Resources And Extensions</xref>.</p>
+                    <p>For a complete list of environment variables and command line arguments, see <xref
+                        href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
+                        Synopsys Bridge Arguments</xref>.</p>
+                        <p>For additional SAST-specific details, see
+                        <xref href="#topic_bqs_5rw_txb/section_igg_jky_dyb" format="dita">Additional
+                            SAST configuration requirements</xref></p>
+            
+        </section>
+        <section id="section_igg_jky_dyb">
+            <title>Additional SAST configuration requirements</title>
+            <p>A <codeph>coverity.yml</codeph> configuration file is required for: <ul
+                    id="ul_i3b_qky_dyb">
+                    <li>Static analysis of compiled languages like C/C++, C# and Java. </li>
+                    <li>Optimizing static analysis when results are unsatisfactory.</li>
+                </ul>Certain Coverity Connect scans on Polaris require configuration of additional
+                capture settings using a <codeph>coverity.yaml</codeph> file. See <xref
+                    href="https://polaris.synopsys.com/developer/default/documentation/t_cov-thin-client"
+                    format="html" scope="external">Configuring Coverity Thin Client for use with
+                    Synopsys Bridge and Polaris</xref> in the <cite>Polaris Developer Portal</cite>
+                for more information.</p>
+        </section>
+    </body>
+</topic>

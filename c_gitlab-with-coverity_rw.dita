@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ss3_yh4_cyb">
+    <title>Using the Synopsys GitLab Template for Coverity Cloud Deployment with Thin Client</title>
+    <body>
+        <p>Before running Coverity using the Synopsys Template, ensure the appropriate project and
+      stream are set in your Coverity Connect server environment, as in the example
+        below.<note>Currently, Synopsys Template only supports the Coverity thin client/cloud
+        deployment model, which removes the need for a large footprint GitLab Runner
+        installation.</note></p>
+        <p>
+      <codeblock>include:
+  - project: synopsys/synopsys-template
+    ref: v1.1.0
+    file: templates/synopsys-template.yml
+  ### Use below configuration for accessing synopsys-template in Gitlab self-managed 
+  # - remote: 'https://gitlab.com/synopsys/synopsys-template/-/raw/v1.1.0/templates/synopsys-template.yml'  
+
+stages:
+  - coverity_scan
+
+variables:
+  SCAN_BRANCHES: "/^(main|master|develop|stage|release|feature_branch)$/" # Add branches where you want to run Coverity scan
+
+synopsys_template_execution:
+  stage: coverity_scan
+  variables:
+    BRIDGE_COVERITY_CONNECT_URL: <varname>$COVERITY_URL
+</varname>    BRIDGE_COVERITY_CONNECT_USER_NAME: <varname>$COVERITY_USER</varname>
+    BRIDGE_COVERITY_CONNECT_USER_PASSWORD: <varname>$COVERITY_PASSWORD</varname>
+    BRIDGE_COVERITY_CONNECT_PROJECT_NAME: <varname>$CI_PROJECT_NAME
+</varname>    ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+  #   INCLUDE_DIAGNOSTICS: 'true'
+  # artifacts:
+  #   when: always
+  #   paths:
+  #   - .bridge
+  rules:
+    - if: (<varname>$CI_COMMIT_BRANCH</varname> =~ <varname>$SCAN_BRANCHES</varname> &amp;&amp; <varname>$CI_PIPELINE_SOURCE</varname> != 'merge_request_event')
+      variables:
+        BRIDGE_COVERITY_CONNECT_STREAM_NAME: <varname>$CI_PROJECT_NAME</varname>-<varname>$CI_COMMIT_BRANCH
+</varname>        BRIDGE_COVERITY_CONNECT_POLICY_VIEW: 'Outstanding Issues'
+    ### Use below configuration to run Coverity PR scan       
+    - if: (<varname>$CI_MERGE_REQUEST_TARGET_BRANCH_NAME</varname> =~ <varname>$SCAN_BRANCHES</varname> &amp;&amp; <varname>$CI_PIPELINE_SOURCE</varname> == 'merge_request_event')
+      variables:
+        BRIDGE_COVERITY_CONNECT_STREAM_NAME: <varname>$CI_PROJECT_NAME</varname>-<varname>$CI_MERGE_REQUEST_TARGET_BRANCH_NAME</varname>
+        ### Below configuration is used to enable feedback from Coverity security testing as pull request comment
+        BRIDGE_COVERITY_AUTOMATION_PRCOMMENT: 'true' 
+        BRIDGE_GITLAB_USER_TOKEN: <varname>$GITLAB_USER_TOKEN</varname> # Mandatory when BRIDGE_COVERITY_AUTOMATION_PRCOMMENT is set to 'true'
+  tags: 
+    - linux # Name of your Gitlab runner
+  extends: .run-synopsys-tools # Used for bash.        
+  #extends: .run-synopsys-tools-powershell # Used for powershell</codeblock>
+    </p>
+    <table frame="all" rowsep="1" colsep="1" id="table_vsg_vm4_gyb">
+      <title><b>List of mandatory and optional parameters for Coverity cloud</b></title>
+      <tgroup cols="3">
+        <colspec colname="c1" colnum="1" colwidth="1*"/>
+        <colspec colname="c2" colnum="2" colwidth="1*"/>
+        <colspec colname="c3" colnum="3" colwidth="1*"/>
+        <thead>
+          <row>
+            <entry>Input Parameter</entry>
+            <entry>Description</entry>
+            <entry>Mandatory/Optional</entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry><codeph>BRIDGE_COVERITY_CONNECT_URL</codeph></entry>
+            <entry>Coverity server URL</entry>
+            <entry>Mandatory</entry>
+          </row>
+          <row>
+            <entry><codeph>BRIDGE_COVERITY_CONNECT_USER_NAME</codeph></entry>
+            <entry>Coverity username</entry>
+            <entry>Mandatory</entry>
+          </row>
+          <row>
+            <entry><codeph>BRIDGE_COVERITY_CONNECT_USER_PASSWORD</codeph></entry>
+            <entry>Coverity passphrase</entry>
+            <entry>Mandatory</entry>
+          </row>
+          <row>
+            <entry><codeph>BRIDGE_COVERITY_CONNECT_PROJECT_NAME</codeph></entry>
+            <entry>Project name in Coverity</entry>
+            <entry>Mandatory</entry>
+          </row>
+          <row>
+            <entry><codeph>BRIDGE_COVERITY_CONNECT_STREAM_NAME</codeph></entry>
+            <entry>Stream name in Coverity</entry>
+            <entry>Mandatory</entry>
+          </row>
+          <row>
+            <entry><codeph>BRIDGE_COVERITY_INSTALL_DIRECTORY</codeph></entry>
+            <entry>Installation directory of Coverity</entry>
+            <entry>Optional</entry>
+          </row>
+          <row>
+            <entry><codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW</codeph></entry>
+            <entry>
+              <p>ID or name of policy view to be used to enforce the “break the build”
+                policy.</p>
+              <p>If issues are found in the specified this view, build will be failed. </p>
+              <p>Example: <codeph>coverity_policy_view: '100001'</codeph> or <codeph>coverity_policy_view:
+                'Outstanding Issues'</codeph> </p>
+            </entry>
+            <entry>Optional</entry>
+          </row>
+          <row>
+            <entry><codeph>BRIDGE_COVERITY_AUTOMATION_PRCOMMENT</codeph></entry>
+            <entry>
+              <p>Option to enable automatic creation pull request comments for new issues
+                found in the pull request.</p>
+              <p>Merge Request must be created first from feature branch to main branch to
+                run Coverity PR Comment. </p>
+              <p>Default: false</p>
+            </entry>
+            <entry>Optional</entry>
+          </row>
+          <row>
+            <entry><codeph>BRIDGE_GITLAB_USER_TOKEN</codeph></entry>
+            <entry>
+              <p>Gitlab User Access Token </p>
+              <p>Example: <codeph>BRIDGE_GITLAB_USER_TOKEN:
+                $GITLAB_USER_TOKEN</codeph></p>
+            </entry>
+            <entry>Mandatory when <codeph>BRIDGE_COVERITY_AUTOMATION_PRCOMMENT</codeph> is set as
+            <codeph>true</codeph>.</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+        
+    </body>
+</topic>

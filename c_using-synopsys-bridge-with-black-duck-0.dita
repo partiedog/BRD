@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_tsw_g1v_qxb">
+    <title>Using Synopsys Bridge CLI with Black Duck</title>
+    <body>
+        
+            <p dir="ltr">As a Black Duck customer, you can use Synopsys Bridge to automate SCA
+                scanning in your CI/CD pipeline. You can use Synopsys Bridge with Black Duck in the
+                following two ways to run scans:</p>
+            <ul id="ul_tnw_kcj_gyb">
+                <li dir="ltr">
+                    <p dir="ltr"><u>Running Black Duck scans with a JSON file</u></p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr"><u>Running Black Duck scans on the command line</u></p>
+                </li>
+            </ul>
+        
+            <p dir="ltr">In addition to running scans, you can also optionally configure Synopsys
+            Bridge to perform the following. For more information, see the <xref
+                href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of Synopsys
+                Bridge Arguments</xref>.</p>
+            <ol id="ol_iy4_ncj_gyb">
+                <li dir="ltr">
+                    <p dir="ltr">Scan pull requests</p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr">Add comments to pull requests</p>
+                </li>
+                <li dir="ltr">
+                <p dir="ltr">Create fix pull requests (NPM only) </p>
+            </li>
+            </ol>
+        <section id="section_wtd_kzv_qxb">
+            <title>Running Black Duck scans with a JSON file</title>
+            <p>You can invoke a JSON file from your project root directory containing common
+                arguments to run scans.</p>
+            <p>After setting your access token as an environmental variable
+                    (<codeph>BRIDGE_BLACKDUCK_TOKEN</codeph>), here's an example command loading the
+                    <codeph>input.json</codeph>
+                file:<codeblock>synopsys-bridge --stage blackduck --input input.json --verbose</codeblock></p>
+            <p> This command loads the following <codeph>input.json</codeph>
+                file:<pre>{
+    "data": {
+        "blackduck": {
+            "url": <varname>&lt;BLACKDUCK_URL></varname>,
+            "scan": {
+                "full": true,
+                "failure": {
+                    "severities": ["CRITICAL"]
+                }
+            }
+        }
+    }
+}</pre></p>
+        </section>
+        <section id="section_x5p_nbw_qxb">
+            <title>Running Black Duck scans on the command line</title>
+            <p>Instead of using a JSON file, you can pass all arguments on the command line. The
+                JSON example above is the same as passing the following arguments written out on the
+                command
+                line:<codeblock>export BRIDGE_BLACKDUCK_TOKEN=<varname>&lt;BLACKDUCK_TOKEN></varname>
+synopsys-bridge --stage blackduck \
+blackduck.url=<varname>&lt;BLACKDUCK_URL></varname> \
+blackduck.scan.failure.severities='["CRITICAL"]' \
+--verbose</codeblock></p>
+            <p><codeph>BRIDGE_BLACKDUCK_TOKEN</codeph> indicates the token is passed as an
+                environmental variable.</p>
+            <p><codeph>synopsys-bridge</codeph> indicates you're running the Synopsys Bridge CLI.
+                The <codeph>--stage</codeph> flag specifies a group of adapters to run. Each adapter
+                has a stage assigned in its configuration. More complex use cases require a few more
+                arguments.</p>
+            <p><codeph>blackduck</codeph> launches Black Duck scans.</p>
+            <p><codeph>blackduck.scan.failure.severities</codeph> indicates what level of problem
+                breaks the build. </p>
+            <p><codeph>--verbose</codeph>  sets logs to verbose mode, recording additional
+                information that can be useful for debugging or understanding why you may not be
+                getting expected results.</p>
+            <p>You can run Black Duck scans as either Full (intelligent) or Rapid. When invoking
+                Black Duck from Bridge, the default scan type is Rapid. To carry out a Full scan,
+                you must set<codeph>blackduck.scan.full</codeph> as <codeph>true</codeph>.</p>
+            <p>You can set any resource known to Synopsys Bridge as a command line argument. Simply
+                provide the entire namespace of the resource and its corresponding value in the
+                format <codeph>key=value</codeph>. The command example above sets the
+                    <codeph>project.name</codeph> resource to the value
+                    <codeph>central-scm-proj</codeph>, loads the proper adapters to run scans with,
+                and lists the proper scanning server URL.</p>
+            <p>For more details, see the <xref
+                    href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
+                    Synopsys Bridge Arguments</xref>. </p>
+        </section>
+        <section id="section_znt_mwb_rxb">
+            <title>Using Environmental Variables</title>
+            <p>Some Black Duck resources can be set as environmental variables, eliminating the need
+                to pass them on the command line or referenced in a JSON file. The following
+                resources can be set as environmental variables.</p>
+            <table id="table_txw_vwb_rxb">
+                <tgroup cols="3">
+                    <colspec colnum="1" colname="col1" colwidth="1.12*"/>
+                    <colspec colnum="2" colname="col2" colwidth="1*"/>
+                    <colspec colnum="3" colname="col3" colwidth="2.02*"/>
+                    <thead>
+                        <row>
+                            <entry>Variable</entry>
+                            <entry>Description</entry>
+                            <entry>Example</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><codeph><b>BLACKDUCK_URL</b></codeph></entry>
+                            <entry>Black Duck URL</entry>
+                            <entry><codeph><varname>&lt;BLACKDUCK_URL></varname></codeph></entry>
+                        </row>
+                        <row>
+                            <entry><codeph><b>BLACKDUCK_API_TOKEN</b></codeph></entry>
+                            <entry>Black Duck API token</entry>
+                            <entry><codeph>THIS_IS_NOT_MY_TOKEN</codeph></entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </section>
+    </body>
+</topic>

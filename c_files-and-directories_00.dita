@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_khx_ctk_kxb">
+    <title>Files and Directories</title>
+    <body>
+        <p>By default, the Synopsys Bridge home directory is
+                <codeph>&lt;current_working_directory>/.bridge</codeph>. To change the home
+            directory location, pass <codeph>--home &lt;directory_path></codeph>. </p>
+        <p>The following files and directories are found under the Synopsys Bridge home
+                directory:<ul id="ul_unb_qxq_rwb">
+                <li><codeph>bridge.log</codeph></li>
+                <li>Adapter directories for any adapters run which contain timestamped
+                        <codeph>stdout</codeph> and <codeph>stderr</codeph> log files.</li>
+                <li>Additional files that vary depending on how Synopsys Bridge is configured.</li>
+                <li>Passing the <codeph>--diagnostics</codeph> flag in a Synopsys Bridge command
+                    creates a <codeph>diagnostics.json</codeph> file in the <codeph>.bridge</codeph>
+                    directory. See <xref href="c_logging-and-diagnostics.dita">Logging and
+                        Diagnostics</xref> for details.</li>
+            </ul></p>
+        <p>If you need to output the step by step Synopsys Bridge command input and output data to a
+            JSON file, pass an <codeph>--out</codeph>
+                option.<codeblock>synopsys-bridge --out /userroot/<varname>yourdirectory</varname>/<varname>any_name</varname>.json</codeblock><note>The
+                output from an <codeph>--out</codeph> command includes sensitive data like tokens,
+                passwords, etc. For a command that masks this information, see <xref
+                    href="c_logging-and-diagnostics.dita">Logging and Diagnostics</xref>.
+            </note></p>
+    </body>
+</topic>

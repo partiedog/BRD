@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_xym_hk4_cyb">
+    <title>GitLab Runner Setup</title>
+    <body>
+        <p>
+            <ul id="ul_p4x_4nf_nxb">
+                <li>GitLab Runner can be installed and used on GNU/Linux, macOS and Windows. Refer
+                    to the GitLab documentation :<xref href="https://docs.gitlab.com/runner/"
+                        format="html" scope="external">https://docs.gitlab.com/runner/</xref></li>
+                <li>During runner registration, choose executor as Shell.</li>
+                <li>After setting up the GitLab runner, make sure you have unzip package tools
+                    installed in your system (Linux/Mac).<note>Synopsys GitLab Template supports
+                        both Project runners and Shared runners (except Shared Mac
+                    Runners).</note></li>
+            </ul>
+        </p>
+    </body>
+</topic>

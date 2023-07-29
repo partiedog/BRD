@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_zjr_hh4_cyb">
+    <title>Using the Synopsys GitLab Template with Polaris </title>
+    <body>
+    <p>It is recommended that you configure sensitive information such as access tokens and URLs
+      using GitLab secrets.</p>
+    <p>Before running a pipeline using the Synopsys Template, add <codeph>.gitlab-ci.yml</codeph> to
+      your project by adding an <codeph>include</codeph> entry, as in the example
+        below.<codeblock>include:
+   - project: synopsys/synopsys-template
+     ref: v1.1.0
+     file: templates/synopsys-template.yml
+  ### Use below configuration for accessing synopsys-template in GitLab self-managed  
+  # - remote: 'https://gitlab.com/synopsys/synopsys-template/-/raw/v1.0.0/templates/synopsys-template.yml'  
+variables:
+  BRIDGE_POLARIS_SERVERURL: <varname>$POLARIS_SERVER_URL
+</varname>  BRIDGE_POLARIS_ACCESSTOKEN: <varname>$POLARIS_ACCESS_TOKEN</varname>
+  BRIDGE_POLARIS_APPLICATION_NAME: <varname>$CI_PROJECT_NAME
+</varname>  BRIDGE_POLARIS_PROJECT_NAME: <varname>$CI_PROJECT_NAME</varname>
+  ### Accepts Multiple Values
+  BRIDGE_POLARIS_ASSESSMENT_TYPES: 'SCA,SAST'      
+stages:
+  - polaris_scan
+synopsys_template_execution:
+  stage: polaris_scan
+  tags: 
+    - linux # Name of your GitLab runner
+  extends: .run-synopsys-tools # Used for bash
+  # extends: .run-synopsys-tools-powershell # Used for powershell
+
+  ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+  # variables:
+  #   INCLUDE_DIAGNOSTICS: 'true'
+  # artifacts:
+  #   when: always
+  #   paths:
+  #     - .bridge
+</codeblock><note id="note_e4j_4l4_gyb">Polaris does not currently support the analysis of
+        merge requests. We recommend running the Synopsys GitLab Template on pushes to main
+        branches.</note></p>
+    <p>Once you push the changes above, an active runner will pick up the job and initiate the
+        pipeline.<table frame="all" rowsep="1" colsep="1" id="table_vsz_fl4_gyb">
+        <title><b>List of mandatory and optional parameters for Polaris</b></title>
+        <tgroup cols="3">
+          <colspec colname="c1" colnum="1" colwidth="1*"/>
+          <colspec colname="c2" colnum="2" colwidth="1*"/>
+          <colspec colname="c3" colnum="3" colwidth="1*"/>
+          <thead>
+            <row>
+              <entry>Input Parameter</entry>
+              <entry>Description</entry>
+              <entry>Mandatory / Optional</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><codeph>BRIDGE_POLARIS_SERVERURL</codeph></entry>
+              <entry>Polaris server URL</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>BRIDGE_POLARIS_ACCESSTOKEN</codeph></entry>
+              <entry>Polaris access token</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>BRIDGE_POLARIS_APPLICATION_NAME</codeph></entry>
+              <entry>Application name in Polaris</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>BRIDGE_POLARIS_PROJECT_NAME</codeph></entry>
+              <entry>Project name in Polaris</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>BRIDGE_POLARIS_ASSESSMENT_TYPES</codeph></entry>
+              <entry>
+                <p>Polaris assessment types </p>
+                <p>Example: SCA,SAST</p>
+              </entry>
+              <entry>Mandatory</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table></p>
+  </body>
+</topic>

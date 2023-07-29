@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_rzp_q5q_kxb">
+    <title>Adapters </title>
+    <body>
+        <p>Synopsys Bridge uses multiple adapters to run scan workflows:<ul id="ul_a4b_qxq_rwb">
+                <li>The <b>Initializer Adapter</b> creates Tests for the requested assessment
+                    types.</li>
+                <li>The <b>Controller Adapter</b> examines Tests and queues up the adapters needed
+                    to provide artifacts. For example: For a SAST assessment test, it queues up the
+                    Coverity Capture Adapter. It also checks to see whether Coverity is installed,
+                    and if not, queues up the Tool Downloader and Coverity Installer adapters with
+                    required resources.</li>
+                <li>The <b>Tool Downloader Adapter</b> downloads any large files needed to install
+                    requested tools. This only runs if one or more tools requested are not already
+                    present.</li>
+                <li>The <b>Coverity Installer Adapter</b> extracts and installs Client Side Coverity
+                    tools. This only runs if the requested tool is not already present.</li>
+                <li>The <b>Black Duck Installer Adapter</b> extracts and installs Client Side Black
+                    Duck tools. This only runs if the requested tool is not already present. </li>
+                <li>The <b>Coverity Capture Adapter</b> executes Coverity Capture commands needed to
+                    generate the <codeph>idir</codeph> artifact. This adapter only runs if an SAST
+                    assessment was requested and the customer has the appropriate entitlements to
+                    run an SAST Test. <note>A <codeph>coverity.yml</codeph> configuration file is
+                        required for <ul id="ul_b4b_qxq_rwb">
+                            <li>Static analysis of compiled languages like C/C++, C# and Java. </li>
+                            <li>Optimizing static analysis when results are unsatisfactory.</li>
+                        </ul> See Configuring Coverity Thin Client for use with Synopsys Bridge and
+                        Polaris.</note></li>
+                <li>The <b>Black Duck Execution Adapter</b> executes the Black Duck commands needed
+                    to generate the <codeph>BDIO</codeph> artifact. This adapter only runs if an SCA
+                    assessment was requested and the customer has the appropriate entitlements to
+                    run an SCA Test.</li>
+                <li>The <b>Artifacts Uploader Adapter</b> uploads any artifacts produced by previous
+                    adapters to Storage, and instructs the Test to continue to the next phase, or
+                    throws an alert if there are failures.</li>
+            </ul></p>
+    </body>
+</topic>

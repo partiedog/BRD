@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_gyx_dh3_cyb">
+    <title>Using Synopsys GitHub Action for Black Duck</title>
+    <body>
+        <p>The Synopsys Action supports both self-hosted (e.g., on-prem) and Synopsys-hosted Black
+      Duck Hub instances. </p>
+        <p id="p_ldg_zpj_mxb">No preparation is typically needed before running the pipeline. In the
+            default Black Duck Hub permission model, projects and project versions are created on
+            the fly and as needed. </p>
+        <p>On pushes, a full "intelligent" Black Duck scan runs. On pull requests, a "rapid"
+      ephemeral scan runs.  <note id="note_hfy_ysj_mxb">Any command line parameters that you need to
+        pass to Detect can be passed through environment variables. This is a standard capability of
+        Detect. For example, if you wanted to only report newly found policy violations on rapid
+        scans, you would normally use the command line
+          <codeph>--detect.blackduck.rapid.compare.mode=BOM_COMPARE_STRICT</codeph>. You can replace
+        this by setting the <codeph>DETECT_BLACKDUCK_RAPID_COMPARE_MODE</codeph> environment
+        variable to <codeph>BOM_COMPARE_STRICT</codeph> and configure this in your GitHub
+        workflow.</note></p>
+        <p>Setting Fix Pull requests creation works as follows:<ul id="ul_u5l_ftj_mxb">
+        <li><b><codeph>blackduck_automation_fixpr</codeph></b>: By default, fix pull request
+          creation is disabled (Black Duck will not create fix pull requests if vulnerabilities are
+          reported). To enable this feature, set <codeph>blackduck_automation_fixpr</codeph> as
+            <codeph>true</codeph>.</li>
+        <li><b><codeph>github_token</codeph></b>: You must pass <codeph>github_token</codeph>
+          parameter with required permissions. The token can be GitHub specified
+            <codeph>secrets.GITHUB_TOKEN</codeph> with required permissions. For more information on
+          GitHub tokens see <xref
+            href="https://docs.github.com/en/actions/security-guides/automatic-token-authentication"
+            format="html" scope="external">the GitHub documentation</xref>. </li>
+        <li>Due to rate limit restriction of GitHub rest API calls, the system may create fewer pull
+          requests than specified.</li>
+      </ul>Below is an example of a <codeph><varname>workflow</varname>.yml</codeph> file configured
+      for Black
+      Duck.<codeblock>name: bd-sig-action
+
+on:
+  push:
+    branches: [ main, master, develop, stage, release ]
+  pull_request:
+    branches: [ main, master, develop, stage, release ]
+  workflow_dispatch:  
+jobs:
+  build:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+
+      - name: Black Duck Full Scan
+        if: <varname>${{ github.event_name != 'pull_request' }}
+</varname>        uses: synopsys-sig/synopsys-action@v1.2.0
+        ### Use below configuration to set specific detect environment variables
+        env:
+          DETECT_PROJECT_NAME: <varname>${{ github.event.repository.name }}
+</varname>        with:
+          blackduck_url: <varname>${{ secrets.BLACKDUCK_URL }}</varname>
+          blackduck_apiToken: <varname>${{ secrets.BLACKDUCK_API_TOKEN }}
+</varname>          blackduck_scan_full: true
+          ### Accepts Multiple Values
+          blackduck_scan_failure_severities: 'BLOCKER,CRITICAL'
+          ### Uncomment below configuration to enable automatic fix pull request creation if vulnerabilities are reported
+          # blackduck_automation_fixpr: true 
+          # github_token: <varname>${{ secrets.GITHUB_TOKEN }}</varname> # Mandatory when blackduck_automation_fixpr is set to 'true'
+          ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+          # include_diagnostics: true  
+
+      - name: Black Duck PR Scan
+        if: <varname>${{ github.event_name == 'pull_request' }}
+</varname>        uses: synopsys-sig/synopsys-action@v1.2.0
+        ### Use below configuration to set specific detect environment variables
+        env:
+          DETECT_PROJECT_NAME: <varname>${{ github.event.repository.name }}
+</varname>        with:
+          blackduck_url: <varname>${{ secrets.BLACKDUCK_URL }}
+</varname>          blackduck_apiToken: <varname>${{ secrets.BLACKDUCK_API_TOKEN }}
+</varname>          blackduck_scan_full: false
+          ### Below configuration is used to enable automatic pull request comment based on Black Duck scan result
+          blackduck_automation_prcomment: true
+          github_token: <varname>${{ secrets.GITHUB_TOKEN }}</varname> # Mandatory when blackduck_automation_prcomment is set to 'true'
+          ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+          # include_diagnostics: true</codeblock></p>
+    </body>
+</topic>

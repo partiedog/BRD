@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_dns_z1r_dyb">
+    <title>Azure Agent Setup</title>
+    <body>
+        <p>Agents can be installed and used on GNU/Linux, macOS, Windows and Docker. See <xref
+                href="https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops&amp;tabs=browser"
+                format="html" scope="external"/> for details. You can use Microsoft-hosted agents as
+            well to scan your code using Azure Pipelines.</p>
+    </body>
+</topic>

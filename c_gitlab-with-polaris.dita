@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_zjr_hh4_cyb">
+    <title>Using the Synopsys GitLab Template with Polaris </title>
+    <body>
+        <p>Before running a pipeline using the Synopsys Template and Polaris, add
+        <codeph>.gitlab-ci.yml</codeph> to your project by adding an <codeph>include</codeph> entry,
+      as in the example
+      below.<codeblock>include:
+   - project: synopsys/synopsys-template
+     ref: v1.1.0
+     file: templates/synopsys-template.yml
+  ### Use below configuration for accessing synopsys-template in GitLab self-managed  
+  # - remote: 'https://gitlab.com/synopsys/synopsys-template/-/raw/v1.0.0/templates/synopsys-template.yml'  
+variables:
+  BRIDGE_POLARIS_SERVERURL: <varname>$POLARIS_SERVER_URL
+</varname>  BRIDGE_POLARIS_ACCESSTOKEN: <varname>$POLARIS_ACCESS_TOKEN</varname>
+  BRIDGE_POLARIS_APPLICATION_NAME: <varname>$CI_PROJECT_NAME
+</varname>  BRIDGE_POLARIS_PROJECT_NAME: <varname>$CI_PROJECT_NAME</varname>
+  ### Accepts Multiple Values
+  BRIDGE_POLARIS_ASSESSMENT_TYPES: 'SCA,SAST'      
+stages:
+  - polaris_scan
+synopsys_template_execution:
+  stage: polaris_scan
+  tags: 
+    - linux # Name of your GitLab runner
+  extends: .run-synopsys-tools # Used for bash
+  # extends: .run-synopsys-tools-powershell # Used for powershell
+
+  ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+  # variables:
+  #   INCLUDE_DIAGNOSTICS: 'true'
+  # artifacts:
+  #   when: always
+  #   paths:
+  #     - .bridge
+</codeblock>
+    </p>
+        <p>Configure sensitive data like access tokens and URLs using GitLab secrets.<note>Polaris
+        does not currently support the analysis of merge requests. We recommend running the Synopsys
+        GitLab Template on pushes to main branches.</note></p>
+        <p>Push those changes and an active runner will pick up the job and initiate the
+            pipeline.</p>
+    </body>
+</topic>

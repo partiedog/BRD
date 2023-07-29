@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_w4s_lvr_5xb">
+    <title>Complete List of Synopsys Bridge Arguments</title>
+    <body>
+        <p>This page lists all the arguments that Synopsys Bridge supports. Arguments can be passed
+            thru environment variables, command line or a JSON file.<note id="note_qb5_qnn_gyb">We
+                recommend that you pass sensitive information such as access tokens using
+                environment variables.</note></p>
+        <p>For a list of arguments that are common to all Synopsys security products, refer to <xref
+                href="#topic_w4s_lvr_5xb/section_wlb_lc5_5xb"/> below.</p>
+        <p>For product specific arguments, refer to the product specific section below:<ul
+                id="ul_wtf_ynn_gyb">
+                <li><xref href="#topic_w4s_lvr_5xb/section_er2_qgx_yxb"/></li>
+                <li><xref href="#topic_w4s_lvr_5xb/section_qhs_hmy_yxb"/></li>
+                <li><xref href="#topic_w4s_lvr_5xb/section_mbx_5wy_yxb"/></li>
+            </ul></p>
+        <section id="section_wlb_lc5_5xb">
+            <title>Universal Synopsys Bridge Arguments</title>
+            <p>These arguments can be passed on the command line, but not as part of a JSON file. </p>
+            <p>
+                <table frame="all" id="table_ewf_1xq_wxb">
+                    <tgroup cols="3">
+                        <colspec colname="c1" colnum="1" colwidth="1*"/>
+                        <colspec colname="c2" colnum="2" colwidth="1.63*"/>
+                        <colspec colname="c3" colnum="3" colwidth="1.32*"/>
+                        <thead>
+                            <row>
+                                <entry>Command</entry>
+                                <entry>Description</entry>
+                                <entry>Required?</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><codeph>synopsys-bridge</codeph></entry>
+                                <entry>Command to invoke Synopsys Bridge.</entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--stage</codeph></entry>
+                                <entry>The <codeph>--stage</codeph> command specifies a group of
+                                    adapters to run (such as <codeph>--stage
+                                    polaris</codeph>).</entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--input</codeph></entry>
+                                <entry>The <codeph>--input</codeph> command loads a JSON file
+                                    containing common arguments to run scans</entry>
+                                <entry>Required for inputting a JSON files.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--help</codeph></entry>
+                                <entry>Shows the help file for Synopsys Bridge.</entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--json-log</codeph></entry>
+                                <entry>Outputs JSON format logs. See <xref
+                                        href="c_logging-and-diagnostics.dita">Logging and
+                                        Diagnostics</xref>.</entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--json-log-file</codeph></entry>
+                                <entry>Outputs JSON format logs in the <codeph>bridge.log</codeph>
+                                    file in the Synopsys Bridge home directory. See <xref
+                                        href="c_logging-and-diagnostics.dita">Logging and
+                                        Diagnostics</xref>.</entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry>-- home</entry>
+                                <entry>Sets a home directory.</entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry>-- version</entry>
+                                <entry>Specifies a specific version of Synopsys Bridge to
+                                    run.</entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry>-- schema</entry>
+                                <entry>Specifies a schema to load</entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry>-- verbose</entry>
+                                <entry>Turns on verbose logging.</entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--diagnostics</codeph></entry>
+                                <entry>Enables debug logs under the Synopsys Bridge home directory.
+                                    Creates a <codeph>diagnostics.json</codeph> file containing the
+                                    final state data inside the Synopsys Bridge home directory, but
+                                    masking sensitive information like tokens and passwords. See
+                                        <xref href="c_logging-and-diagnostics.dita">Logging and
+                                        Diagnostics</xref>.</entry>
+                                <entry>No</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </p>
+        </section>
+        <section id="section_er2_qgx_yxb">
+            <title>Polaris</title>
+            <!--<p>The base command to run the scan:<codeblock>synopsys-bridge -\-stage polaris</codeblock></p>-->
+            <p><b>Arguments to Pass</b><table id="table_lps_vgx_yxb">
+                    <tgroup cols="6">
+                        <colspec colnum="1" colname="col1" colwidth="1*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="1.64*"/>
+                        <colspec colnum="4" colname="col4" colwidth="1*"/>
+                        <colspec colnum="5" colname="col5" colwidth="1*"/>
+                        <colspec colnum="6" colname="col6" colwidth="1*"/>
+                        <thead>
+                            <row>
+                                <entry>Argument</entry>
+                                <entry namest="col2" nameend="col4">Input Mode</entry>
+                                <entry>Required</entry>
+                                <entry>Notes</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry/>
+                                <entry><b>Command Line Argument</b></entry>
+                                <entry><b>Environment Variable</b></entry>
+                                <entry><b>JSON field</b></entry>
+                                <entry/>
+                                <entry/>
+                            </row>
+                            <row>
+                                <entry>Access token</entry>
+                                <entry><codeph>polaris.accesstoken</codeph></entry>
+                                <entry><codeph>BRIDGE_POLARIS_ACCESSTOKEN</codeph></entry>
+                                <entry><codeph>polaris.accesstoken</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>For security reasons, it is recommended that you pass this as
+                                    an environment variable.</entry>
+                            </row>
+                            <row>
+                                <entry>Server URL</entry>
+                                <entry><codeph>polaris.serverurl</codeph></entry>
+                                <entry><codeph>BRIDGE_POLARIS_SERVERURL</codeph></entry>
+                                <entry><codeph>polaris.serverurl</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>Polaris server URL</entry>
+                            </row>
+                            <row>
+                                <entry>Application Name</entry>
+                                <entry><codeph>polaris.application.name</codeph></entry>
+                                <entry><codeph>BRIDGE_POLARIS_APPLICATION_NAME</codeph></entry>
+                                <entry><codeph>polaris.application.name</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>Application must be created on Polaris, and have right
+                                    entitlements.</entry>
+                            </row>
+                            <row>
+                                <entry>Project Name</entry>
+                                <entry><codeph>polaris.project.name</codeph></entry>
+                                <entry><codeph>BRIDGE_POLARIS_PROJECT_NAME</codeph></entry>
+                                <entry><codeph>polaris.project.name</codeph></entry>
+                                <entry>Yes.</entry>
+                                <entry>The specified project must exist on Polaris. If you set
+                                        <codeph>polaris.onboarding </codeph>to<codeph>true</codeph>,
+                                    Synopsys Bridge will automatically create the project in case it
+                                    doesn’t yet exist on Polaris.</entry>
+                            </row>
+                            <row>
+                                <entry>Assessment Type</entry>
+                                <entry><codeph>polaris.assessment.types</codeph></entry>
+                                <entry><codeph>BRIDGE_POLARIS_ASSESSMENT_TYPES</codeph></entry>
+                                <entry><codeph>polaris.assessment.types</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>Comma separated values. Accepted values <codeph>SAST</codeph>
+                                    or <codeph>SCA</codeph> or <codeph>SAST, SCA</codeph>.</entry>
+                            </row>
+                            <row>
+                                <entry>Tool Install Directory</entry>
+                                <entry><codeph>tool.install.directory</codeph></entry>
+                                <entry><codeph>BRIDGE_TOOL_INSTALL_DIRECTORY</codeph></entry>
+                                <entry><codeph>tool.install.directory</codeph></entry>
+                                <entry>No</entry>
+                                <entry>Directory to which Bridge  downloads the underlying scan
+                                    tools. Defaults to
+                                        <codeph><varname>&lt;User></varname>/.bridge</codeph>.</entry>
+                            </row>
+                            <row>
+                                <entry>Auto Create Projects</entry>
+                                <entry><codeph>polaris.onboarding</codeph></entry>
+                                <entry><codeph>BRIDGE_POLARIS_ONBOARDING </codeph></entry>
+                                <entry><codeph>polaris.onboarding</codeph></entry>
+                                <entry>No</entry>
+                                <entry>If set to <codeph>true</codeph>, Bridge will attempt to
+                                    create the project on Polaris if it does not exist. Default is
+                                        <codeph>false</codeph>. </entry>
+                            </row>
+                            <row>
+                                <entry>Polaris Triage</entry>
+                                <entry><codeph>polaris.triage</codeph></entry>
+                                <entry><codeph>BRIDGE_POLARIS_TRIAGE</codeph></entry>
+                                <entry><codeph>polaris.triage</codeph></entry>
+                                <entry>No</entry>
+                                <entry>If you are entitled to the Auto-Triage feature on Polaris,
+                                    you can use this option to enable the feature. Possible values
+                                    are <codeph>REQUIRED</codeph>, <codeph>NOT_REQUIRED</codeph> and
+                                        <codeph>NOT_ENTITLED</codeph>.</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table><b>JSON Input</b></p>
+            <p>Here is a sample <codeph>input.json</codeph> file that can be used with
+                Polaris:<codeblock>{
+    "data": {
+        "polaris": {
+            "application": {
+                "name": "<varname>&lt;Application Name></varname>"
+            },
+            "project": {
+                "name": "<varname>&lt;Project Name></varname>"
+            },         
+            "assessment": {
+                "types":  ["SCA", "SAST"]
+ 
+            },
+            "serverUrl": "&lt;Polaris URL>"
+        }
+    }
+}</codeblock></p>
+            <p>Here are the commands to run:
+                <codeblock id="codeblock_w4q_4sn_gyb">export BRIDGE_POLARIS_ACCESSTOKEN=&lt;POLARIS_ACCESSTOKEN>
+synopsys-bridge --stage Polaris --input input.json
+</codeblock></p>
+        </section>
+        <section id="section_qhs_hmy_yxb">
+            <title>Black Duck</title>
+            <p>The base command to run the
+                scan:<codeblock>synopsys-bridge --stage blackduck</codeblock></p>
+            <p><b>Arguments to Pass</b><table id="table_dkn_dny_yxb">
+                    <tgroup cols="6">
+                        <colspec colnum="1" colname="col1" colwidth="1.35*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1.61*"/>
+                        <colspec colnum="3" colname="col3" colwidth="2.92*"/>
+                        <colspec colnum="4" colname="col4" colwidth="1.61*"/>
+                        <colspec colnum="5" colname="col5" colwidth="1*"/>
+                        <colspec colnum="6" colname="col6" colwidth="2.2*"/>
+                        <thead>
+                            <row>
+                                <entry>Argument</entry>
+                                <entry namest="col2" nameend="col4">Input Mode</entry>
+                                <entry>Required</entry>
+                                <entry>Notes</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry/>
+                                <entry><b>Command Line Argument</b></entry>
+                                <entry><b>Environment Variable</b></entry>
+                                <entry><b>JSON field</b></entry>
+                                <entry/>
+                                <entry/>
+                            </row>
+                            <row>
+                                <entry>URL</entry>
+                                <entry><codeph>blackduck.url</codeph></entry>
+                                <entry><codeph>BRIDGE_BLACKDUCK_URL</codeph></entry>
+                                <entry><codeph>blackduck.url</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>Black Duck URL </entry>
+                            </row>
+                            <row>
+                                <entry>Token</entry>
+                                <entry><codeph>blackduck.token</codeph></entry>
+                                <entry><codeph>BRIDGE_BLACKDUCK_TOKEN</codeph></entry>
+                                <entry><codeph>blackduck.token</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>Black Duck Access token</entry>
+                            </row>
+                            <row>
+                                <entry>Full scan</entry>
+                                <entry><codeph>blackduck.scan.full</codeph></entry>
+                                <entry><codeph>BRIDGE_BLACKDUCK_SCAN_FULL</codeph></entry>
+                                <entry><codeph>blackduck.scan.full</codeph></entry>
+                                <entry>No</entry>
+                                <entry><p>Performs a full/intelligent scan when set to
+                                            <codeph>true</codeph>. Required and used for scanning
+                                        based on SCM push events. </p><p>Performs a rapid scan when
+                                        set to <codeph>false</codeph> . Required for SCM pull
+                                        request events.</p>
+                                    <codeph>true </codeph>or <codeph>false</codeph>. (Default:
+                                        <codeph>false</codeph>).</entry>
+                            </row>
+                            <row>
+                                <entry>Install Directory</entry>
+                                <entry><codeph>blackduck.install.directory</codeph></entry>
+                                <entry><codeph>BRIDGE_BLACKDUCK_INSTALL_DIRECTORY</codeph></entry>
+                                <entry><codeph>blackduck.install.directory</codeph></entry>
+                                <entry>No</entry>
+                                <entry>
+                                    <p>Path to directory where <codeph>detect.jar</codeph>
+                                        resides.</p>
+                                    <p>Default: <codeph>&lt;$HOME>/.bridge/blackduck</codeph></p>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>Failure severities</entry>
+                                <entry><codeph>blackduck.scan.failure.severities</codeph></entry>
+                                <entry><codeph>BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES</codeph></entry>
+                                <entry><codeph>blackduck.scan.failure.severities</codeph></entry>
+                                <entry>No</entry>
+                                <entry>
+                                    <p>Used by Bridge to determine whether to break the build or
+                                        not. </p>
+                                    <p>If provided, Bridge will break the build and returns exit
+                                        code.</p>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>Create fix pull requests</entry>
+                                <entry><codeph>blackduck.automation.fixpr</codeph></entry>
+                                <entry><codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph></entry>
+                                <entry><codeph>blackduck.automation.fixpr</codeph></entry>
+                                <entry>No</entry>
+                                <entry>
+                                    <p>If set to <codeph>true</codeph>, Bridge creates fix pull
+                                        requests for vulnerable direct dependencies. (Default:
+                                            <codeph>false</codeph>) </p>
+                                    <p> </p>
+                                    <p>Note: Currently only NPM is supports.</p>
+                                    <p>Note: Requires SCM information including token as documented
+                                        in section SCM Information needed for “Creating Fix Pull
+                                        Requests” feature  below. </p>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>Add comments to pull requests</entry>
+                                <entry><codeph>blackduck.automation.prcomments</codeph></entry>
+                                <entry><codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENTS</codeph></entry>
+                                <entry><codeph>blackduck.automation.prcomments</codeph></entry>
+                                <entry>No</entry>
+                                <entry><p>If set to <codeph>true</codeph> , Bridge adds comments to
+                                        pull requests for new issues introduced in the pull request.
+                                    </p> Note: Requires Rapid Scan to be run on pull require events.
+                                    This argument is ignored if full scan is run.<p>Note: Requires
+                                        SCM information including token as documented in section SCM
+                                        Information needed for "Adding Comments to Pull Requests"
+                                        feature below. </p></entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table><b>SCM Information needed for “Creating Fix Pull Requests” feature</b></p>
+            <p>To use this feature, you must pass the following SCM arguments.</p>
+            <p>
+                <table id="table_wyl_t4y_yxb">
+                    <tgroup cols="6">
+                        <colspec colnum="1" colname="col1"/>
+                        <colspec colnum="2" colname="col2"/>
+                        <colspec colnum="3" colname="col3"/>
+                        <colspec colnum="4" colname="col4"/>
+                        <colspec colnum="5" colname="col5"/>
+                        <colspec colnum="6" colname="col6"/>
+                        <thead>
+                            <row>
+                                <entry>SCM</entry>
+                                <entry>Argument</entry>
+                                <entry namest="col3" nameend="col5">Input Mode</entry>
+                                <entry>Required</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry morerows="1"> </entry>
+                                <entry morerows="1"/>
+                                <entry namest="col3" nameend="col5"/>
+                                <entry morerows="1"/>
+                            </row>
+                            <row>
+                                <entry><b>Command Line Argument</b></entry>
+                                <entry><b>Environment Variable</b></entry>
+                                <entry><b>JSON Field</b></entry>
+                            </row>
+                            <row>
+                                <entry morerows="3">GitHub</entry>
+                                <entry>User Token</entry>
+                                <entry><codeph>github.user.token</codeph></entry>
+                                <entry><codeph>BRIDGE_GITHUB_USER_TOKEN</codeph></entry>
+                                <entry><codeph>github.user.token</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Repository Name</entry>
+                                <entry><codeph>github.repository.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITHUB_REPOSITORY_NAME</codeph></entry>
+                                <entry><codeph>github.repository.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Branch Name</entry>
+                                <entry><codeph>github.repository.branch.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITHUB_REPOSITORY_BRANCH_NAME</codeph></entry>
+                                <entry>github.repository.branch.name</entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Repository  Owner</entry>
+                                <entry><codeph>github.repository.owner.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITHUB_REPOSITORY_OWNER_NAME</codeph></entry>
+                                <entry><codeph>github.repository.owner.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry morerows="3">GitLab</entry>
+                                <entry>GitLab API URL</entry>
+                                <entry><codeph>gitlab.api.url</codeph></entry>
+                                <entry><codeph>BRIDGE_GITLAB_URL</codeph></entry>
+                                <entry><codeph>gitlab.api.url</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>User Token</entry>
+                                <entry><codeph>gitlab.user.token</codeph></entry>
+                                <entry><codeph>BRIDGE_GITLAB_USER_TOKEN</codeph></entry>
+                                <entry><codeph>gitlab.user.token</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Repository Name</entry>
+                                <entry><codeph>gitlab.repository.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITLAB_REPOSITORY_NAME</codeph></entry>
+                                <entry><codeph>gitlab.repository.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry> Branch Name</entry>
+                                <entry><codeph>gitlab.repository.branch.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITLAB_REPOSITORY_BRANCH_NAME</codeph></entry>
+                                <entry><codeph>gitlab.repository.branch.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry morerows="6">Azure</entry>
+                                <entry>Azure API URL</entry>
+                                <entry><codeph>azure.api.url</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_API_URL</codeph></entry>
+                                <entry><codeph>azure.api.url</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>User Token</entry>
+                                <entry><codeph>azure.user.token</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_USER_TOKEN</codeph></entry>
+                                <entry><codeph>azure.user.token</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Organization Name</entry>
+                                <entry><codeph>azure.organization.name</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_ORGANIZATION_NAME</codeph></entry>
+                                <entry><codeph>azure.organization.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Project Name</entry>
+                                <entry><codeph>azure.project.name</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_PROJECT_NAME</codeph></entry>
+                                <entry><codeph>azure.project.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Repository Name</entry>
+                                <entry><codeph>azure.repository.name</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_REPOSITORY_NAME</codeph></entry>
+                                <entry><codeph>azure.repository.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Branch Name</entry>
+                                <entry><codeph>azure.repository.branch.name</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_REPOSITORY_BRANCH_NAME</codeph></entry>
+                                <entry><codeph>azure.repository.branch.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Pull Request Number</entry>
+                                <entry><codeph>azure.repository.pull.number</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_REPOSITORY_PULL_NUMBER</codeph></entry>
+                                <entry><codeph>azure.repository.pull.number</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </p>
+            <p><b>SCM Information needed for <b>“Adding Comments to Pull Requests”
+                    feature</b></b><table id="table_v31_kry_yxb">
+                    <tgroup cols="6">
+                        <colspec colnum="1" colname="col1"/>
+                        <colspec colnum="2" colname="col2"/>
+                        <colspec colnum="3" colname="col3"/>
+                        <colspec colnum="4" colname="col4"/>
+                        <colspec colnum="5" colname="col5"/>
+                        <colspec colnum="6" colname="col6"/>
+                        <thead>
+                            <row>
+                                <entry>SCM</entry>
+                                <entry>Argument</entry>
+                                <entry namest="col3" nameend="col5">Input Mode</entry>
+                                <entry>Required</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry/>
+                                <entry/>
+                                <entry><b>Command Line Argument</b></entry>
+                                <entry><b>Environment Variable</b></entry>
+                                <entry><b>JSON Field</b></entry>
+                                <entry/>
+                            </row>
+                            <row>
+                                <entry morerows="4">GitHub</entry>
+                                <entry>User Token</entry>
+                                <entry><codeph>github.user.token</codeph></entry>
+                                <entry><codeph>BRIDGE_GITHUB_USER_TOKEN</codeph></entry>
+                                <entry><codeph>github.user.token</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Repository Name</entry>
+                                <entry><codeph>github.repository.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITHUB_REPOSITORY_NAME</codeph></entry>
+                                <entry><codeph/></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Branch Name</entry>
+                                <entry><codeph>github.repository.branch.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITHUB_REPOSITORY_BRANCH_NAME</codeph></entry>
+                                <entry><codeph>github.repository.branch.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Repoository Owner</entry>
+                                <entry><codeph>github.repository.owner.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITHUB_REPOSITORY_OWNER_NAME</codeph></entry>
+                                <entry><codeph>github.repository.owner.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Pull Request Number</entry>
+                                <entry><codeph>github.repository.pull.number</codeph></entry>
+                                <entry><codeph>BRIDGE_GITHUB_REPOSITORY_PULL_NUMBER</codeph></entry>
+                                <entry><codeph>github.repository.pull.number</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry morerows="4">GitLab</entry>
+                                <entry>GitLab API URL</entry>
+                                <entry><codeph>gitlab.api.url</codeph></entry>
+                                <entry><codeph>BRIDGE_GITLAB_URL</codeph></entry>
+                                <entry><codeph>gitlab.api.url</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>User Token</entry>
+                                <entry><codeph>gitlab.user.token</codeph></entry>
+                                <entry><codeph>BRIDGE_GITLAB_USER_TOKEN</codeph></entry>
+                                <entry><codeph>gitlab.user.token</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Repository Name</entry>
+                                <entry><codeph>gitlab.repository.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITLAB_REPOSITORY_NAME</codeph></entry>
+                                <entry><codeph>gitlab.repository.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Branch Name</entry>
+                                <entry><codeph>gitlab.repository.branch.name</codeph></entry>
+                                <entry><codeph>BRIDGE_GITLAB_REPOSITORY_BRANCH_NAME</codeph></entry>
+                                <entry><codeph>gitlab.repository.branch.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Pull Request Number</entry>
+                                <entry><codeph>gitlab.repository.pull.number</codeph></entry>
+                                <entry><codeph>BRIDGE_GITLAB_REPOSITORY_PULL_NUMBER</codeph></entry>
+                                <entry><codeph>gitlab.repository.pull.number</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry morerows="5">Azure</entry>
+                                <entry>Azure API URL</entry>
+                                <entry><codeph>azure.api.url</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_API_URL</codeph></entry>
+                                <entry><codeph>azure.api.url</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>User Token</entry>
+                                <entry><codeph>azure.user.token</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_USER_TOKEN</codeph></entry>
+                                <entry><codeph>azure.user.token</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Organization Name</entry>
+                                <entry><codeph>azure.organization.name</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_ORGANIZATION_NAME</codeph></entry>
+                                <entry><codeph>azure.organization.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Project Name</entry>
+                                <entry><codeph>azure.project.name</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_PROJECT_NAME</codeph></entry>
+                                <entry><codeph>azure.project.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Repository Name</entry>
+                                <entry><codeph>azure.repository.name</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_REPOSITORY_NAME</codeph></entry>
+                                <entry><codeph>azure.repository.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry>Branch Name</entry>
+                                <entry><codeph>azure.repository.branch.name</codeph></entry>
+                                <entry><codeph>BRIDGE_AZURE_REPOSITORY_BRANCH_NAME</codeph></entry>
+                                <entry><codeph>azure.repository.branch.name</codeph></entry>
+                                <entry>Yes</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table><b>JSON Input</b></p>
+            <p>Here is a sample <codeph>input.json </codeph>file that can be used with Black
+                Duck:<codeblock>{
+    "data": {
+        "blackduck": {
+            "url": <varname>&lt;BlackDuck url></varname>,
+            "scan": {
+                "full": true,
+                "failure": {
+                    "severities": ["CRITICAL"]
+                }
+            }
+        }
+    }
+}</codeblock></p>
+            <p>Here are the commands to
+                run:<codeblock id="codeblock_bsj_124_gyb">export BRIDGE_BLACKDUCK_TOKEN=&lt;BLACKDUCK_TOKEN>
+synopsys-bridge --stage blackduck --input input.json</codeblock>
+            </p>
+        </section>
+        <section id="section_mbx_5wy_yxb">
+            <title>Coverity Connect</title>
+            <p>
+                <table id="table_e3y_m1z_yxb">
+                    <tgroup cols="6">
+                        <colspec colnum="1" colname="col1"/>
+                        <colspec colnum="2" colname="col2"/>
+                        <colspec colnum="3" colname="col3"/>
+                        <colspec colnum="4" colname="col4"/>
+                        <colspec colnum="5" colname="col5"/>
+                        <colspec colnum="6" colname="col6"/>
+                        <thead>
+                            <row>
+                                <entry>Argument</entry>
+                                <entry namest="col2" nameend="col4">Input Mode</entry>
+                                <entry>Required</entry>
+                                <entry>Notes</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry/>
+                                <entry><b>Command Line Argument</b></entry>
+                                <entry><b>Environment Variable</b></entry>
+                                <entry><b>JSON field</b></entry>
+                                <entry/>
+                                <entry/>
+                            </row>
+                            <row>
+                                <entry>Coverity URL</entry>
+                                <entry><codeph>coverity.connect.url</codeph></entry>
+                                <entry><codeph>BRIDGE_COVERITY_CONNECT_URL</codeph></entry>
+                                <entry><codeph>coverity.connect.url</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry/>
+                            </row>
+                            <row>
+                                <entry>User Name</entry>
+                                <entry><codeph>coverity.connect.user.name</codeph></entry>
+                                <entry><codeph>BRIDGE_COVERITY_CONNECT_USER_NAME</codeph></entry>
+                                <entry><codeph>coverity.connect.user.name</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>For security reasons it is recommended to pass this as an
+                                    environmental variable.</entry>
+                            </row>
+                            <row>
+                                <entry>Password</entry>
+                                <entry><codeph>coverity.connect.user.password</codeph></entry>
+                                <entry><codeph>BRIDGE_COVERITY_CONNECT_USER_PASSWORD</codeph></entry>
+                                <entry><codeph>coverity.connect.user.password</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>For security reasons it is recommended to pass this as an
+                                    environmental variable.</entry>
+                            </row>
+                            <row>
+                                <entry>Project Name</entry>
+                                <entry><codeph>coverity.connect.project.name</codeph></entry>
+                                <entry><codeph>BRIDGE_COVERITY_CONNECT_PROJECT_NAME</codeph></entry>
+                                <entry><codeph>coverity.connect.project.name</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>Project must exist on Coverity Instance</entry>
+                            </row>
+                            <row>
+                                <entry>Stream Name</entry>
+                                <entry>coverity.connect.stream.name</entry>
+                                <entry><codeph>BRIDGE_COVERITY_CONNECT_STREAM_NAME</codeph></entry>
+                                <entry><codeph>coverity.connect.stream.name</codeph></entry>
+                                <entry>Yes</entry>
+                                <entry>Stream must exist on Coverity Instance.</entry>
+                            </row>
+                            <row>
+                                <entry>View</entry>
+                                <entry><codeph>coverity.connect.policy.view</codeph></entry>
+                                <entry><codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW</codeph></entry>
+                                <entry><codeph>coverity.connect.policy.view</codeph></entry>
+                                <entry>No</entry>
+                                <entry>
+                                    <p>Coverity platform's view name/ID.</p>
+                                    <p>Bridge will break the build if issues are found in the view
+                                        provided by user and returns <xref href="c_exit-codes.dita"
+                                            >exit code </xref>.</p>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry> Add comments to pull requests</entry>
+                                <entry><codeph>coverity.connect.automation.prcomment</codeph></entry>
+                                <entry><codeph>BRIDGE_COVERITY_CONNECT_AUTOMATION_PRCOMMENT</codeph></entry>
+                                <entry><codeph>coverity.connect.automation.prcomment</codeph></entry>
+                                <entry>No</entry>
+                                <entry>
+                                    <p>If set to <codeph>true</codeph> , Bridge adds comments to
+                                        pull requests for new issues introduced in the pull request. </p>
+                                    <p>Requires Rapid Scan to be run on pull require events. This
+                                        argument is ignored if full scan is run.</p>
+                                    <p>Note: Requires SCM information including token as documented
+                                        in section SCM Information needed for “Adding Comments to
+                                        Pull Requests” feature.  </p>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>Install directory</entry>
+                                <entry><codeph>coverity.install.directory</codeph></entry>
+                                <entry><codeph>BRIDGE_COVERITY_INSTALL_DIRECTORY</codeph></entry>
+                                <entry><codeph>coverity.install.directory</codeph></entry>
+                                <entry>No</entry>
+                                <entry>
+                                    <p>Path to directory where <codeph>coverity </codeph> resides.
+                                        Default: <codeph>&lt;$HOME>/.bridge/coverity</codeph>.</p>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry>local analysis</entry>
+                                <entry><codeph>coverity.local</codeph></entry>
+                                <entry><codeph>BRIDGE_COVERITY_LOCAL</codeph></entry>
+                                <entry><codeph>coverity.local</codeph></entry>
+                                <entry>No</entry>
+                                <entry><p>To use Synopsys Bridge with on-prem Coverity Connect, set
+                                        this to <codeph>true</codeph>. When set to true, Bridge will
+                                        download full analysis kit and will perform capture and
+                                        analysis locally.</p><p> </p> With Coverity cloud
+                                    deployments, Synopsys uses Thin Client and this option should be
+                                    set to <codeph>false</codeph>.<p>Default:
+                                        <codeph>false</codeph>. </p></entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+                <note id="note_y21_hg4_gyb">To use Synopsys Bridge with on-prem Coverity Connect,
+                    you must set the <codeph>coverity.local</codeph> to <codeph>true</codeph> as
+                    described above.</note>
+            </p>
+            <p>Here is a sample <codeph>input.json</codeph> file that can be used with Coverity
+                Cloud:</p>
+            <p>:<codeblock>{
+    "data":
+    {
+        "coverity":
+        {
+            "connect": {
+                "url": "<varname>&lt;Connect URL></varname>",
+             
+                "project":{
+                    "name": "<varname>&lt;PROJECT_NAME></varname>"
+                },
+                "stream": {
+                  "name": "<varname>&lt;STREAM_NAME></varname>" 
+                },
+                "policy": {
+                    "view": "<varname>&lt;View Name / Id></varname>"
+                },
+                "automation": {
+                    "prcomment" : false
+                }
+ 
+            }
+        }
+    }
+}</codeblock></p>
+            <p>Here is a sample <codeph>input.json </codeph>file that can be used with on-prem
+                Coverity Connect:<codeblock id="codeblock_hdf_pg4_gyb">{
+    "data":
+    {
+        "coverity":
+        {
+            "connect": {
+                "url": "<varname>&lt;Connect URL></varname>",
+             
+                "project":{
+                    "name": "<varname>&lt;PROJECT_NAME></varname>"
+                },
+                "stream": {
+                  "name": "<varname>&lt;STREAM_NAME></varname>" 
+                },
+                "policy": {
+                    "view": "<varname>&lt;View Name / Id></varname>"
+                },
+                "automation": {
+                    "prcomment" : false
+                }
+ 
+            },
+            “local” : true}
+        }
+    }
+}</codeblock></p>
+            <p>Here are the commands to
+                run:<codeblock id="codeblock_lsg_vg4_gyb">export BRIDGE_COVERITY_CONNECT_USER_NAME=&lt;COV_USER>
+export BRIDGE_COVERITY_CONNECT_USER_PASSWORD=&lt;COVERITY_PASSPHRASE>
+synopsys-bridge --stage connect --input input.json</codeblock>
+            </p>
+        </section>
+    </body>
+</topic>

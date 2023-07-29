@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_blf_w2j_z4b">
+    <title>Glossary</title>
+    <body>
+        <section id="section_rvj_bnm_t4b">
+            <p>Here are terms and concepts used by Synopsys Bridge and the various Synopsys programs
+                with which it interfaces.<table frame="all" rowsep="1" colsep="1"
+                    id="table_u4d_nnm_t4b">
+                    <tgroup cols="2" align="left">
+                        <colspec colname="c1" colnum="1" colwidth="1*"/>
+                        <colspec colname="c2" colnum="2" colwidth="2.03*"/>
+                        <thead>
+                            <row>
+                                <entry>Term</entry>
+                                <entry>Definition</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><b>Application</b></entry>
+                                <entry>The software security tool used to scan code. </entry>
+                            </row>
+                            <row>
+                                <entry><b>Application Security</b></entry>
+                                <entry>Application security is enhancing software features to
+                                    functionality to prevent security threats. These include denial
+                                    of service attacks, unauthorized data access, privilege
+                                    escalation attacks, etc. Application security is one of several
+                                    levels of security used to protect systems. </entry>
+                            </row>
+                            <row>
+                                <entry><b>BDSA</b></entry>
+                                <entry>Black Duck Security Advisory, highly detailed open source
+                                    vulnerability records that are hand-crafted by the Synopsys
+                                    Cybersecurity Research Center (CyRC)</entry>
+                            </row>
+                            <row>
+                                <entry><b>Black Duck</b></entry>
+                                <entry>Software composition analysis (SCA) security scanning tool.
+                                    Helps manage the security, quality, and license compliance risks
+                                    of open source and third-party code in applications and
+                                    containers. Bridge integrates with Black Duck.</entry>
+                            </row>
+                            <row>
+                                <entry><b>CI/CD</b></entry>
+                                <entry>Continuous Integration/Continuous Deployment, the process by
+                                    which new checked-in code is automatically built, checked for
+                                    security issues, and packaged for deployment. </entry>
+                            </row>
+                            <row>
+                                <entry><b>CLI</b></entry>
+                                <entry>Command Line Interface</entry>
+                            </row>
+                            <row>
+                                <entry><b>Coverity</b></entry>
+                                <entry>Static analysis scanning tool (SAST), which scans source code
+                                    for security flaws and coding standards compliance. Bridge does
+                                    not integrate with Coverity, but does integrate with Coverity
+                                    Connect and CNC.</entry>
+                            </row>
+                            <row>
+                                <entry><b>Coverity Connect</b></entry>
+                                <entry>A web-based platform for Coverity. Bridge supports Coverity
+                                    Connect.</entry>
+                            </row>
+                            <row>
+                                <entry><b>Coverity cloud deployment</b></entry>
+                                <entry>A cloud-native version of Coverity. Bridge supports Coverity
+                                    cloud deployment, and every place in this manual that references
+                                    "Coverity Connect" also applies to Coverity cloud
+                                    deployment.</entry>
+                            </row>
+                            <row>
+                                <entry><b>CVE</b></entry>
+                                <entry>Common Vulnerabilities and Exposures. A database of publicly
+                                    identified, defined, and cataloged cybersecurity
+                                    vulnerabilities.</entry>
+                            </row>
+                            <row>
+                                <entry><b>EULM</b></entry>
+                                <entry>End User License Management agreement</entry>
+                            </row>
+                            <row>
+                                <entry><b>GUI</b></entry>
+                                <entry>Graphic User Interface</entry>
+                            </row>
+                            <row>
+                                <entry><b>IAST</b></entry>
+                                <entry>
+                                    <p>Interactive application security testing (IAST) solutions
+                                        help organizations identify and manage security risks
+                                        associated with vulnerabilities discovered in running web
+                                        applications by continuously analyzing all application
+                                        interactions initiated by manual and/or automated tests to
+                                        identify vulnerabilities in real time.</p>
+                                </entry>
+                            </row>
+                            <row>
+                                <entry><b>Polaris</b></entry>
+                                <entry>Polaris is a cloud-native application security testing
+                                    solution that provides both best-in-class SAST and SCA, making
+                                    it easier to manage application security testing. Bridge
+                                    integrates with Polaris.</entry>
+                            </row>
+                            <row>
+                                <entry><b>Rapid Scan Static (Sigma)</b></entry>
+                                <entry>Rapid Scan Static using the Sigma engine is a headless Static
+                                    Application Security Testing (SAST) scanner.</entry>
+                            </row>
+                            <row>
+                                <entry><b>RSQL</b></entry>
+                                <entry>REST Query Language</entry>
+                            </row>
+                            <row>
+                                <entry><b>Runner</b></entry>
+                                <entry>An application that runs a pipeline job from a CI/CD platform
+                                    like GitHub or GitLab.</entry>
+                            </row>
+                            <row>
+                                <entry><b>SAST</b></entry>
+                                <entry>Static Analysis Security Testing (SAST), or static analysis,
+                                    is a testing methodology that analyzes source code to find
+                                    security vulnerabilities. SAST scans an application before the
+                                    code is compiled. Coverity is a SAST tool. </entry>
+                            </row>
+                            <row>
+                                <entry><b>SCA</b></entry>
+                                <entry>Software Composition Analysis (SCA) is an automated process
+                                    identifying open source software in a codebase to evaluate
+                                    security, license compliance, and code quality. Black Duck is an
+                                    SCA tool.</entry>
+                            </row>
+                            <row>
+                                <entry><b>SCM</b></entry>
+                                <entry>Source Code Management. This usually refers to an online
+                                    CI/CD SCM repo like GitHub, GitLab or Azure, all of which
+                                    Synopsys offers integrations adaptors for. </entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table></p>
+        </section>
+    </body>
+</topic>

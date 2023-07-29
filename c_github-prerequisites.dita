@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_hyy_y3w_cyb">
+    <title>GitHub Prerequisites</title>
+    <body>
+        <p>Before configuring Synopsys Action into your workflow, you must meet the following
+            prerequisites:</p>
+        <section id="section_idd_bym_2yb">
+            <title>GitHub Runner Setup</title>
+            <p>
+                <ul id="ul_vcq_cym_2yb">
+                    <li>Runners are the machines that execute jobs in a GitHub Actions workflow. To
+                        use GitHub runners in your project, GitHub Actions must be enabled for a
+                        repository/organization settings in order for required workflows to run
+                            (<b>Repository Settings</b> → <b>SelectActions</b> → <b>General</b> →
+                            <b>Actions permissions</b>).</li>
+                    <li>GitHub runner can be Self-hosted or GitHub-hosted. For installing
+                        Self-hosted runners, see <xref
+                            href="https://docs.github.com/en/actions/hosting-your-own-runners"
+                            format="html" scope="external">Self-hosted runners</xref>. For
+                        installing GitHub-hosted runners, see <xref
+                            href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners"
+                            format="html" scope="external">GitHub-hosted runners</xref>.</li>
+                </ul>
+            </p>
+        </section>
+        <section id="section_hnp_hzm_2yb">
+            <title>Configure GitHub Secrets</title>
+            <p>Sensitive data such as access tokens, user names, passwords and even URLs must be
+                configured using GitHub secrets (<b>GitHub</b> → <b>Project</b> → <b>Settings</b> →
+                    <b>Secrets and Variables</b> → <b>Actions</b>).</p>
+        </section>
+        <section id="section_qqr_zzm_2yb">
+            <title><b>Configure GitHub Token</b></title>
+            <p><codeph>github_token</codeph> is required as input when running Black Duck Fix PR,
+                Black Duck/Coverity PR Comment. There are two different types of tokens that can be
+                passed to <codeph>github_token</codeph>:<ul id="ul_awl_c1n_2yb">
+                    <li>Token can be GitHub specified <codeph>secrets.GITHUB_TOKEN</codeph> with
+                        required workflow read and write permissions (<b>GitHub</b> → <b>Project</b>
+                        → <b>Settings</b> → <b>Actions</b> → <b>General</b> → <b>Workflow
+                            Permissions</b>). It will be created by GitHub at start of each workflow
+                        run.</li>
+                    <li>If you need a token that requires permissions that aren't available in the
+                            <codeph>secrets.GITHUB_TOKEN</codeph>, create a Personal Access Token
+                        (PAT) with required scopes (<b>Select Profile Photo</b> → <b>Settings</b> →
+                            <b>Developer Settings</b> → <b>Personal access tokens</b>). For more
+                        information, see <xref
+                            href="https://docs.github.com/en/actions/security-guides/automatic-token-authentication#granting-additional-permissions"
+                            format="html" scope="external">Granting Additional Permissions</xref>.
+                        PAT must have repo and api scope to perform Black Duck Fix PR or Black
+                        Duck/Coverity PR Comment.</li>
+                </ul></p>
+        </section>
+        <section id="section_cgx_fdn_2yb">
+            <title>Create workflow</title>
+            <p>Create a new workflow (<b>GitHub</b> → <b>Project</b> → <b>Actions</b> → <b>New
+                    Workflow</b> → <b>Setup a workflow yourself</b>) and configure he required
+                fields. Push those changes and GitHub runner will initiate the workflow which can be
+                seen on the <b>Actions</b> tab on main page of the repository.</p>
+        </section>
+    </body>
+</topic>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_dgj_lhh_qxb">
+    <title>Black Duck Schema Resources</title>
+    <body>
+        <section id="section_unl_w43_4xb">
+            <title>Black Duck Resources</title>
+            <p>All resources are user provided except <codeph><b>environment.scan.pull</b></codeph>.
+                    <table id="table_gk2_444_4xb">
+                    <tgroup cols="4">
+                        <colspec colnum="1" colname="col1" colwidth="2.26*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="5.46*"/>
+                        <colspec colname="newCol4" colnum="4" colwidth="1.39*"/>
+                        <thead>
+                            <row>
+                                <entry>Resource</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                                <entry>Required</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><codeph>blackduck.url</codeph></entry>
+                                <entry>string</entry>
+                                <entry>URL to the Black Duck Hub server.</entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>blackduck.token</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Token used to authenticate with the Blackduck Hub
+                                    server.</entry>
+                                <entry>Yes</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>blackduck.install.directory</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Directory to find or install detect. Defaults to
+                                            <codeph><varname>{USER_HOME}</varname>/.bridge/blackduck/</codeph>
+                                    (Optional)</entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>blackduck.scan.full</codeph></entry>
+                                <entry>bool</entry>
+                                <entry>
+                                    <p>If using Hub, scan type set as follows:</p>
+                                    <ul id="ul_mhm_bwp_4xb">
+                                        <li>If <codeph>true</codeph>, intelligent scan</li>
+                                        <li>If <codeph>false</codeph>, rapid scan</li>
+                                        <li>If not provided, default based on the current
+                                            situation.</li>
+                                    </ul>
+                                    <p>(Optional)</p>
+                                </entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>blackduck.scan.failure.severities</codeph></entry>
+                                <entry/>
+                                <entry>
+                                    <p>A json list of issue severities. If provided, Black Duck will
+                                        break the build if it finds any issues that match the given
+                                        severities.</p>
+                                    <p>Acceptable values can be any of the following:</p>
+                                    <p>:<codeblock>(ALL|NONE|BLOCKER|CRITICAL|MAJOR|MINOR|OK|TRIVIAL|UNSPECIFIED)</codeblock></p>
+                                    <p>Example usage in json
+                                        file:<codeblock>{
+  "data": {
+    "blackduck": {
+      "scan": {
+        "failure": {
+          "severities": ["BLOCKER", "CRITICAL", "TRIVIAL"]
+        }
+      }
+    }
+  }
+}</codeblock></p>
+                                    <p>Example setting via environment
+                                        variable:<codeblock>export BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES='["CRITICAL", "MAJOR"]'</codeblock></p>
+                                    <p>Example via command
+                                        line:<codeblock>bridge blackduck.scan.failure.severities='["BLOCKER", "MINOR"]'</codeblock></p>
+                                    <p>Black Duck information available via the Black Duck detect
+                                        tool
+                                        itself:<codeblock>java -jar synopsys-detect-7.9.0.jar -h policy</codeblock></p>
+                                    <p>(Optional)</p>
+                                </entry>
+                                <entry>No</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>environment.scan.pull</codeph></entry>
+                                <entry>bool</entry>
+                                <entry>This value is not user-provided, but is retrieved from the
+                                    GitHub Action or GitLab Template.</entry>
+                                <entry>NA</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table></p>
+        </section>
+        <section id="section_kmv_mzv_4xb">
+            <title>Blackduck Detect Settings Used in Polaris and Hub workflows </title>
+            <p>While running in Black Duck Hub workflow:<ul id="ul_u1c_qzv_4xb">
+                    <li>
+                        <ul id="ul_y2t_nhh_qxb">
+                            <li>If the scan is performed as part of a pull/merge request, it
+                                defaults to a rapid scan.</li>
+                            <li>If the scan is not part of a pull/merge request, it defaults to an
+                                intelligent scan.</li>
+                        </ul>
+                    </li>
+                </ul><table id="table_tlk_xzv_4xb">
+                    <tgroup cols="3">
+                        <colspec colnum="1" colname="col1" colwidth="2.24*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colname="newCol3" colnum="3" colwidth="1*"/>
+                        <thead>
+                            <row>
+                                <entry>Setting</entry>
+                                <entry>Polaris</entry>
+                                <entry>Hub</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><codeph>--blackduck.offline.mode</codeph></entry>
+                                <entry><codeph>true</codeph></entry>
+                                <entry><codeph>false</codeph> (default)</entry>
+                            </row>
+                            <row>
+                                <entry>-<codeph>-blackduck.url</codeph></entry>
+                                <entry>Not used</entry>
+                                <entry>Provided by user.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--blackduck.api.token</codeph></entry>
+                                <entry>Not used</entry>
+                                <entry>Token provided by user.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--detect.blackduck.scan.mode</codeph></entry>
+                                <entry><codeph>INTELLIGENT</codeph> or <codeph>RAPID</codeph>, based
+                                    on configuration or output from previous steps</entry>
+                                <entry><codeph>INTELLIGENT</codeph> or <codeph>RAPID</codeph>, based
+                                    on configuration or output from previous steps</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--detect.policy.check.fail.on.severities</codeph></entry>
+                                <entry>Provided by user, only used if scan mode is
+                                        <codeph>INTELLIGENT</codeph>.</entry>
+                                <entry>Provided by user, only used if scan mode is
+                                        <codeph>INTELLIGENT</codeph>.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--detect.cleanup</codeph></entry>
+                                <entry><codeph>false</codeph></entry>
+                                <entry><codeph>false</codeph></entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--detect.bdio.file.name</codeph></entry>
+                                <entry><codeph>scan</codeph></entry>
+                                <entry><codeph>scan</codeph></entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--detect.bdio.output.path</codeph></entry>
+                                <entry><codeph>./.bridge/detect/bdio/blackduck_artifact</codeph></entry>
+                                <entry><codeph>./.bridge/detect/bdio/blackduck_artifact</codeph></entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--detect.output.path</codeph></entry>
+                                <entry><codeph>./.bridge/detect</codeph></entry>
+                                <entry><codeph>./.bridge/detect</codeph></entry>
+                            </row>
+                            <row>
+                                <entry><codeph>--detect.source.path</codeph></entry>
+                                <entry>Only used if code root directory is specified by
+                                    user.</entry>
+                                <entry>Only used if code root directory is specified by
+                                    user.</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table></p>
+            <p>See <xref href="c_using-synopsys-bridge-with-black-duck.dita">Using Synopsys Bridge
+                    with Black Duck</xref> for more information.</p>
+        </section>
+    </body>
+</topic>

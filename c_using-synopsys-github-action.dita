@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_tnv_k23_mxb">
+    <title>GitHub - Synopsys Action</title>
+    <body>
+        <p>The Synopsys GitHub Action leverages Synopsys Bridge, allowing you to configure your
+            GitHub pipeline to run Synopsys security testing and take action on the results. </p>
+        <p>The latest version of Synopsys GitHub Action can be installed from the GitHub Marketplace
+            link at: <xref href="https://github.com/marketplace/actions/synopsys-action"
+                format="html" scope="external"
+                >https://github.com/marketplace/actions/synopsys-action</xref>.</p>
+        <p>By configuring the above Synopsys Action entries in your
+                    <codeph><varname>workflow</varname>.yml</codeph> file, security scanning tools
+            automatically leverage Synopsys GitHub Actions (including all necessary files) and
+            Synopsys Bridge to run pipeline scans on your GitHub repository.</p>
+        <p>Mask sensitive data like access tokens and URLs using GitHub secrets.</p>
+        <p>For more information, see:<ul id="ul_rh5_vkp_cyb">
+                <li><xref href="c_github-prerequisites.dita">GitHub Prerequisites</xref></li>
+                <li><xref href="c_github-polaris.dita">Using Synopsys GitHub Action for
+                        Polaris</xref></li>
+                <li><xref href="c_github-blackduck.dita">Using Synopsys GitHub Action for Black
+                        Duck</xref></li>
+                <li><xref href="c_github-coverity.dita">Using Synopsys GitHub Action for Coverity
+                        Cloud Deployment with Thin Client</xref></li>
+                <li><xref href="c_additional-gitlab-parameters.dita">Additional GitHub
+                        Configuration</xref></li>
+            </ul></p>
+    </body>
+</topic>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_gly_qg3_cyb">
+    <title>Using Synopsys GitHub Action for Polaris</title>
+    <body>
+        <p>Before running a pipeline using the Synopsys GitHub Action with Polaris, you must set the
+            appropriate applications and entitlements in your Polaris environment. </p>
+        <p>Polaris does not currently support the analysis of pull requests. We recommend running
+            the Synopsys Action on pushes to main branches.</p>
+        <p>Add the following code block to your existing
+                <codeph><varname>workflow</varname>.yml</codeph> file in your
+                <codeph>.github/workflows</codeph> directory. (If you need to create a workflow, go
+            to the repository you're integrating with Polaris on the GitHub UI, click the
+                <b>Actions</b> tab at the top, then click <b>New Workflow</b>.)</p>
+        <p>Below is an example of a <codeph><varname>workflow</varname>.yml</codeph> file configured
+            for Polaris.</p>
+        <p>
+            <codeblock>name: polaris-sig-action
+on:
+  push:
+    branches: [ main, master, develop, stage, release ]
+  workflow_dispatch:  
+jobs:
+  build:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+        
+      - name: Polaris Scan
+        uses: synopsys-sig/synopsys-action@v1.2.0
+        with:
+          polaris_serverUrl: <varname>${{ secrets.POLARIS_SERVERURL }}
+</varname>          polaris_accessToken: <varname>${{ secrets.POLARIS_ACCESSTOKEN }}
+</varname>          polaris_application_name: <varname>${{ github.event.repository.name }}
+</varname>          polaris_project_name: <varname>${{ github.event.repository.name }}
+</varname>          ### Accepts Multiple Values
+          polaris_assessment_types: "SAST,SCA"
+          ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+          # include_diagnostics: true</codeblock>
+        </p>
+    </body>
+</topic>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_n3s_tjp_cyb">
+    <title>Using Azure DevOps Extension with Coverity Connect with Thin Client</title>
+    <body>
+        <section id="section_u5k_1qz_wxb">
+            <p>Currently, Synopsys Security Scan only supports the Coverity Connect with thin client
+                deployment model, which removes the need for a large footprint installation in your
+                agent. Before running Coverity Connect using the Synopsys Security Scan for Azure
+                DevOps Extension, ensure the appropriate project and stream are set in your Coverity
+                Connect server environment. Configure sensitive data like usernames, passwords and
+                URLs using pipeline variables. An example of additions to
+                    <codeph>azure-pipelines.yml</codeph> to run Coverity Connect with Thin Client is
+                shown
+                below.<codeblock>trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - group: coverity
+  
+steps:
+- task: SynopsysSecurityScan@1.0.0
+  displayName: 'Coverity Full Scan'
+  condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+  inputs:
+    BRIDGE_COVERITY_CONNECT_URL: <varname>$(COVERITY_URL)
+</varname>    BRIDGE_COVERITY_CONNECT_USER_NAME: <varname>$(COVERITY_USER)</varname>
+    BRIDGE_COVERITY_CONNECT_USER_PASSWORD: <varname>$(COVERITY_PASSPHRASE)
+</varname>    BRIDGE_COVERITY_CONNECT_PROJECT_NAME: <varname>$(Build.Repository.Name)
+</varname>    BRIDGE_COVERITY_CONNECT_STREAM_NAME: <varname>$(Build.Repository.Name)</varname>-<varname>$(Build.SourceBranchName)
+</varname>    BRIDGE_COVERITY_CONNECT_POLICY_VIEW: 'Outstanding Issues'
+    ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+    # include_diagnostics: true
+
+- task: SynopsysSecurityScan@1.0.0
+  displayName: 'Coverity PR Scan'
+  condition: eq(variables['Build.Reason'], 'PullRequest')
+  inputs:
+    BRIDGE_COVERITY_CONNECT_URL: <varname>$(COVERITY_URL)
+</varname>    BRIDGE_COVERITY_CONNECT_USER_NAME: <varname>$(COVERITY_USER)
+</varname>    BRIDGE_COVERITY_CONNECT_USER_PASSWORD: <varname>$(COVERITY_PASSPHRASE)
+</varname>    BRIDGE_COVERITY_CONNECT_PROJECT_NAME: <varname>$(Build.Repository.Name)
+</varname>    BRIDGE_COVERITY_CONNECT_STREAM_NAME: <varname>$(Build.Repository.Name)</varname>-<varname>$(Build.targetBranchName)
+</varname>    ### Below configuration is used to enable feedback from Coverity security testing as pull request comment
+    BRIDGE_COVERITY_AUTOMATION_PRCOMMENT: true
+    AZURE_TOKEN: $(System.AccessToken) # Mandatory when BRIDGE_COVERITY_AUTOMATION_PRCOMMENT is set to 'true'
+    ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+    # include_diagnostics: true</codeblock></p>
+        </section>
+        <section id="section_rv4_d34_cyb">
+            <title>Optional Parameters for Cloud Coverity</title>
+            <p>
+                <ul id="ul_fl1_3sd_nxb">
+                    <li><codeph>BRIDGE_COVERITY_INSTALL_DIRECTORY</codeph>: Specifies an install
+                        directory other than the default to install Coverity.</li>
+                    <li><codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW</codeph>: Policy view in
+                        Coverity. ID number/Name of a saved view to apply as a break the build
+                        policy. If any defects are found within this view when applied to the
+                        project, the build fails with an exit code. Example:
+                            <codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW: '100001'</codeph> or
+                            <codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW:'Outstanding
+                            Issues'</codeph>.</li>
+                    <li><codeph>BRIDGE_COVERITY_AUTOMATION_PRCOMMENT</codeph>: Enables feedback from
+                        Coverity security testing as pull request comment. Merge request must be
+                        created first from feature branch to main branch to run Coverity PR Comment.
+                        Values are <codeph>true</codeph> or <codeph>false</codeph>.</li>
+                </ul>
+            </p>
+            <p>See the <xref href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List
+                    of Synopsys Bridge Arguments</xref> for details of Coverity Connect
+                arguments.</p>
+            <p>If <codeph>bridge_coverity_automation_prcomment</codeph> is set to
+                    <codeph>true</codeph>, you must also pass <codeph>azure_token</codeph> with the
+                required permissions. (Example: <codeph>azure_token:
+                        $<varname>(System.AccessToken)</varname></codeph>.)</p>
+        </section>
+    </body>
+</topic>

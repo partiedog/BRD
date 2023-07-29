@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_fk5_fbx_4xb">
+    <title>Logging and Diagnostics</title>
+    <body>
+        <p>Synopsys Bridge offers multiple logging and diagnostic options.</p>
+        <section id="section_a1p_3bx_4xb">
+            <title>Logging</title>
+            <p>Synopsys Bridge offers multiple logging options.<ul id="ul_b1p_3bx_4xb">
+                    <li>Pass <codeph>--json-log</codeph> to output JSON format logs.</li>
+                    <li>Pass <codeph>--json-log-file</codeph> to enable JSON format logs in the
+                            <codeph>bridge.log</codeph> file in the Synopsys Bridge home directory
+                        .</li>
+                </ul></p>
+            <p>Synopsys Bridge also provides logs in adapters, with five log levels: <ul
+                    id="ul_c1p_3bx_4xb">
+                    <li><codeph>DEBUG</codeph></li>
+                    <li><codeph>INFO</codeph></li>
+                    <li><codeph>WARNING</codeph></li>
+                    <li><codeph>ERROR</codeph></li>
+                    <li><codeph>FATAL</codeph></li>
+                </ul></p>
+        </section>
+        <section id="section_d1p_3bx_4xb">
+            <title>Diagnostics</title>
+            <p>To enable Synopsys Bridge diagnostics mode, pass a <codeph>--diagnostics</codeph>
+                command line option. This:<ul id="ul_e1p_3bx_4xb">
+                    <li>Enables debug logs.</li>
+                    <li>Passes additional arguments to configured tools which creates additional
+                        diagnostics artifacts/logs from these tools under the Synopsys Bridge home
+                        directory. </li>
+                    <li>Creates a <codeph>diagnostics.json</codeph> file containing the final state
+                        data inside the Synopsys Bridge home directory, but masking sensitive
+                        information like tokens and passwords.</li>
+                </ul></p>
+        </section>
+    </body>
+</topic>

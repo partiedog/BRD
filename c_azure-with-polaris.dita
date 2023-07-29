@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_txm_53p_cyb">
+    <title>Using Azure DevOps Extension with Polaris</title>
+    <body>
+        <p>Before running a pipeline using the Synopsys Security Scan and Polaris, add
+                <codeph>azure-pipelines.yml</codeph> to your project. Configure sensitive data like
+            usernames, passwords and URLs using pipeline variables. Push those changes and agent
+            will pick up the job and initiate the pipeline. An example of the changes you need to
+            add to <codeph>azure-pipelines.yml</codeph> is shown
+            below.<codeblock>trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - group: polaris
+  
+steps:
+- task: SynopsysSecurityScan@1.0.0
+  displayName: 'Polaris Scan'
+  inputs:
+    BRIDGE_POLARIS_SERVERURL: <varname>$(POLARIS_SERVER_URL)
+</varname>    BRIDGE_POLARIS_ACCESSTOKEN: <varname>$(POLARIS_ACCESS_TOKEN)
+</varname>    BRIDGE_POLARIS_APPLICATION_NAME: <varname>$(Build.Repository.Name)
+</varname>    BRIDGE_POLARIS_PROJECT_NAME: <varname>$(Build.Repository.Name)
+</varname>    ### Accepts Multiple Values
+    BRIDGE_POLARIS_ASSESSMENT_TYPES: 'SCA,SAST'
+    ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+    # INCLUDE_DIAGNOSTICS: 'true'</codeblock></p>
+        <p>Descriptions of these arguments are shown in the <xref
+                href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of Synopsys
+                Bridge Arguments</xref>. </p>
+    </body>
+</topic>

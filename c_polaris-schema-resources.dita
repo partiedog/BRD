@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ekw_xdh_qxb">
+    <title>Polaris Schema Resources</title>
+    <body>
+        <section id="section_lhj_gpt_qtb">
+            <title>Polaris Schema Resources</title>
+            <p>The schema currently known to Synopsys Bridge can be viewed by entering the command
+                    <codeph>synopsys-bridge --schema</codeph>. The following are the only properties
+                you should need to use on the command line. All are required. </p>
+            <p>
+                <table id="table_hyk_npt_qtb">
+                    <tgroup cols="3">
+                        <colspec colnum="1" colname="col1" colwidth="2.85*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="3.2*"/>
+                        <thead>
+                            <row>
+                                <entry>Resource</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><codeph>polaris.serverUrl</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Polaris Server URL</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>polaris.accessToken</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Offline access token, used for authentication with Polaris
+                                    service APIs.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>polaris.application.name</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Application name created in Polaris server.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>polaris.project.name</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Project name created in Polaris server.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>polaris.assessment.types</codeph></entry>
+                                <entry>list of string</entry>
+                                <entry>Assessment types for which user wants to run tests
+                                    for.</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table>
+            </p>
+        </section>
+    </body>
+</topic>

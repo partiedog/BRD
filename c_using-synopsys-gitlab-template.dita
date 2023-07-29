@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_bc3_hsj_mxb">
+    <title>GitLab – Synopsys Template  </title>
+    <body>
+        <p>The Synopsys GitLab Template leverages Synopsys Bridge, allowing you to configure your
+            GitLab pipeline to run Synopsys security testing and act on the results. </p>
+        <p>The Synopsys GitLab Template Marketplace link is  <xref
+                href="https://gitlab.com/synopsys/synopsys-template" format="html" scope="external"
+                >https://gitlab.com/synopsys/synopsys-template</xref>.</p>
+        <section id="section_a13_gl4_cyb">
+            <title>Additional information</title>
+            <p>For additional GitLab integration information, see:</p>
+            <ul id="ul_l2q_gl4_cyb">
+                <li><xref href="c_gitlab-prerequisites.dita">GitLab Prerequisites</xref></li>
+                <li><xref href="c_gitlab-runner-setup.dita">GitLab Runner Setup</xref></li>
+                <li><xref href="c_gitlab-with-polaris.dita">Using Synopsys GitLab Template with
+                        Polaris</xref></li>
+                <li><xref href="c_gitlab-with-blackduck.dita">Using the Synopsys GitLab Template
+                        with Black Duck</xref></li>
+                <li><xref href="c_gitlab-with-coverity.dita">Using the Synopsys GitLab Template for
+                        Coverity Cloud Deployment with Thin Client</xref></li>
+                <li><xref href="c_additional-gitlab-parameters.dita">Additional GitLab
+                        Configuration</xref></li>
+            </ul>
+        </section>
+    </body>
+</topic>

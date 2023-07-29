@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_tsw_g1v_qxb">
+    <title>Using Synopsys Bridge CLI with Black Duck</title>
+    <body>
+        <p dir="ltr">As a Black Duck customer, you can use Synopsys Bridge to automate SCA scanning
+            in your CI/CD pipeline. You can use Synopsys Bridge with Black Duck in the following two
+            ways to run scans: </p>
+        <ul id="ul_tnw_kcj_gyb">
+            <li dir="ltr">
+                <p dir="ltr"><u><xref href="#topic_tsw_g1v_qxb/ul_tnw_kcj_gyb">Running Black Duck
+                            scans with a JSON file</xref></u></p>
+            </li>
+            <li dir="ltr">
+                <p dir="ltr"><u><xref href="#topic_tsw_g1v_qxb/section_x5p_nbw_qxb">Running Black
+                            Duck scans on the command line</xref></u></p>
+            </li>
+        </ul>
+        <p dir="ltr">In addition to running scans, you can also optionally configure Synopsys Bridge
+            to perform the following:</p>
+        <ul id="ul_thl_xlm_gyb">
+            <li>Scan pull requests</li>
+            <li>Add comments to pull requests</li>
+            <li>Create fix pull requests (NPM only) </li>
+        </ul>
+        <p> For more information, see <xref href="c_complete-list-of-synopsys-bridge-commands.dita"
+                >Complete List of Synopsys Bridge Arguments</xref>.</p>
+        <section id="section_wtd_vvv_qxb">
+            <title>Pass Sensitive Data as Environmental Variables</title>
+            <p>Before passing arguments with Synopsys Bridge, it is recommended that you pass user
+                name and password arguments using environmental variables for security reasons.</p>
+        </section>
+        <section id="section_wtd_kzv_qxb">
+            <title>Running Black Duck scans with a JSON file</title>
+            <p>Here is an example command:</p>
+            <p>
+                <codeblock>synopsys-bridge --stage blackduck --input input.json</codeblock>
+            </p>
+            <p>
+                <div>
+                    <p dir="ltr">The above example uses the following:</p>
+                    <ul id="ul_flh_hdj_gyb">
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>BRIDGE_BLACKDUCK_TOKEN</codeph> environment
+                                variable to pass sensitive information such as password or access
+                                token to Synopsys Bridge (recommended for security purposes). Note
+                                that Synopsys Bridge automatically picks up values passed thru these
+                                environment variables.</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>--stage</codeph> argument to specify the Synopsys
+                                security product in use</p>
+                        </li>
+                    </ul>
+                </div>
+            </p>
+            <p>Here is the input.json file:<pre>{
+    "data": {
+        "blackduck": {
+            "url": <varname>&lt;BLACKDUCK_URL></varname>,
+            "scan": {
+                "full": true,
+                "failure": {
+                    "severities": ["CRITICAL"]
+                }
+            }
+        }
+    }
+}</pre></p>
+        </section>
+        <p>
+            <div><p dir="ltr">The above example uses the following schema resources:</p><ul
+                    id="ul_vpt_kdj_gyb">
+                    <li dir="ltr">
+                        <p dir="ltr"><codeph>blackduck.url</codeph> for Black Duck URL</p>
+                    </li>
+                    <li dir="ltr">
+                        <p dir="ltr"><codeph>blackduck.scan.full</codeph> should be set to true so
+                            that Intelligent scans are run by Synopsys Bridge</p>
+                    </li>
+                    <li dir="ltr">
+                        <p dir="ltr"><codeph>blackduck.scan.failure.severities</codeph> is a list of
+                            severities that is used by Synopsys Bridge to decide if the CI pipeline
+                            should be failed or not</p>
+                    </li>
+                </ul><p dir="ltr">For the required minimum set of arguments that you need to pass to
+                    integrate Synopsys Bridge with Black Duck, refer to Black Duck specific
+                    resources page under <xref href="c_schema.dita" format="dita">Schema Resources
+                        And Extensions</xref>. </p>For a complete list of environment variables and
+                command line arguments, see <xref
+                    href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
+                    Synopsys Bridge Arguments</xref>.</div>
+        </p>
+        <section id="section_x5p_nbw_qxb">
+            <title>Running Black Duck scans on the command line</title>
+            <p dir="ltr">Instead of using a JSON file, you can pass all arguments via the command
+                line. Here is a command line example for Black Duck:</p>
+            <p>
+                <codeblock>export BRIDGE_BLACKDUCK_TOKEN=<varname>&lt;BLACKDUCK_TOKEN></varname>
+synopsys-bridge --stage blackduck \
+blackduck.url=<varname>&lt;BLACKDUCK_URL></varname> \
+blackduck.scan.failure.severities='["CRITICAL"]' \
+--verbose</codeblock>
+            </p>
+            <p>
+                <div><p dir="ltr">The above example uses the following:</p><ul id="ul_jx4_qdj_gyb">
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>BRIDGE_BLACKDUCK_TOKEN></codeph> environment
+                                variable to pass sensitive information such as password or access
+                                token to Synopsys Bridge (recommended for security purposes). Note
+                                that Synopsys Bridge automatically picks up values passed thru these
+                                environment variables.</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>--stage</codeph> argument to specify the Synopsys
+                                security product in use</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>blackduck.url</codeph> for Black Duck URL</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>blackduck.scan.full</codeph> should be set to true
+                                so that Intelligent scans are run by Synopsys Bridge</p>
+                            <p><codeph>blackduck.scan.failure.severities</codeph> is a comma
+                                separated list of severities that is used by Synopsys Bridge to
+                                decide if the CI pipeline should be failed or not</p>
+                        </li>
+                    </ul><p dir="ltr">For the required minimum set of arguments that you need to
+                        pass to integrate Synopsys Bridge with Black Duck, refer to Black Duck
+                        specific resources page under <xref href="c_schema.dita" format="dita"
+                            >Schema Resources and Extensions</xref>.</p>For a complete list of
+                    environment variables and command line arguments, see <xref
+                        href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
+                        Synopsys Bridge Arguments</xref>.</div>
+            </p>
+        </section>
+    </body>
+</topic>

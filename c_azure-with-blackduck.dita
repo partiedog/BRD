@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_lyx_3kp_cyb">
+    <title>Using Azure DevOps Extension with Black Duck</title>
+    <body>
+        <p>Synopsys Security Scan supports both self-hosted (e.g. on-prem) and Synopsys-hosted Black
+            Duck Hub instances. In the default Black Duck Hub permission model, projects and project
+            versions are created on the fly as needed. Configure sensitive data like usernames,
+            passwords and URLs using pipeline variables. An example of additions to
+                <codeph>azure-pipelines.yml</codeph> to run Black Duck is shown
+            below.<codeblock>trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - group: blackduck
+
+steps:
+- task: SynopsysSecurityScan@1.0.0
+  displayName: 'Black Duck Full Scan'
+  condition: not(eq(variables['Build.Reason'], 'PullRequest'))
+  ### Use below configuration to set specific detect environment variables
+  env:
+    DETECT_PROJECT_NAME: <varname>$(Build.Repository.Name)
+</varname>  inputs:
+    BRIDGE_BLACKDUCK_URL: <varname>$(BLACKDUCK_URL)
+</varname>    BRIDGE_BLACKDUCK_TOKEN: $<varname>(BLACKDUCK_TOKEN)
+</varname>    BRIDGE_BLACKDUCK_SCAN_FULL: true
+    ### Accepts Multiple Values
+    BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES: 'BLOCKER,CRITICAL'
+    ### Uncomment below configuration to enable automatic fix pull request creation if vulnerabilities are reported
+    # BRIDGE_BLACKDUCK_AUTOMATION_FIXPR: true 
+    # AZURE_TOKEN: <varname>$(System.AccessToken)</varname> # Mandatory when BRIDGE_BLACKDUCK_AUTOMATION_FIXPR is set to 'true'
+    ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+    # INCLUDE_DIAGNOSTICS: true      
+
+- task: SynopsysSecurityScan@1.0.0
+  displayName: 'Black Duck PR Scan'
+  condition: eq(variables['Build.Reason'], 'PullRequest')
+  ### Use below configuration to set specific detect environment variables
+  env:
+    DETECT_PROJECT_NAME: $<varname>(Build.Repository.Name)</varname>
+  inputs:
+    BRIDGE_BLACKDUCK_URL: <varname>$(BLACKDUCK_URL)
+</varname>    BRIDGE_BLACKDUCK_TOKEN: <varname>$(BLACKDUCK_API_TOKEN)
+</varname>    BRIDGE_BLACKDUCK_SCAN_FULL: false
+    ### Below configuration is used to enable automatic pull request comment based on Black Duck scan result
+    BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT: true
+    AZURE_TOKEN: <varname>$(System.AccessToken)</varname> # Mandatory when BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT is set to 'true'
+    ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+    # INCLUDE_DIAGNOSTICS: true    </codeblock></p>
+        <section id="section_ipy_x4y_fyb">
+            <title>Optional Parameters for Black Duck</title>
+            <p>
+                <ul id="ul_snw_t3f_nxb">
+                    <li><codeph>BRIDGE_BLACKDUCK_SCAN_FULL</codeph>: To enable full scan set it as
+                            <codeph>true</codeph>. By default, pushes will initiate a full
+                        "intelligent" scan and pull requests will initiate a rapid scan.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_INSTALL_DIRECTORY</codeph>: Pass the directory path
+                        to install Black Duck on the runner.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES</codeph>: Values are
+                            <codeph>ALL|NONE|BLOCKER|CRITICAL|MAJOR|MINOR|OK|TRIVIAL|UNSPECIFIED</codeph>.
+                        Single parameter as <codeph>ALL</codeph> and multiple parameters as
+                            <codeph>BLOCKER</codeph>, <codeph>CRITICAL</codeph>,
+                            <codeph>TRIVIAL</codeph>.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph>: Set
+                            <codeph>true</codeph> to enable feedback from Black Duck testing as pull
+                        request comment.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph>: Set
+                            <codeph>true</codeph> to enable automatc fix pull request creation.</li>
+                </ul>
+                <note><b>About Detect command line parameters</b>. Any command line parameters
+                    passed to detect can be passed through variables. This is a standard capability
+                    of Detect. For example, if you want to only report newly found policy violations
+                    on rapid scans, you would normally use the command line
+                        <codeph>--detect.blackduck.rapid.compare.mode=BOM_COMPARE_STRICT</codeph>.
+                    You can replace this by setting the
+                        <codeph>DETECT_BLACKDUCK_RAPID_COMPARE_MODE</codeph> variable to
+                        <codeph>BOM_COMPARE_STRICT</codeph>.</note>
+            </p>
+        </section>
+        <p>See the <xref href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
+                Synopsys Bridge Arguments</xref> for details of Black Duck arguments.</p>
+        <p>If <codeph>bridge_blackduck_automation_prcomment</codeph> or
+                <codeph>bridge_blackduck_automation_fixpr</codeph> is set to <codeph>true</codeph>,
+            you must also pass <codeph>azure_token</codeph> with the required permissions. (Example:
+                <codeph>azure_token: <varname>(System.AccessToken)</varname></codeph>.)</p>
+    </body>
+</topic>

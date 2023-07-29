@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_p52_qwd_wxb">
+    <title>Azure DevOps - Synopsys Security Scan</title>
+    <body>
+        <p>Synopsys Security Scan Extension for Azure DevOps enables you to configure your Azure
+            pipeline to run Synopsys security testing and take action on the results. Synopsys
+            Security Scan leverages Synopsys Bridge, allowing you to run tests for several Synopsys
+            products from the command line.</p>
+        <p>The Synopsys Security Scan for Azure DevOps Visual Studio Marketplace link is <xref
+                href="https://marketplace.visualstudio.com/items?itemName=synopsys-security-scan.synopsys-security-scan"
+                format="html" scope="external"/>.<note>Synopsys Security Scan for Azure DevOps
+                requires appropriate licenses for all Synopsys applications used.</note></p>
+        <section id="section_y5j_rpy_wxb">
+            <title>Additional Info</title>
+            <p>For additional Azure integration information, see:</p>
+            <ul id="ul_l2q_gl4_cyb">
+                <li><xref href="c_azure-prerequisites.dita">Azure Prerequisites</xref></li>
+                <li><xref href="c_azure-with-polaris.dita">Using Azure DevOps Extension with
+                        Polaris</xref></li>
+                <li><xref href="c_azure-with-blackduck.dita">Using Azure DevOps Extension with Black
+                        Duck</xref></li>
+                <li><xref href="c_azure-with-coverity.dita">Using Azure DevOps Extension with
+                        Coverity Connect with Thin Client</xref></li>
+                <li><xref href="c_additional-gitlab-parameters.dita">Additional Azure
+                        Configuration</xref></li>
+            </ul>
+        </section>
+    </body>
+</topic>

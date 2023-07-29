@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ep2_r34_cyb">
+    <title>Using the Synopsys GitLab Template with Black Duck</title>
+    <body>
+        <p>Synopsys GitLab Template supports both self-hosted (on-prem) and Synopsys-hosted Black
+            Duck Hub instances.</p>
+        <p>In the default Black Duck Hub permission model, projects and project versions are created on the fly and as needed. Ensure that permissions needed to create projects and project versions are granted on Black Duck Hub.</p>
+        <p>Before running a pipeline using the Synopsys GitLab Template and Black Duck, add
+                <codeph>.gitlab-ci.yml</codeph> to your project by using an <codeph>include</codeph>
+            entry, as shown in the example below.<codeblock>include:
+  - project: synopsys/synopsys-template
+    ref: v1.1.0
+    file: templates/synopsys-template.yml
+  ### Use below configuration for accessing synopsys-template in Gitlab self-managed 
+  # - remote: 'https://gitlab.com/synopsys/synopsys-template/-/raw/v1.1.0/templates/synopsys-template.yml'  
+
+stages:
+  - blackduck_scan  
+  
+variables:
+  SCAN_BRANCHES: "/^(main|master|develop|stage|release|feature_branch)$/" # Add branches where you want to run Black Duck scan
+  
+synopsys_template_execution:
+  stage: blackduck_scan
+  variables:
+    BRIDGE_BLACKDUCK_URL: <varname>$BLACKDUCK_URL</varname>
+    BRIDGE_BLACKDUCK_TOKEN: <varname>$BLACKDUCK_API_TOKEN</varname>
+    ### Use below configuration to set specific detect environment variables
+    DETECT_PROJECT_NAME: <varname>$CI_PROJECT_NAME
+</varname>    ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+  #   INCLUDE_DIAGNOSTICS: 'true'
+  # artifacts:
+  #   when: always
+  #   paths:
+  #   - .bridge
+  rules:
+    ### Use below configuration to run Black Duck full scan
+    - if: (<varname>$CI_COMMIT_BRANCH</varname> =~ <varname>$SCAN_BRANCHES</varname> &amp;&amp; <varname>$CI_PIPELINE_SOURCE</varname> != 'merge_request_event')
+      variables:
+        BRIDGE_BLACKDUCK_SCAN_FULL: 'true'
+        ### Accepts Multiple Values
+        BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES: 'BLOCKER,CRITICAL'
+        ### Uncomment below configuration to enable automatic fix pull request creation if vulnerabilities are reported
+        # BRIDGE_BLACKDUCK_AUTOMATION_FIXPR: 'true' 
+        BRIDGE_GITLAB_USER_TOKEN: <varname>$GITLAB_USER_TOKEN</varname> # Mandatory when BRIDGE_BLACKDUCK_AUTOMATION_FIXPR is set to 'true'
+    ### Use below configuration to run Black Duck PR scan    
+    - if: (<varname>$CI_MERGE_REQUEST_TARGET_BRANCH_NAME</varname> =~ <varname>$SCAN_BRANCHES</varname> &amp;&amp; <varname>$CI_PIPELINE_SOURCE</varname> == 'merge_request_event')
+      variables:
+        BRIDGE_BLACKDUCK_SCAN_FULL: 'false'
+        BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT: 'true'
+        BRIDGE_GITLAB_USER_TOKEN: $GITLAB_USER_TOKEN
+  tags: 
+    - linux # Name of your Gitlab runner
+  extends: .run-synopsys-tools # Used for bash.        
+  #extends: .run-synopsys-tools-powershell # Used for powershell</codeblock></p>
+        <p>
+            <table frame="all" rowsep="1" colsep="1" id="table_ap5_1m4_gyb">
+                <title><b>List of mandatory and optional parameters for Black Duck</b></title>
+                <tgroup cols="3">
+                    <colspec colname="c1" colnum="1" colwidth="1*"/>
+                    <colspec colname="c2" colnum="2" colwidth="1*"/>
+                    <colspec colname="c3" colnum="3" colwidth="1*"/>
+                    <thead>
+                        <row>
+                            <entry>Input Parameter</entry>
+                            <entry>Description</entry>
+                            <entry>Mandatory/Optional</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_URL</codeph></entry>
+                            <entry>Black Duck server URL</entry>
+                            <entry>Mandatory</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_TOKEN</codeph></entry>
+                            <entry>Black Duck API token</entry>
+                            <entry>Mandatory</entry>
+                        </row>
+                        <row>
+                            <entry
+                                ><codeph>BRIDGE_BLACKDUCK_INSTALL_DIRECTORY</codeph></entry>
+                            <entry>Installation directory for Black Duck</entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_BLACKDUCK_SCAN_FULL</codeph></entry>
+                            <entry>
+                                <p>Specifies whether full scan is required or not. </p>
+                                <p>Full "intelligent" scan is to be used for push events
+                                    and rapid scan for pull request events. </p>
+                            </entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry
+                                    ><codeph>BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES</codeph></entry>
+                            <entry>
+                                <p>Black Duck scan failure severities. </p>
+                                <p>Supported values: ALL, NONE, BLOCKER, CRITICAL, MAJOR,
+                                    MINOR, OK, TRIVIAL, UNSPECIFIED </p>
+                            </entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry
+                                ><codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph></entry>
+                            <entry>
+                                <p>Option to enable automatic creation for fix pull
+                                    requests for vulnerable direct dependencies. </p>
+                                <p> Default: false </p>
+                                <p> Supported values: true or false</p>
+                            </entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry
+                                ><codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph></entry>
+                            <entry>
+                                <p>Option to enable automatic creation pull request
+                                    comments for new issues found in the pull request.</p>
+                                <p>Merge Request must be created first from feature branch
+                                    to main branch to run Black Duck PR Comment.</p>
+                                <p>Default: false </p>
+                            </entry>
+                            <entry>Optional</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>BRIDGE_GITLAB_USER_TOKEN</codeph></entry>
+                            <entry>
+                                <p>Gitlab User Access Token </p>
+                                <p>Example: <codeph>BRIDGE_GITLAB_USER_TOKEN:
+                                        $GITLAB_ACCESS_TOKEN</codeph></p>
+                            </entry>
+                            <entry>Mandatory when
+                                    <codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph> or
+                                    <codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph> is set as
+                                    <codeph>true</codeph>.</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </p>
+
+    </body>
+</topic>

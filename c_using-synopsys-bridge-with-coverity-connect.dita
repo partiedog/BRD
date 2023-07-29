@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_rk3_jcz_rxb">
+    <title>Using Synopsys Bridge CLI with Coverity</title>
+    <body>
+        <p>
+            <div><p dir="ltr">As a Coverity customer, you can use Synopsys Bridge to automate SAST
+                    scanning in your CI/CD pipeline. You can integrate Synopsys Bridge with Coverity
+                    in the following ways:</p><ol id="ol_tbj_32j_gyb">
+                    <li dir="ltr">
+                        <p dir="ltr"><u><xref href="#topic_rk3_jcz_rxb/section_cyh_r1x_fyb">Running
+                                    scans using a JSON file</xref></u></p>
+                    </li>
+                    <li dir="ltr">
+                        <p dir="ltr"><u><xref href="#topic_rk3_jcz_rxb/section_znp_ysw_fyb">Running
+                                    scans using the command line</xref></u></p>
+                    </li>
+                </ol>In addition to running scans, you can also optionally configure Synopsys Bridge
+                to add comments to pull requests. For more information, see the <xref
+                    href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
+                    Synopsys Bridge Arguments</xref>.</div>
+        </p>
+        <section id="section_cyh_r1x_fyb">
+            <title>Running Coverity scans using a JSON file</title>
+            <p>Before running Synopsys Bridge, it is recommended that you pass user name and
+                password arguments using environmental variables for security reasons. Here are the
+                example
+                commands:<codeblock id="codeblock_s3l_q2j_gyb">export BRIDGE_COVERITY_CONNECT_USER_NAME="<varname>&lt;COV_USER></varname>"
+export BRIDGE_COVERITY_CONNECT_USER_PASSWORD="<varname>&lt;COVERITY_PASSPHRASE></varname>"
+synopsys-bridge --stage connect --input input.json</codeblock></p>
+            <p>Here is an example <codeph>input.json</codeph> file that you can use with on-prem
+                Coverity Connect:<codeblock>{
+  "data": 
+    {
+        "coverity": 
+        {
+             "connect": {
+                    "url": "<varname>&lt;Connect URL></varname>",
+                        "project":{
+                        "name": "<varname>&lt;PROJECT_NAME></varname>"
+                    },
+                    "stream": {
+                        "name": "<varname>&lt;STREAM_NAME></varname>"  
+                    },
+                    "policy": {
+                        "view": "<varname>&lt;View Name / Id></varname>"
+                    }
+                },
+            "local": true
+        }
+    }
+}</codeblock></p>
+            <p>Here is an example <codeph>input.json</codeph> file that you can use with Coverity
+                cloud deployment:<codeblock id="codeblock_v22_snl_gyb">{
+  "data": 
+    {
+        "coverity": 
+        {
+             "connect": {
+                    "url": "<varname>&lt;Connect URL></varname>",
+                        "project":{
+                        "name": "<varname>&lt;PROJECT_NAME></varname>"
+                    },
+                    "stream": {
+                        "name": "<varname>&lt;STREAM_NAME></varname>"  
+                    },
+                    "policy": {
+                        "view": "<varname>&lt;View Name / Id></varname>"
+                    }
+                },
+        }
+    }
+}</codeblock></p>
+            <p dir="ltr">The above examples use the following:</p>
+            <ul id="ul_gfm_vnl_gyb">
+                <li dir="ltr">
+                    <p dir="ltr"><codeph>BRIDGE_COVERITY_CONNECT_USER_NAME</codeph> and
+                            <codeph>BRIDGE_COVERITY_CONNECT_USER_PASSWORD</codeph> environment
+                        variables to pass sensitive information such as password or access token to
+                        Synopsys Bridge (recommended for security purposes). Note that Synopsys
+                        Bridge automatically picks up values passed thru these environment
+                        variables.</p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr"><codeph>--stage </codeph>argument to specify the Synopsys security
+                        product in use</p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr"><codeph>coverity.connect.url </codeph>for Coverity Connect URL</p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr"><codeph>coverity.connect.project.name </codeph>for project on
+                        Coverity Connect to be used</p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr"><codeph>coverity.connect.stream.name</codeph> for stream on
+                        Coverity Connect to be used</p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr"><codeph>coverity.connect.policy.view </codeph>for policy view to be
+                        used to decide if the CI pipeline should be failed or not</p>
+                </li>
+                <li dir="ltr">
+                    <p dir="ltr"><codeph>Coverity.local </codeph>to let Synopsys bridge know if this
+                        is an on-prem Coverity Connect or a Coverity cloud deployment</p>
+                </li>
+            </ul>
+        </section>
+        <section id="section_znp_ysw_fyb">
+            <title>Running Coverity Connect scans using the command line</title>
+            <p>Instead of using a JSON file, you can pass arguments on the command line. Here are
+                the example commands that can be used with on-prem Coverity
+                Connect:<codeblock>export BRIDGE_COVERITY_CONNECT_USER_NAME=&lt;COV_USER>
+export BRIDGE_COVERITY_CONNECT_USER_PASSWORD=&lt;COVERITY_PASSPHRASE>
+synopsys-bridge --stage bridge \ 
+  coverity.connect url=&lt;COVERITY_URL> \
+  coverity.connect.project.name=&lt;COVERITY_PROJECT> \ 
+  coverity.connect.stream.name=&lt;COVERITY_STREAM> \ 
+  coverity.connect.policy.view=&lt;COVERITY_VIEW_NAME> \ 
+  coveriy.local=true</codeblock></p>
+            <p>
+                <div><p dir="ltr">Here are the example commands that can be used with Coverity cloud
+                        deployment:<codeblock id="codeblock_xk3_h4l_gyb">export BRIDGE_COVERITY_CONNECT_USER_NAME=&lt;COV_USER>
+export BRIDGE_COVERITY_CONNECT_USER_PASSWORD=&lt;COVERITY_PASSPHRASE>
+  synopsys-bridge --stage bridge \ 
+  coverity.connect url=&lt;COVERITY_URL> \
+  coverity.connect.project.name=&lt;COVERITY_PROJECT> \ 
+  coverity.connect.stream.name=&lt;COVERITY_STREAM> \ 
+  coverity.connect.policy.view=&lt;COVERITY_VIEW_NAME></codeblock></p><p
+                        dir="ltr">The above examples use the following:</p><ul id="ul_kmk_kfj_gyb">
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>BRIDGE_COVERITY_CONNECT_USER_NAME</codeph> and
+                                    <codeph>BRIDGE_COVERITY_CONNECT_USER_PASSWORD</codeph>
+                                environment variables to pass sensitive information such as password
+                                or access token to Synopsys Bridge (recommended for security
+                                purposes). Note that Synopsys Bridge automatically picks up values
+                                passed thru these environment variables.</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>--stage</codeph> argument to specify the Synopsys
+                                security product in use</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>coverity.connect.url</codeph> for Coverity Connect
+                                URL</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>coverity.connect.project.name</codeph> for project
+                                on Coverity Connect to be used</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>coverity.connect.stream.name</codeph> for stream on
+                                Coverity Connect to be used</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>coverity.connect.policy.view</codeph> for policy
+                                view to be used to decide if the CI pipeline should be failed or
+                                not</p>
+                        </li>
+                        <li dir="ltr">
+                            <p dir="ltr"><codeph>Coverity.local</codeph> to let Synopsys bridge know
+                                if this is an on-prem Coverity Connect or a Coverity cloud
+                                deployment</p>
+                        </li>
+                    </ul><p dir="ltr">For the required minimum set of arguments that you need to
+                        pass to integrate Synopsys Bridge with Coverity Cloud Deployment, refer to
+                        Coverity Connect specific resources page under <xref href="c_schema.dita">Schema Resources And Extensions</xref>.
+                    </p>For a complete list of environment variables and command line arguments, see
+                    the <xref href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List
+                        of Synopsys Bridge Arguments</xref>.</div>
+            </p>
+        </section>
+    </body>
+</topic>

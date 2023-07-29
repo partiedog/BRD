@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ws3_kg4_cyb">
+    <title>Additional GitLab Configuration</title>
+    <body>
+        <p>The following optional parameters can be used for Polaris, Black Duck or Coverity
+            Connect. <ul id="ul_yf1_5mz_nxb">
+                <li><codeph>SYNOPSYS_BRIDGE_PATH</codeph>: Use this to specify the path to Synopsys Bridge. Optional. <note>If you don't
+                        provide any path, then the configuration path defaults to
+                            <codeph>$HOME/synopsys-bridge</codeph>.</note></li>
+                <li><codeph>DOWNLOAD_BRIDGE_URL</codeph>:  Use this to specify the URL to the Synopsys Bridge zip file to be downloaded from and used.</li>
+                <li><codeph>DOWNLOAD_BRIDGE_VERSION</codeph>: Use this to specify the Synopsys
+                    Bridge version to use. If provided, the specified version of Synopsys Bridge
+                    will be automatically downloaded and used. If not, the latest version is
+                    downloaded and used.<note>If <codeph>DOWNLOAD_BRIDGE_VERSION</codeph> or
+                        <codeph>DOWNLOAD_BRIDGE_URL</codeph> are not provided, Synopsys Template
+                    automatically downloads and configures the latest version of Synopsys Bridge. As
+                    per current behavior, the existing directory will be cleaned and then Synopsys
+                    Template automatically downloads and configures Synopsys Bridge every time.</note></li>
+                <li><codeph>INCLUDE_DIAGNOSTICS</codeph>: When set to <codeph>true</codeph>, Synopsys Bridge diagnostic files are created.<note>While including Synopsys Bridge
+                        diagnostic files, default expiry time for uploaded artifacts is 30 days.
+                        Expiry time for job artifacts can be updated accordingly. Refer to SCM
+                        documentation for more details :<xref
+                            href="https://docs.gitlab.com/ee/ci/jobs/job_artifacts.html"
+                            format="html" scope="external"
+                            >https://docs.gitlab.com/ee/ci/jobs/job_artifacts.html</xref>.</note></li>
+            </ul></p>
+    </body>
+</topic>

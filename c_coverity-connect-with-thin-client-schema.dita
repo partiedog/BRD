@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_vlh_5kh_qxb">
+    <title>Coverity Connect With Thin Client Schema</title>
+    <body>
+        <p>Use the following resources for Coverity Connect with the Thin Client. <note>Synopsys
+                Bridge supports both Coverity Connect and Cloud Native Coverity (CNC), and both work
+                with the Thin Client. Anywhere this documentation references Coverity Connect, those
+                same commands and capabilities apply to CNC. One additional argument
+                    (<codeph>local=true</codeph>) must be passed for Coverity Connect. </note></p>
+        <section id="section_hcq_d44_4xb">
+            <title>Coverity Connect Using Thin Client Commands</title>
+            <table id="table_r4j_p2x_4xb">
+                <tgroup cols="3">
+                    <colspec colnum="1" colname="col1" colwidth="5*"/>
+                    <colspec colnum="2" colname="col2" colwidth="1*"/>
+                    <colspec colnum="3" colname="col3" colwidth="5*"/>
+                    <thead>
+                        <row>
+                            <entry>Resource</entry>
+                            <entry>Type</entry>
+                            <entry>Description</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><codeph>coverity.connect.user.name</codeph></entry>
+                            <entry>string</entry>
+                            <entry>The name of the user account. (User specified.)</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>coverity.connect.user.password</codeph></entry>
+                            <entry>string</entry>
+                            <entry>The password of the user account. (User specified.)</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>coverity.connect.url</codeph></entry>
+                            <entry>string</entry>
+                            <entry>The URL to the coverity connect server. (User specified.)</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>coverity.execution.path</codeph></entry>
+                            <entry>string</entry>
+                            <entry>Path to the coverity thin client binary. (Not user
+                                specified.)</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>coverity.install.directory</codeph></entry>
+                            <entry>string</entry>
+                            <entry>Path to Coverity install directory. (Optional.)</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>coverity.install.default.directory</codeph></entry>
+                            <entry>string</entry>
+                            <entry>Path where Coverity will be installed by default, if not
+                                specified by user with <codeph>coverity.install.directory</codeph>
+                                resource.  (Not user specified.)</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>coverity.connect.project.name</codeph></entry>
+                            <entry>string</entry>
+                            <entry>User specified project name. If not present, defaults to using
+                                the <codeph>generic project.repository.name</codeph> for this
+                                environment. (Optional.)</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>coverity.connect.stream.name</codeph></entry>
+                            <entry>string</entry>
+                            <entry>User specified stream. If not present, defaults to the
+                                    <codeph>project.branch.name</codeph> for the
+                                environment.(Optional.)</entry>
+                        </row>
+                        <row>
+                            <entry><codeph>coverity.connect.policy.view</codeph></entry>
+                            <entry>string</entry>
+                            <entry>The ID of the view in Coverity Connect used to determine whether
+                                to enforce a security gate on the build (i.e. break the build).
+                                (Optional.)</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </section>
+        <section id="section_b1m_ybd_pxb">
+            <title>Coverity Thin Client Capture/Upload Adapter Schema Resources</title>
+            <p>The Coverity Thin Client capture/upload adapter calls the Coverity Thin Client after
+                setting certain variables and command line options. Synopsys Bridge can set the
+                following resources if needed. Otherwise, all are optional. <table
+                    id="table_c3w_hcd_pxb">
+                    <tgroup cols="3">
+                        <colspec colnum="1" colname="col1" colwidth="5*"/>
+                        <colspec colnum="2" colname="col2" colwidth="1*"/>
+                        <colspec colnum="3" colname="col3" colwidth="5*"/>
+                        <thead>
+                            <row>
+                                <entry>Resource</entry>
+                                <entry>Type</entry>
+                                <entry>Description</entry>
+                            </row>
+                        </thead>
+                        <tbody>
+                            <row>
+                                <entry><codeph>coverity.build.command</codeph></entry>
+                                <entry><codeph>[]string</codeph>
+                                </entry>
+                                <entry>The project's build command. If provided, this is passed to
+                                    Coverity at the end of its arguments list: <codeph>--
+                                        &lt;values></codeph>.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>coverity.connect.url</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Server URL for Connect workflow. If provided, this is passed
+                                    to Coverity via command line arguments: <codeph>-o
+                                        commit.connect.url=&lt;value></codeph></entry>
+                            </row>
+                            <row>
+                                <entry><codeph>coverity.connect.user.name</codeph></entry>
+                                <entry>string</entry>
+                                <entry>User name for authenticating with the server in the Connect
+                                    workflow. When provided, this is used as the value for the
+                                        <codeph>COVERITY_CLI_CONNECT_USERNAME</codeph> environment
+                                    variable.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>coverity.connect.user.password</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Password used when authenticating with the server in the
+                                    Connect workflow. When provided, this is used as the value for
+                                    the <codeph>COVERITY_CLI_CONNECT_PASSWORD</codeph> environment
+                                    variable.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>coverity.connect.stream.name</codeph></entry>
+                                <entry>string</entry>
+                                <entry>The name of the stream to sync results with. If provided it
+                                    is passed to Coverity using the command line options: <codeph>-o
+                                            commit.connect.stream=<varname>&lt;value></varname></codeph>.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>coverity.idir.path</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Path to <codeph>idir</codeph> to use/create for the run. If
+                                    provided, passed to Coverity with the command line options:
+                                        <codeph>--dir
+                                    <varname>&lt;value></varname></codeph>.</entry>
+                            </row>
+                            <row>
+                                <entry><codeph>project.directory</codeph></entry>
+                                <entry>string</entry>
+                                <entry>Capture directory. Defaults to current directory if not
+                                    provided.</entry>
+                            </row>
+                        </tbody>
+                    </tgroup>
+                </table></p>
+        </section>
+    </body>
+</topic>

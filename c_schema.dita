@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ins_bpt_qtb">
+    <title>Schema Resources and Extensions</title>
+    <prolog>
+        <metadata>
+            <othermeta name="product" content="Polaris fAST Services"/>
+        </metadata>
+    </prolog>
+    <body>
+        <p>Synopsys Bridge can use additional schema resources and extensions for more complex and
+            tool-specific tasks. Schema Resources include:<ul id="ul_zr1_sfh_qxb">
+                <li><xref href="c_polaris-schema-resources.dita">Polaris Schema
+                    Resources</xref></li>
+                <li><xref href="c_black-duck-schema-resources.dita">Black Duck Schema
+                        Resources</xref></li>
+                <li><xref href="c_coverity-connect-with-thin-client-schema.dita">Coverity Connect
+                        With Thin Client Schema</xref></li>
+            </ul></p>
+    </body>
+</topic>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_smd_zg3_cyb">
+    <title>Using Synopsys GitHub Action for Coverity Cloud Deployment with Thin Client</title>
+    <body>
+        <p>At this time the Synopsys GitHub Action only supports the Kubernetes-based Coverity cloud
+            deployment model, which uses a small footprint thin client to capture the source code
+            and submit an analysis job running on the server. This removes the need for a
+            multi-gigabyte software installation in your GitHub Runner.</p>
+        <p>If you are using a non-Kubernetes deployment of Coverity, please see the <xref
+                href="https://github.com/marketplace/actions/coverity-json-output-v7-report"
+                format="html" scope="external">Coverity json-output-v7 Report Action</xref>.</p>
+        <p id="p_mzk_wj3_mxb">On pushes, a full Coverity scan will be run and results committed to
+      the Coverity Connect database. On pull requests, the scan will typically be incremental, and
+      results will not be committed to the Coverity Connect database.</p>
+        <p>Before running a pipeline using the Synopsys Action and Coverity, make sure the
+            appropriate project and stream are set in your Coverity Connect server environment.</p>
+        <p>Below is an example of a <codeph><varname>workflow</varname>.yml</codeph> file configured
+      for Coverity Cloud
+      Deployment.<codeblock>name: cnc-sig-action
+on:
+  push:
+    branches: [ main, master, develop, stage, release ]
+  pull_request:
+    branches: [ main, master, develop, stage, release ]
+  workflow_dispatch:  
+jobs:
+  build:
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+
+      - name: Coverity Full Scan
+        if: <varname>${{ github.event_name != 'pull_request' }}
+</varname>        uses: synopsys-sig/synopsys-action@v1.2.0
+        with:
+          coverity_url: <varname>${{ secrets.COVERITY_URL }}
+</varname>          coverity_user: <varname>${{ secrets.COVERITY_USER }}
+</varname>          coverity_passphrase: <varname>${{ secrets.COVERITY_PASSPHRASE }}
+</varname>          coverity_project_name: <varname>${{ github.event.repository.name }}
+</varname>          coverity_stream_name: <varname>${{ github.event.repository.name }}</varname>-<varname>${{ github.ref_name }}
+</varname>          coverity_policy_view: 'Outstanding Issues'
+          ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+          # include_diagnostics: true  
+          
+      - name: Coverity PR Scan
+        if: <varname>${{ github.event_name == 'pull_request' }}
+</varname>        uses: synopsys-sig/synopsys-action@v1.2.0
+        with:
+          coverity_url: <varname>${{ secrets.COVERITY_URL }}
+</varname>          coverity_user: <varname>${{ secrets.COVERITY_USER }}
+</varname>          coverity_passphrase: <varname>${{ secrets.COVERITY_PASSPHRASE }}
+</varname>          coverity_project_name: <varname>${{ github.event.repository.name }}
+</varname>          coverity_stream_name: <varname>${{ github.event.repository.name }}</varname>-<varname>${{ github.base_ref }}
+</varname>          ### Below configuration is used to enable feedback from Coverity security testing as pull request comment
+          coverity_automation_prcomment: true
+          github_token: <varname>${{ secrets.GITHUB_TOKEN }}</varname> # Mandatory when coverity_automation_prcomment is set to 'true'   
+          ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+          # include_diagnostics: true  
+        </codeblock></p>
+    </body>
+</topic>

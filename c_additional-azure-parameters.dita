@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ws3_kg4_cyb">
+    <title>Additional Azure Configuration</title>
+    <body>
+        <p>The following parameters can be used for Polaris, Black Duck or Coverity Connect. <ul
+                id="ul_yf1_5mz_nxb">
+                <li><codeph>BRIDGE_DOWNLOAD_URL</codeph>: Provides URL to Synopsys Bridge zip file.
+                    If provided, Synopsys Bridge is automatically downloaded and configured.</li>
+                <li><codeph>BRIDGE_DOWNLOAD_VERSION</codeph>: Provides Synopsys Bridge version. If
+                    provided, the specified version of Synopsys Bridge is automatically downloaded
+                    and configured.<note>If <codeph>DOWNLOAD_BRIDGE_VERSION</codeph> or
+                            <codeph>DOWNLOAD_BRIDGE_URL</codeph> are not provided, Synopsys Template
+                        automatically downloads and configures the latest version of Synopsys
+                        Bridge. As per current behavior, the existing directory will be cleaned and
+                        then Synopsys Template automatically downloads and configures Synopsys
+                        Bridge every time.</note></li>
+                <li><codeph>SYNOPSYS_BRIDGE_PATH</codeph>: Provide a path, where you want to
+                    configure or already configured Synopsys Bridge. Optional. <note>If you don't
+                        provide any path, then the configuration path defaults to
+                            <codeph>$HOME/synopsys-bridge</codeph>.</note></li>
+                <li><codeph>include_diagnostics</codeph>: Pass <codeph>true</codeph> to upload
+                    Synopsys Bridge diagnostic files. Azure DevOps no longer supports per-pipeline
+                    retention rules. The only way to configure retention policies for YAML and
+                    classic pipelines is through the project settings. For more details, see <xref
+                        href="https://learn.microsoft.com/en-us/azure/devops/pipelines/policies/retention?view=azure-devops&amp;tabs=yaml#set-run-retention-policies"
+                        format="html" scope="external">Set run retention policies</xref>.</li>
+            </ul></p>
+    </body>
+</topic>

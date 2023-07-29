@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ohb_ddf_lxb">
+    <title>Exit Codes</title>
+    <body>
+        <p>After running a Synopsys Bridge command, you will receive a response code (see below)
+            while full response details appear in the console. If Synopsys Bridge runs into
+            problems, it outputs colored <codeph>ERROR</codeph> and <codeph>WARN</codeph> lines in
+            the console response. </p>
+        <p>Synopsys Bridge replies with different exit codes depending upon execution results. Any
+            exit code other than <codeph>0</codeph> should be seen as a build-breaking condition in
+            your CI/CD platform. </p>
+        <table id="table_j4b_qxq_rwb">
+            <tgroup cols="3">
+                <colspec colnum="1" colname="col1" colwidth="1*"/>
+                <colspec colnum="2" colname="col2" colwidth="1.29*"/>
+                <colspec colnum="3" colname="col3" colwidth="3.09*"/>
+                <thead>
+                    <row>
+                        <entry>Code</entry>
+                        <entry>Code Name</entry>
+                        <entry>Description</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry><codeph>0</codeph></entry>
+                        <entry>Normal</entry>
+                        <entry>Synopsys Bridge ran the command and exited without any errors. View
+                            results for details. </entry>
+                    </row>
+                    <row>
+                        <entry><codeph>1</codeph></entry>
+                        <entry>UndefinedError</entry>
+                        <entry>Undefined errors. Review the log file to find out what went
+                            wrong.</entry>
+                    </row>
+                    <row>
+                        <entry><codeph>2</codeph></entry>
+                        <entry>AdapterError</entry>
+                        <entry>Synopsys Bridge received a non-0 exit code from an invoked adapter.
+                            Review the log file to find out what went wrong.</entry>
+                    </row>
+                    <row>
+                        <entry><codeph>3</codeph></entry>
+                        <entry>ShutdownFailed</entry>
+                        <entry>Synopsys Bridge failed to shutdown after running the command. Review
+                            the log file to find out what went wrong.</entry>
+                    </row>
+                    <row>
+                        <entry><codeph>8</codeph></entry>
+                        <entry>BridgeBuildBreak</entry>
+                        <entry>The config option <codeph>bridge.break</codeph> has been set to true,
+                            indicating that a build break condition has been triggered. However,
+                            Synopsys Bridge does not have the ability to break the build on its own.
+                            If running a test script, ensure the script triggers build breaking
+                            actions in your CI/CD platform, or take appropriate action if running
+                            Synopsys Bridge manually.</entry>
+                    </row>
+                    <row>
+                        <entry><codeph>9</codeph></entry>
+                        <entry>StartupFailed </entry>
+                        <entry>Failed to initiate Synopsys Bridge. Review the log file to find out
+                            what went wrong.</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+    </body>
+</topic>

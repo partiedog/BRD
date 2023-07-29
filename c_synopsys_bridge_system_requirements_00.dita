@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_a5t_n2c_txb">
+    <title>Support Matrix</title>
+    <body>
+        <p>The table below outlines which Synopsys security tools Synopsys Bridge can and cannot
+            launching scans on.<simpletable frame="all" id="simpletable_wc3_s1w_1yb">
+                <sthead>
+                    <stentry>Tool</stentry>
+                    <stentry>Bridge Support?</stentry>
+                    <stentry>Notes</stentry>
+                </sthead>
+                <strow>
+                    <stentry>Polaris</stentry>
+                    <stentry>Yes</stentry>
+                    <stentry>Synopsys Bridge can run both SCA and SAST scans on Polaris. For systems
+                        requirements, see Coverity and Black Duck requirements below.</stentry>
+                </strow>
+                <strow>
+                    <stentry>Black Duck</stentry>
+                    <stentry>Yes</stentry>
+                    <stentry>Synopsys Bridge can run scans on Black Duck.</stentry>
+                </strow>
+                <strow>
+                    <stentry>Coverity Connect</stentry>
+                    <stentry>Yes</stentry>
+                    <stentry>Synopsys Bridge supports both Coverity Connect and Coverity cloud
+                        deployment, and both work with the Thin Client. Anywhere this documentation
+                        references Coverity Connect, those same arguments and capabilities apply to
+                        Coverity cloud deployment. If running Coverity capture locally, see <xref
+                            href="https://sig-product-docs.synopsys.com/bundle/coverity-docs/page/deploy-install-guide/topics/minimum_requirements.html"
+                            format="html" scope="external">minimum requirements</xref>.</stentry>
+                </strow>
+                <strow>
+                    <stentry>Coverity on Polaris</stentry>
+                    <stentry>No</stentry>
+                    <stentry>Synopsys Bridge cannot run scans on Coverity on Polaris (also known as
+                        "Classic Polaris")</stentry>
+                </strow>
+            </simpletable></p>
+        <p>Synopsys Bridge runs on the following operating systems:</p>
+        <p>
+            <table id="table_ijr_r2c_txb">
+                <tgroup cols="3">
+                    <colspec colnum="1" colname="col1" colwidth="1*"/>
+                    <colspec colnum="2" colname="col2" colwidth="3.09*"/>
+                    <colspec colnum="3" colname="col3" colwidth="3.04*"/>
+                    <thead>
+                        <row>
+                            <entry>OS</entry>
+                            <entry>System Requirements</entry>
+                            <entry>Notes</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>Linux</entry>
+                            <entry>64-bit kernel, version 2.6.32+ with glibc 2.18 or later</entry>
+                            <entry>Debian GNU is <i>not</i> supported</entry>
+                        </row>
+                        <row>
+                            <entry>macOS</entry>
+                            <entry>OSX 11, 12, 13</entry>
+                            <entry>macOS 11, 12 and 13 on Intel (M1 and M2 based Macs are not
+                                currently supported)</entry>
+                        </row>
+                        <row>
+                            <entry>Windows</entry>
+                            <entry>x86_64, Version 10 and 11 and Windows Server 2019 and
+                                2022</entry>
+                            <entry>Server Core not supported</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </p>
+    </body>
+</topic>

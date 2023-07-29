@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ep2_r34_cyb">
+    <title>Using the Synopsys GitLab Template with Black Duck</title>
+    <body>
+        <p>Synopsys GitLab Template supports both self-hosted (on-prem) and Synopsys-hosted Black
+            Duck Hub instances.</p>
+        <p>In the default Black Duck Hub permission model, projects and project versions are created
+            on the fly as needed.</p>
+        <p>Before running a pipeline using the Synopsys GitLab Template and Black Duck, add
+                <codeph>.gitlab-ci.yml</codeph> to your project by adding an
+                <codeph>include</codeph> entry, as in the example
+            below.<codeblock>include:
+  - project: synopsys/synopsys-template
+    ref: v1.1.0
+    file: templates/synopsys-template.yml
+  ### Use below configuration for accessing synopsys-template in Gitlab self-managed 
+  # - remote: 'https://gitlab.com/synopsys/synopsys-template/-/raw/v1.1.0/templates/synopsys-template.yml'  
+
+stages:
+  - blackduck_scan  
+  
+variables:
+  SCAN_BRANCHES: "/^(main|master|develop|stage|release|feature_branch)$/" # Add branches where you want to run Black Duck scan
+  
+synopsys_template_execution:
+  stage: blackduck_scan
+  variables:
+    BRIDGE_BLACKDUCK_URL: <varname>$BLACKDUCK_URL</varname>
+    BRIDGE_BLACKDUCK_TOKEN: <varname>$BLACKDUCK_API_TOKEN</varname>
+    ### Use below configuration to set specific detect environment variables
+    DETECT_PROJECT_NAME: <varname>$CI_PROJECT_NAME
+</varname>    ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
+  #   INCLUDE_DIAGNOSTICS: 'true'
+  # artifacts:
+  #   when: always
+  #   paths:
+  #   - .bridge
+  rules:
+    ### Use below configuration to run Black Duck full scan
+    - if: (<varname>$CI_COMMIT_BRANCH</varname> =~ <varname>$SCAN_BRANCHES</varname> &amp;&amp; <varname>$CI_PIPELINE_SOURCE</varname> != 'merge_request_event')
+      variables:
+        BRIDGE_BLACKDUCK_SCAN_FULL: 'true'
+        ### Accepts Multiple Values
+        BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES: 'BLOCKER,CRITICAL'
+        ### Uncomment below configuration to enable automatic fix pull request creation if vulnerabilities are reported
+        # BRIDGE_BLACKDUCK_AUTOMATION_FIXPR: 'true' 
+        BRIDGE_GITLAB_USER_TOKEN: <varname>$GITLAB_USER_TOKEN</varname> # Mandatory when BRIDGE_BLACKDUCK_AUTOMATION_FIXPR is set to 'true'
+    ### Use below configuration to run Black Duck PR scan    
+    - if: (<varname>$CI_MERGE_REQUEST_TARGET_BRANCH_NAME</varname> =~ <varname>$SCAN_BRANCHES</varname> &amp;&amp; <varname>$CI_PIPELINE_SOURCE</varname> == 'merge_request_event')
+      variables:
+        BRIDGE_BLACKDUCK_SCAN_FULL: 'false'
+        BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT: 'true'
+        BRIDGE_GITLAB_USER_TOKEN: $GITLAB_USER_TOKEN
+  tags: 
+    - linux # Name of your Gitlab runner
+  extends: .run-synopsys-tools # Used for bash.        
+  #extends: .run-synopsys-tools-powershell # Used for powershell
+</codeblock></p>
+        <section id="section_ycg_t34_cyb">
+            <title>Optional Parameters for Black Duck</title>
+            <p>
+                <ul id="ul_snw_t3f_nxb">
+                    <li><codeph>BRIDGE_BLACKDUCK_SCAN_FULL</codeph>: To enable full scan set it as
+                            <codeph>true</codeph>. By default, pushes will initiate a full
+                        "intelligent" scan and pull requests will initiate a rapid scan.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_INSTALL_DIRECTORY</codeph>: Pass the directory path
+                        to install Black Duck on the runner.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES</codeph>: Values are
+                            <codeph>ALL|NONE|BLOCKER|CRITICAL|MAJOR|MINOR|OK|TRIVIAL|UNSPECIFIED</codeph>.
+                        Single parameter as <codeph>ALL</codeph> and multiple parameters as
+                            <codeph>BLOCKER</codeph>, <codeph>CRITICAL</codeph>,
+                            <codeph>TRIVIAL</codeph>.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph>: Set
+                            <codeph>true</codeph> to enable feedback from Black Duck testing as pull
+                        request comment.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph>: Set
+                            <codeph>true</codeph> to enable automatc fix pull request creation.</li>
+                    <li><codeph>BRIDGE_GITLAB_USER_TOKEN</codeph>: It is mandatory when
+                            <codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph> is set to
+                            <codeph>true</codeph>, or when
+                            <codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph> is set to
+                            <codeph>true</codeph>. Generate Personal Access Token (PAT) from GitLab
+                        and store it as secret variable or store and fetch it from vault. The PAT
+                        must have api scope. For more info, see - <xref
+                            href="https://docs.gitlab.com/ee/ci/secrets/index.html" format="html"
+                            scope="external"
+                        >https://docs.gitlab.com/ee/ci/secrets/index.html</xref>"</li>
+                </ul>
+                <note><b>About Detect command line parameters</b>. Any command line parameters
+                    passed to detect can be passed through variables. This is a standard capability
+                    of Detect. For example, if you want to only report newly found policy violations
+                    on rapid scans, you would normally use the command line
+                        <codeph>--detect.blackduck.rapid.compare.mode=BOM_COMPARE_STRICT</codeph>.
+                    You can replace this by setting the
+                        <codeph>DETECT_BLACKDUCK_RAPID_COMPARE_MODE</codeph> variable to
+                        <codeph>BOM_COMPARE_STRICT</codeph>.</note>
+            </p>
+        </section>
+    </body>
+</topic>

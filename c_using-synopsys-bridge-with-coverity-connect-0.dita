@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_rk3_jcz_rxb">
+    <title>Using Synopsys Bridge CLI with Coverity Connect</title>
+    <body>
+        <p>Coverity Connect is a web-based version of Coverity. You can use Synopsys Bridge to run
+            Coverity Connect scans locally, or in the cloud with the Thin Client.</p>
+        <section id="section_cyh_r1x_fyb">
+            <title>Pass Senitive Data as Environmental Variables</title>
+            <p>Before passing arguments with Synopsys Bridge, first pass user name and password
+                arguments as environmental variables for security
+                reasons:<codeblock>export BRIDGE_COVERITY_CONNECT_USER_NAME="<varname>&lt;COV_USER></varname>"
+export BRIDGE_COVERITY_CONNECT_USER_PASSWORD="<varname>&lt;COVERITY_PASSPHRASE></varname>"</codeblock></p>
+        </section>
+        <section id="section_xhm_cpw_fyb">
+            <title>Running Coverity scans locally using a JSON file</title>
+            <p>Synopsys Bridge can download full analysis tools to run analysis locally using
+                Coverity CLI. Once analysis is complete, Coverity CLI pushes results to the server. </p>
+            <p>You can invoke a JSON file containing common arguments to run scans.</p>
+            <p>Here's an example command loading the <codeph>input.json</codeph>
+                file:<codeblock>synopsys-bridge --stage connect --input input.json</codeblock></p>
+            <p>That command loads the following <codeph>input.json</codeph>
+                file:<codeblock>{
+    "data": 
+    {
+        "coverity": 
+        {
+            "connect": {
+                "url": "<varname>&lt;Connect URL></varname>",
+                "project":{
+                    "name": "<varname>&lt;PROJECT_NAME></varname>"
+                },
+                "stream": {
+                  "name": "<varname>&lt;STREAM_NAME></varname>"  
+                },
+                "policy": {
+                    "view": "<varname>&lt;View Name / Id></varname>"
+                }
+            },
+            "local": true
+        }
+	}
+}</codeblock></p>
+        </section>
+        <section id="section_znp_ysw_fyb">
+            <title>Running Coverity Connect scans locally on the command line</title>
+            <p>Instead of JSON file, you can run commands by including all arguments on the command
+                line.  In order to run local analysis, pass the argument:
+                <codeblock>coveriy.local=true</codeblock></p>
+            <p>The JSON example above is the same as passing the following arguments on the command
+                line:<codeblock>synopsys-bridge --stage bridge \
+  coverity.connect url=&lt;<varname>COVERITY_URL></varname> \
+  coverity.connect.project.name=<varname>&lt;COVERITY_PROJECT></varname> \
+  coverity.connect.stream.name=<varname>&lt;COVERITY_STREAM></varname> \
+  coverity.connect.policy.view=<varname>&lt;COVERITY_VIEW_NAME></varname> \
+  coverity.connect.automation.prcomment=true
+  coveriy.local=true</codeblock></p>
+        </section>
+        <section id="section_wtd_kzv_qxb">
+            <title>Running Coverity scans with the Thin Client using a JSON file</title>
+            <p>You can invoke a JSON file containing common arguments to run scans.</p>
+            <p>Here's an example command loading the <codeph>input.json</codeph>
+                file:<codeblock>synopsys-bridge --stage connect --input input.json</codeblock></p>
+            <p>That command loads the following <codeph>input.json</codeph>
+                file:<codeblock>{
+    "data":
+    {
+        "coverity":
+        {
+            "connect": {
+                "url": "<varname>&lt;Connect URL></varname>",
+                "project":{
+                    "name": "<varname>&lt;PROJECT_NAME></varname>"
+                },
+                "stream": {
+                  "name": "<varname>&lt;STREAM_NAME></varname>" 
+                },
+                "policy": {
+                    "view": "<varname>&lt;View Name / Id></varname>"
+                },
+                "automation": {
+                    "prcomment" : false
+                }
+ 
+            }
+        }
+    }
+}</codeblock></p>
+        </section>
+        <section id="section_wck_3lg_sxb">
+            <title>Running Coverity Connect scans on the command line</title>
+            <p>Instead of JSON file, you can run commands by including all arguments on the command
+                line.</p>
+            <p>This is the same as passing the following arguments written out on the command
+                line:<codeblock>synopsys-bridge --stage bridge \
+  coverity.connect url=<varname>COVERITY_URL</varname> \
+  coverity.connect.project.name=<varname>COVERITY_PROJECT</varname> \
+  coverity.connect.stream.name=<varname>COVERITY_STREAM</varname> \
+  coverity.connect.policy.view=<varname>COVERITY_VIEW_NAME</varname> \
+  coverity.connect.automation.prcomment=true</codeblock></p>
+            <p>The all caps in <codeph>BRIDGE_COVERITY_CONNECT_USER_NAME</codeph> and
+                    <codeph>BRIDGE_COVERITY_CONNECT_USER_PASSWORD</codeph> indicate these arguments
+                are being passed as environmental variables.</p>
+            <p>For more details, see the <xref
+                    href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
+                    Synopsys Bridge Arguments</xref>. </p>
+        </section>
+    </body>
+</topic>

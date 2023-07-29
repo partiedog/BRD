@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_bwl_lrj_kxb">
+    <title>Overview</title>
+    <body>
+        <p>Use any of these to integrate Static Analysis Security Testing (SAST) and Software
+            Composition Analysis (SCA) into your CI/CD pipelines: </p>
+        <ul id="ul_rm4_jlw_fyb">
+            <li>Synopsys Bridge CLI</li>
+            <li>Synopsys Action for GitHub</li>
+            <li>Synopsys Template for GitLab</li>
+            <li>Synopsys Security Scan for Azure DevOps </li>
+        </ul>
+        <p>With any of the integrations above you can: </p>
+        <ul id="ul_sm4_jlw_fyb">
+            <li>Scan when you merge code or on a pull request. </li>
+            <li>Optionally create pull request comments when new issues are found.</li>
+            <li>Optionally create a new pull request to automatically update vulnerable
+                components.</li>
+        </ul>
+        <section id="section_yhf_kq3_yxb">
+            <title>Further information</title>
+            <ul id="ul_g4h_3ms_5xb">
+                <li><xref href="c_synopsys_bridge_system_requirements.dita">Support
+                    Matrix</xref></li>
+                <li><xref href="c_files-and-directories.dita">Files and Directories</xref></li>
+                <li><xref href="c_download.dita">Download Synopsys Bridge</xref></li>
+            </ul>
+        </section>
+    </body>
+</topic>

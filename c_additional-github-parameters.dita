@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_ws3_kg4_cyb">
+    <title>Additional GitHub Configuration</title>
+    <body>
+        <p>The following optional parameters can be used for Polaris, Black Duck or Coverity
+            Connect. <ul id="ul_yf1_5mz_nxb">
+                <li><codeph>synopsys_bridge_path</codeph>: Use this to specify the  path to Synopsys
+                    Bridge. <note>If this is not explicitly specified, then the integration defaults
+                        to <codeph>$HOME/synopsys-bridge</codeph>. If the installed version of
+                        Synopsys Bridge is not the latest, then the latest version of Synopsys
+                        Bridge is downloaded unless you specify the version to use explicitly (as
+                        documented below).</note></li>
+                <li><codeph>bridge_download_url</codeph>: Specifies the URL to the Synopsys Bridge
+                    zip file to be downloaded and used.<note>If <codeph>bridge_download_url</codeph>
+                        is not provided, Synopsys GitHub Action downloads the latest version of
+                        Synopsys Bridge from the default SIG-REPO download location.</note></li>
+                <li><codeph>bridge_download_version</codeph>: Specifies the Synopsys Bridge version
+                    to use. If provided, the specified version of Synopsys Bridge will be
+                    automatically downloaded and used. If not, the latest version is downloaded and
+                    used.</li>
+                <li><codeph>include_diagnostics</codeph>: When set to <codeph>true</codeph>,
+                    Synopsys Bridge diagnostic files are created and posted to GitHub. Additionally,
+                    diagnostics_retention_days can be used to specify the number of days the
+                    diagnostics files are retained for. Default value is 90. Accepted range of
+                    values is from 1 to 90.</li>
+            </ul></p>
+    </body>
+</topic>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC "-//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="topic_tnv_k23_mxb">
+    <title>GitHub - Synopsys Action</title>
+    <body>
+                <p>The Synopsys GitHub Action can be used to integrate Synopsys security
+                        testing into your CI pipeline. You can download Synopsys GitHub Action
+                        directly from the GitHub Marketplace link at: <xref
+                                href="https://github.com/marketplace/actions/synopsys-action"
+                                format="html" scope="external"
+                                >https://github.com/marketplace/actions/synopsys-action</xref>.</p>
+                <p>By including and configuring the Synopsys Action in your <i>workflow</i>.yml
+                        file, you can quickly integrate Synopsys security products into your CI
+                        pipeline. We recommend using GitHub secrets for sensitive data like access
+                        tokens.</p>
+        <p>For more information, see:<ul id="ul_rh5_vkp_cyb">
+                                <li><xref href="c_github-prerequisites.dita">GitHub
+                                                Prerequisites</xref></li>
+                                <li><xref href="c_github-polaris.dita">Using Synopsys GitHub Action
+                                                for Polaris</xref></li>
+                                <li><xref href="c_github-blackduck.dita">Using Synopsys GitHub
+                                                Action for Black Duck</xref></li>
+                                <li><xref href="c_github-coverity.dita">Using Synopsys GitHub Action
+                                                for Coverity Cloud Deployment with Thin
+                                                Client</xref></li>
+                                <li><xref href="c_additional-gitlab-parameters.dita">Additional
+                                                GitHub Configuration</xref></li>
+                        </ul></p>
+    </body>
+</topic>
