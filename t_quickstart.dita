@@ -4,7 +4,7 @@
     <title>Using Synopsys Bridge CLI</title>
     <taskbody>
         <context>
-            <p>Once you have <codeph>synopsys-bridge</codeph> executable installed, you are ready to
+            <p>AAAAAAAAAAAAOnce you have <codeph>synopsys-bridge</codeph> executable installed, you are ready to
                 use Synopsys Bridge to integrate SAST and/or SCA scans into your CI/CD pipeline. </p>
             <p>You can run Synopsys Bridge in one of the following two ways:</p>
         </context>
