@@ -1,2 +1,1 @@
-B1# My Repository
-Another line added
+B1 has been changed to this information.
