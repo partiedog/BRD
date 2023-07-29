@@ -4,9 +4,9 @@
     <title>Using Synopsys GitHub Action for Polaris</title>
     <body>
         <p>Before running a pipeline using the Synopsys GitHub Action with Polaris, you must set the
-            appropriate applications and entitlements in your Polaris environment. </p>
-        <p>Polaris does not currently support the analysis of pull requests. We recommend running
-            the Synopsys Action on pushes to main branches.</p>
+            appropriate applications and entitlements in your Polaris environment.</p>
+        <p>Using Synopsys Action, you can perform scans on push events to main branches. Pull
+            request scanning is currently not supported for Polaris.</p>
         <p>Add the following code block to your existing
                 <codeph><varname>workflow</varname>.yml</codeph> file in your
                 <codeph>.github/workflows</codeph> directory. (If you need to create a workflow, go
@@ -39,5 +39,49 @@ jobs:
           ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
           # include_diagnostics: true</codeblock>
         </p>
+        <table>
+            <title>List of mandatory and optional parameters for Polaris</title>
+            <tgroup cols="3">
+                <colspec colname="c1" colnum="1" colwidth="1*"/>
+                <colspec colname="c2" colnum="2" colwidth="1*"/>
+                <colspec colname="c3" colnum="3" colwidth="1*"/>
+                <thead>
+                    <row>
+                        <entry><b>Input Parameter</b></entry>
+                        <entry>Description</entry>
+                        <entry><b>Mandatory / Optional</b></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry><codeph>polaris_serverUrl</codeph></entry>
+                        <entry>Polaris URL</entry>
+                        <entry>Mandatory</entry>
+                    </row>
+                    <row>
+                        <entry><codeph>polaris_accessToken</codeph></entry>
+                        <entry>Polaris Access token</entry>
+                        <entry>Mandatory</entry>
+                    </row>
+                    <row>
+                        <entry><codeph>polaris_application_name</codeph></entry>
+                        <entry>Polaris Application name</entry>
+                        <entry>Mandatory</entry>
+                    </row>
+                    <row>
+                        <entry><codeph>polaris_project_name</codeph></entry>
+                        <entry>Polaris Project name</entry>
+                        <entry>Mandatory</entry>
+                    </row>
+                    <row>
+                        <entry><codeph>polaris_assessment_types</codeph></entry>
+                        <entry>
+                            <p>Polaris assessment types. Example: SCA or SAST or SAST,SCA </p>
+                        </entry>
+                        <entry>Mandatory</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
     </body>
 </topic>

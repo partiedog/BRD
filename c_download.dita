@@ -17,7 +17,7 @@
                     
             </ul>
         </p>
-        <p>To install, simply unzip and add synopsys-bridge executable to your PATH or use absolute
-            PATH to synopsys-bridge executable.</p>
+        <p>To install, simply unzip and add <codeph>synopsys-bridge</codeph> executable to your PATH
+            or use absolute PATH to <codeph>synopsys-bridge</codeph> executable.</p>
     </body>
 </topic>

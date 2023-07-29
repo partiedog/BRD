@@ -28,7 +28,7 @@
                     <stentry>Coverity Connect</stentry>
                     <stentry>Yes</stentry>
                     <stentry>Coverity users can use Synopsys Bridge CLI to automate SAST scans in
-                        their CI pipeline. Synopsys Bridge can be used with both an on-prem Coverity
+                        their CI pipeline. Synopsys Bridge can be used with both on-prem Coverity
                         Connect as well as Coverity cloud deployment. Click here for <xref
                             href="https://sig-product-docs.synopsys.com/bundle/coverity-docs/page/deploy-install-guide/topics/minimum_requirements.html"
                             format="html" scope="external">system requirements</xref>.</stentry>

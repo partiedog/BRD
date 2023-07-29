@@ -3,17 +3,14 @@
 <topic id="topic_tnv_k23_mxb">
     <title>GitHub - Synopsys Action</title>
     <body>
-        <p>The Synopsys GitHub Action leverages Synopsys Bridge, allowing you to configure your
-            GitHub pipeline to run Synopsys security testing and take action on the results. </p>
-        <p>The latest version of Synopsys GitHub Action can be installed from the GitHub Marketplace
-            link at: <xref href="https://github.com/marketplace/actions/synopsys-action"
-                format="html" scope="external"
-                >https://github.com/marketplace/actions/synopsys-action</xref>.</p>
-        <p>By configuring the above Synopsys Action entries in your
-                    <codeph><varname>workflow</varname>.yml</codeph> file, security scanning tools
-            automatically leverage Synopsys GitHub Actions (including all necessary files) and
-            Synopsys Bridge to run pipeline scans on your GitHub repository.</p>
-        <p>Mask sensitive data like access tokens and URLs using GitHub secrets.</p>
+                <p>The Synopsys GitHub Action can be used to integrate Synopsys security testing
+                        into your CI pipeline. You can download Synopsys GitHub Action directly from
+                        the GitHub Marketplace link at: <xref
+                                href="https://github.com/marketplace/actions/synopsys-action"
+                                format="html" scope="external"/>.</p>
+        <p>By including and configuring the Synopsys Action in your <i>workflow</i>.yml file, you
+                        can quickly integrate Synopsys security products into your CI pipeline. We
+                        recommend using GitHub secrets for sensitive data like access tokens</p>
         <p>For more information, see:<ul id="ul_rh5_vkp_cyb">
                 <li><xref href="c_github-prerequisites.dita">GitHub Prerequisites</xref></li>
                 <li><xref href="c_github-polaris.dita">Using Synopsys GitHub Action for

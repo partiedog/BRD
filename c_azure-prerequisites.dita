@@ -3,11 +3,12 @@
 <topic id="topic_lr5_l5x_dyb">
     <title>Azure Prerequisites</title>
     <body>
-        <p>Before configuring Synopsys Security Scan into your azure pipeline, note the following
+        <p>Before adding Synopsys Security Scan in your azure pipeline, you must meet the following
             prerequisites: </p>
         <section id="section_gfr_5wx_dyb">
             <title>Azure Agent Setup</title>
-            <p>Agents can be installed and used on GNU/Linux, macOS, Windows and Docker. See <xref
+            <p>Azure agents are required and can be installed and used on GNU/Linux, macOS, Windows
+                and Docker. See <xref
                     href="https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops&amp;tabs=browser"
                     format="html" scope="external"/> for details. You can use Microsoft-hosted
                 agents as well to scan your code using Azure Pipelines.</p>
@@ -34,10 +35,12 @@
                             href="https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&amp;tabs=Windows"
                             format="html" scope="external">Use personal access tokens</xref> for
                         more details. </li>
-                </ul>For Black Duck and Coverity PR comments, enable <b>Build validation policy</b>
-                    (<b>Project</b> → <b>Project Settings</b> → <b>Repositories</b> → <b>Branch
-                    Policy</b> → <b>Add branch protection</b>) to trigger the pipeline on raising PR
-                or any push event to existing branch (usually on main or master branch). See <xref
+                </ul></p>
+            <p>If you like Synopsys Security Scan to add comments to pull requests (supported
+                forBlack Duck and Coverity), enable <b>Buildvalidation policy
+                    </b>(<b>Project</b>→<b>ProjectSettings </b>→ <b>Repositories</b>→<b>Branch
+                    Policy </b>→<b>Add branch protection</b>) to trigger the pipeline on any PR or
+                push event to a branch (usually main or master branch). See <xref
                     href="https://learn.microsoft.com/en-us/azure/devops/repos/git/branch-policies?view=azure-devops&amp;tabs=browser#build-validation"
                     format="html" scope="external">Build Validation</xref> for more details.</p>
         </section>

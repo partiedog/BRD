@@ -3,18 +3,16 @@
 <topic id="topic_smd_zg3_cyb">
     <title>Using Synopsys GitHub Action for Coverity Cloud Deployment with Thin Client</title>
     <body>
-        <p>At this time the Synopsys GitHub Action only supports the Kubernetes-based Coverity cloud
-            deployment model, which uses a small footprint thin client to capture the source code
-            and submit an analysis job running on the server. This removes the need for a
-            multi-gigabyte software installation in your GitHub Runner.</p>
-        <p>If you are using a non-Kubernetes deployment of Coverity, please see the <xref
-                href="https://github.com/marketplace/actions/coverity-json-output-v7-report"
-                format="html" scope="external">Coverity json-output-v7 Report Action</xref>.</p>
-        <p id="p_mzk_wj3_mxb">On pushes, a full Coverity scan will be run and results committed to
-      the Coverity Connect database. On pull requests, the scan will typically be incremental, and
-      results will not be committed to the Coverity Connect database.</p>
-        <p>Before running a pipeline using the Synopsys Action and Coverity, make sure the
-            appropriate project and stream are set in your Coverity Connect server environment.</p>
+    <p>Synopsys GitHub Action only supports the Kubernetes-based Coverity cloud deployment
+      model.</p>
+    <p>On push events, a full Coverity scan will be run and results are committed to the Coverity
+      Connect database. </p>
+    <p>On pull request events, comments are added to pull requests for new issues found by the scan
+      if <codeph>coverity_automation_prcomment</codeph> is set to <codeph>true</codeph> (see example
+      below). Note that scan results are not committed to Coverity Connect database in this
+      case.</p>
+    <p>Before running the pipeline with Synopsys Action, make sure the specified project and stream
+      exist in your Coverity Connect server environment.</p>
         <p>Below is an example of a <codeph><varname>workflow</varname>.yml</codeph> file configured
       for Coverity Cloud
       Deployment.<codeblock>name: cnc-sig-action
@@ -59,5 +57,85 @@ jobs:
           ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
           # include_diagnostics: true  
         </codeblock></p>
+    <p>
+      <table frame="all" rowsep="1" colsep="1" id="table_c2d_5yn_gyb">
+        <title><b>List of mandatory and optional parameters for Coverity</b></title>
+        <tgroup cols="3">
+          <colspec colname="c1" colnum="1" colwidth="1*"/>
+          <colspec colname="c2" colnum="2" colwidth="1*"/>
+          <colspec colname="c3" colnum="3" colwidth="1*"/>
+          <thead>
+            <row>
+              <entry>Input Parameter</entry>
+              <entry>Description</entry>
+              <entry>Mandatory / Optional</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><codeph>coverity_url</codeph></entry>
+              <entry>Coverity URL</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_user</codeph></entry>
+              <entry>Coverity username</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_passphrase</codeph></entry>
+              <entry>Coverity passphrase</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_project_name</codeph></entry>
+              <entry>
+                <p>Coverity project name. </p>
+                <p>Tip: Many customers prefer to set their Coverity project and stream names to
+                  match the GitHub repository name </p>
+              </entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_stream_name</codeph></entry>
+              <entry>Coverity stream name</entry>
+              <entry>Mandatory</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_install_directory</codeph></entry>
+              <entry>Installation directory of Coverity</entry>
+              <entry>Optional</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_policy_view</codeph></entry>
+              <entry>
+                <p>ID or name of policy view to be used to enforce the “break the build” policy.</p>
+                <p>If issues are found in the specified this view, build will be failed. </p>
+                <p>Example: <codeph>coverity_policy_view: '100001'</codeph> or
+                    <codeph>coverity_policy_view: 'Outstanding Issues'</codeph></p>
+              </entry>
+              <entry>Optional</entry>
+            </row>
+            <row>
+              <entry><codeph>coverity_automation_prcomment</codeph></entry>
+              <entry><p>Option to enable automatic creation pull request comments for new issues
+                  found in the pull request.</p><p>Baseline full scan results must exist on the
+                  server for this feature to work.</p> Default: <codeph>false</codeph>
+              </entry>
+              <entry>Optional</entry>
+            </row>
+            <row>
+              <entry><codeph>github_token</codeph></entry>
+              <entry>
+                <p>GitHub Access Token </p>
+                <p>Example: <codeph>github_token: ${{ secrets.GITHUB_TOKEN }}</codeph></p>
+              </entry>
+              <entry>Mandatory if <codeph>coverity_automation_prcomment</codeph> is set as
+                  <codeph>true</codeph></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </p>
     </body>
 </topic>

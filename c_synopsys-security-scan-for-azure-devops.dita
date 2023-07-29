@@ -3,14 +3,12 @@
 <topic id="topic_p52_qwd_wxb">
     <title>Azure DevOps - Synopsys Security Scan</title>
     <body>
-        <p>Synopsys Security Scan Extension for Azure DevOps enables you to configure your Azure
-            pipeline to run Synopsys security testing and take action on the results. Synopsys
-            Security Scan leverages Synopsys Bridge, allowing you to run tests for several Synopsys
-            products from the command line.</p>
-        <p>The Synopsys Security Scan for Azure DevOps Visual Studio Marketplace link is <xref
+        <p>Synopsys Security Scan Extension for Azure DevOps enables you to integrate Synopsys
+            security testing intoyour Azure pipeline.</p>
+        <p>You can download  Synopsys Security Scan for Azure DevOps using the Azure DevOps
+            marketplace link: <xref
                 href="https://marketplace.visualstudio.com/items?itemName=synopsys-security-scan.synopsys-security-scan"
-                format="html" scope="external"/>.<note>Synopsys Security Scan for Azure DevOps
-                requires appropriate licenses for all Synopsys applications used.</note></p>
+                format="html" scope="external"/>.</p>
         <section id="section_y5j_rpy_wxb">
             <title>Additional Info</title>
             <p>For additional Azure integration information, see:</p>

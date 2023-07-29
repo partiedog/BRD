@@ -3,36 +3,32 @@
 <topic id="topic_fk5_fbx_4xb">
     <title>Logging and Diagnostics</title>
     <body>
-        <p>Synopsys Bridge offers multiple logging and diagnostic options.</p>
+        <p>Synopsys Bridge offers multiple logging and diagnostic options. By default, logs are
+            written to <codeph>&lt;current_working_directory>/.bridge</codeph> directory. User can
+            change this default location by passing the<codeph> --home &lt;directory_path></codeph>
+            option.</p>
         <section id="section_a1p_3bx_4xb">
             <title>Logging</title>
-            <p>Synopsys Bridge offers multiple logging options.<ul id="ul_b1p_3bx_4xb">
-                    <li>Pass <codeph>--json-log</codeph> to output JSON format logs.</li>
+            <p>Synopsys Bridge offers the following JSON format logging options:<ul
+                    id="ul_b1p_3bx_4xb">
+                    <li>Pass <codeph>--json-log</codeph> to output JSON format logs to console.</li>
                     <li>Pass <codeph>--json-log-file</codeph> to enable JSON format logs in the
-                            <codeph>bridge.log</codeph> file in the Synopsys Bridge home directory
-                        .</li>
-                </ul></p>
-            <p>Synopsys Bridge also provides logs in adapters, with five log levels: <ul
-                    id="ul_c1p_3bx_4xb">
-                    <li><codeph>DEBUG</codeph></li>
-                    <li><codeph>INFO</codeph></li>
-                    <li><codeph>WARNING</codeph></li>
-                    <li><codeph>ERROR</codeph></li>
-                    <li><codeph>FATAL</codeph></li>
+                            <codeph>bridge.log</codeph> file in the Synopsys Bridge home
+                        directory.</li>
                 </ul></p>
         </section>
         <section id="section_d1p_3bx_4xb">
             <title>Diagnostics</title>
             <p>To enable Synopsys Bridge diagnostics mode, pass a <codeph>--diagnostics</codeph>
-                command line option. This:<ul id="ul_e1p_3bx_4xb">
-                    <li>Enables debug logs.</li>
-                    <li>Passes additional arguments to configured tools which creates additional
-                        diagnostics artifacts/logs from these tools under the Synopsys Bridge home
-                        directory. </li>
-                    <li>Creates a <codeph>diagnostics.json</codeph> file containing the final state
-                        data inside the Synopsys Bridge home directory, but masking sensitive
-                        information like tokens and passwords.</li>
-                </ul></p>
+                command line option. With this option set, Synopsys Bridge:<ul id="ul_zv3_yk4_gyb">
+                    <li>writes additional diagnostics information to
+                        <codeph>bridge.log</codeph>.</li>
+                    <li>passes diagnostics related options to underlying tools so that they create
+                        logs under the Synopsys Bridge home directory.</li>
+                    <li>writes execution state date to <codeph>diagnostics.json</codeph> file under
+                        the Synopsys Bridge home directory.</li>
+                </ul>
+            </p>
         </section>
     </body>
 </topic>
