@@ -4,19 +4,35 @@
     <title>Using Synopsys Bridge CLI</title>
     <taskbody>
         <context>
-            <p>AAAAAAAAAAAAOnce you have <codeph>synopsys-bridge</codeph> executable installed, you are ready to
-                use Synopsys Bridge to integrate SAST and/or SCA scans into your CI/CD pipeline. </p>
-            <p>You can run Synopsys Bridge in one of the following two ways:</p>
+            <p>The steps in this procedure show you the basics of using Synopsys Bridge to run
+                scans. The example command below is from a Polaris integration. For the details of
+                Synopsys Bridge calls to other Synopsys security scanning tools, see <xref
+                    href="c_schema.dita">Schema Resources And Extensions</xref> for a list of
+                Synopsys Bridge resources and <xref
+                    href="c_using-synopsys-bridge-with-black-duck.dita">Black Duck</xref> or <xref
+                    href="c_using-synopsys-bridge-with-coverity-connect.dita">Coverity
+                    Connect</xref> integration topics for the details of launching scans with those
+                products.</p>
         </context>
         <steps>
             <step>
-                <cmd><xref href="c_run-commands-using-a-json-file.dita"/></cmd>
+                <cmd>Add Synopsys Bridge to your <codeph>PATH</codeph> environment variable. </cmd>
             </step>
             <step>
-                <cmd><xref href="c_run-commands-using-the-cli.dita"/></cmd>
+                <cmd>If you haven't already done so, create an access token. The method by which you
+                    create a token may vary depending on which Synopsys security product you're
+                    integrating. </cmd>
+            </step>
+            <step>
+                <cmd>Select the code base directory to scan and pass your Synopsys Bridge arguments
+                    using either a <xref href="c_run-commands-using-a-json-file.dita">JSON
+                        file</xref> or <xref href="c_run-commands-using-the-cli.dita">passing
+                        arguments on the command line</xref>. </cmd>
+            </step>
+            <step>
+                <cmd>Synopsys Bridge sends an exit code indicating the results of the scan. See the
+                        <xref href="c_exit-codes.dita">Exit Code</xref> table. </cmd>
             </step>
         </steps>
-        <example id="example_ip2_3sm_gyb">For a complete list of exit codes returned by Synopsys
-            Bridge, see the <xref href="c_exit-codes.dita">Exit Code</xref> table.</example>
     </taskbody>
 </task>

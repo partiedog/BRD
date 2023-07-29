@@ -3,8 +3,8 @@
 <topic id="topic_a5t_n2c_txb">
     <title>Support Matrix</title>
     <body>
-        <p>The table below outlines which Synopsys security tools are supported by Synopsys
-                Bridge.<simpletable frame="all" id="simpletable_wc3_s1w_1yb">
+        <p>The table below outlines which Synopsys security tools Synopsys Bridge can and cannot
+            launching scans on.<simpletable frame="all" id="simpletable_wc3_s1w_1yb">
                 <sthead>
                     <stentry>Tool</stentry>
                     <stentry>Bridge Support?</stentry>
@@ -13,25 +13,29 @@
                 <strow>
                     <stentry>Polaris</stentry>
                     <stentry>Yes</stentry>
-                    <stentry>Polaris users can use Synopsys Bridge CLI to automate SAST and/or SCA
-                        scans in their CI pipeline. Click here for SAST specific <xref
-                            href="https://sig-product-docs.synopsys.com/bundle/coverity-docs/page/deploy-install-guide/topics/minimum_requirements.html"
-                            format="html" scope="external">system requirements</xref>.</stentry>
+                    <stentry>Synopsys Bridge can run both SCA and SAST scans on Polaris. For systems
+                        requirements, see Coverity and Black Duck requirements below.</stentry>
                 </strow>
                 <strow>
                     <stentry>Black Duck</stentry>
                     <stentry>Yes</stentry>
-                    <stentry>Black Duck users can use Synopsys Bridge CLI to automate SCA scans in
-                        their CI pipeline.</stentry>
+                    <stentry>Synopsys Bridge can run scans on Black Duck.</stentry>
                 </strow>
                 <strow>
                     <stentry>Coverity Connect</stentry>
                     <stentry>Yes</stentry>
-                    <stentry>Coverity users can use Synopsys Bridge CLI to automate SAST scans in
-                        their CI pipeline. Synopsys Bridge can be used with both on-prem Coverity
-                        Connect as well as Coverity cloud deployment. Click here for <xref
+                    <stentry>Synopsys Bridge supports both Coverity Connect and Coverity cloud
+                        deployment, and both work with the Thin Client. Anywhere this documentation
+                        references Coverity Connect, those same arguments and capabilities apply to
+                        Coverity cloud deployment. If running Coverity capture locally, see <xref
                             href="https://sig-product-docs.synopsys.com/bundle/coverity-docs/page/deploy-install-guide/topics/minimum_requirements.html"
-                            format="html" scope="external">system requirements</xref>.</stentry>
+                            format="html" scope="external">minimum requirements</xref>.</stentry>
+                </strow>
+                <strow>
+                    <stentry>Coverity on Polaris</stentry>
+                    <stentry>No</stentry>
+                    <stentry>Synopsys Bridge cannot run scans on Coverity on Polaris (also known as
+                        "Classic Polaris")</stentry>
                 </strow>
             </simpletable></p>
         <p>Synopsys Bridge runs on the following operating systems:</p>
@@ -64,7 +68,7 @@
                             <entry>Windows</entry>
                             <entry>x86_64, Version 10 and 11 and Windows Server 2019 and
                                 2022</entry>
-                            <entry>Server Core is <i>not </i>supported</entry>
+                            <entry>Server Core not supported</entry>
                         </row>
                     </tbody>
                 </tgroup>

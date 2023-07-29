@@ -3,14 +3,10 @@
 <topic id="topic_zjr_hh4_cyb">
     <title>Using the Synopsys GitLab Template with Polaris </title>
     <body>
-    <p>Before running a pipeline using the Synopsys GitLab Template with Polaris, you must set the
-      appropriate applications and entitlements in your Polaris environment.</p>
-    <p>Using Synopsys Template, you can perform scans on push events to main branches. Pull request
-      scanning is currently not supported for Polaris.</p>
-    <p>It is recommended that you configure sensitive information such as access tokens and URLs
-      using GitLab secrets.</p>
-        <p>To use Synopsys Template, add <codeph>.gitlab-ci.yml</codeph> to your project by using an
-        <codeph>include</codeph> entry, as shown in the example below.<codeblock>include:
+        <p>Before running a pipeline using the Synopsys Template and Polaris, add
+        <codeph>.gitlab-ci.yml</codeph> to your project by adding an <codeph>include</codeph> entry,
+      as in the example
+      below.<codeblock>include:
    - project: synopsys/synopsys-template
      ref: v1.1.0
      file: templates/synopsys-template.yml
@@ -41,57 +37,10 @@ synopsys_template_execution:
   #     - .bridge
 </codeblock>
     </p>
-        <p>
-      <note>Polaris does not currently support the analysis of merge requests. We recommend running
-        the Synopsys GitLab Template on pushes to main branches.</note>
-    </p>
-        <p>Once you push the changes above, an active runner will pick up the job and initiate the
-      pipeline.</p>
-    <table frame="all" rowsep="1" colsep="1" id="table_vsz_fl4_gyb">
-      <title><b>List of mandatory and optional parameters for Polaris</b></title>
-      <tgroup cols="3">
-        <colspec colname="c1" colnum="1" colwidth="1*"/>
-        <colspec colname="c2" colnum="2" colwidth="1*"/>
-        <colspec colname="c3" colnum="3" colwidth="1*"/>
-        <thead>
-          <row>
-            <entry>Input Parameter</entry>
-            <entry>Description</entry>
-            <entry>Mandatory / Optional</entry>
-          </row>
-        </thead>
-        <tbody>
-          <row>
-            <entry><codeph>BRIDGE_POLARIS_SERVERURL</codeph></entry>
-            <entry>Polaris server URL</entry>
-            <entry>Mandatory</entry>
-          </row>
-          <row>
-            <entry><codeph>BRIDGE_POLARIS_ACCESSTOKEN</codeph></entry>
-            <entry>Polaris access token</entry>
-            <entry>Mandatory</entry>
-          </row>
-          <row>
-            <entry><codeph>BRIDGE_POLARIS_APPLICATION_NAME</codeph></entry>
-            <entry>Application name in Polaris</entry>
-            <entry>Mandatory</entry>
-          </row>
-          <row>
-            <entry><codeph>BRIDGE_POLARIS_PROJECT_NAME</codeph></entry>
-            <entry>Project name in Polaris</entry>
-            <entry>Mandatory</entry>
-          </row>
-          <row>
-            <entry><codeph>BRIDGE_POLARIS_ASSESSMENT_TYPES</codeph></entry>
-            <entry>
-              <p>Polaris assessment types </p>
-              <p>Accepted values: <codeph>SCA</codeph> or <codeph>SAST</codeph> or
-                  <codeph>SAST,SCA</codeph></p>
-            </entry>
-            <entry>Mandatory</entry>
-          </row>
-        </tbody>
-      </tgroup>
-    </table>
+        <p>Configure sensitive data like access tokens and URLs using GitLab secrets.<note>Polaris
+        does not currently support the analysis of merge requests. We recommend running the Synopsys
+        GitLab Template on pushes to main branches.</note></p>
+        <p>Push those changes and an active runner will pick up the job and initiate the
+            pipeline.</p>
     </body>
 </topic>

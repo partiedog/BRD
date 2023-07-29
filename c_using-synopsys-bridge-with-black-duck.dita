@@ -3,40 +3,30 @@
 <topic id="topic_tsw_g1v_qxb">
     <title>Using Synopsys Bridge CLI with Black Duck</title>
     <body>
-        <p>As a Black Duck customer, you can use Synopsys Bridge to automate SCA scanning in your CI
-            pipeline. </p>
-        <p>You can use Synopsys Bridge with Black Duck in the following two ways:<ul
-                id="ul_kkz_4fn_gyb">
-                <li><xref href="#topic_tsw_g1v_qxb/section_wtd_kzv_qxb"/></li>
-                <li><xref href="#topic_tsw_g1v_qxb/section_x5p_nbw_qxb"/></li>
-            </ul></p>
-        <p>In addition to running full scans, you can also optionally configure Synopsys Bridge to
-            perform the following:<ul id="ul_qr3_tfn_gyb">
-                <li>Scan pull requests</li>
-                <li>Add comments to pull requests</li>
-                <li>Create fix pull requests (NPM only)</li>
-            </ul><note id="note_qyh_4dt_gyb">As an alternative to Synopsys Bridge, you can also use
-                    <xref href="c_using-synopsys-github-action.dita">Synopsys Action</xref>,
-                    <xref href="c_using-synopsys-gitlab-template.dita">Synopsys Template for
-                    GitLab</xref> or <xref href="c_synopsys-security-scan-for-azure-devops.dita"
-                    >Synopsys Security Scan for Azure DevOps</xref>.</note></p>
+        <p>Black Duck is a software composition analysis (SCA) security scanning tool that helps
+            manage the security, quality, and license compliance risks of Open Source and
+            third-party code in applications and containers. Running a Black Duck scan alerts you to
+            vulnerabilities in these Open Source and third party tools and their libraries.</p>
+        <p>If you have integrated the GitHub Actions or GitLab Template Adapters, scans can be
+            automatically run for pulls or pushes in the background, with the adapter levering
+            Synopsys Bridge. </p>
+        <p>You can also run Black Duck scans using Synopsys Bridge command line calls. </p>
+        <p>
+            <note> To enable automatic creation of pull requests to fix the vulnerability found, set
+                    <codeph>blackduck.automation.fixpr</codeph> to <codeph>true</codeph>. This only
+                works for npm (Node.js) scans, and only for direct dependencies. Users still have to
+                approve pull requests through their usual process.</note>
+        </p>
         <section id="section_wtd_kzv_qxb">
             <title>Running Black Duck scans with a JSON file</title>
-            <p>Pass sensitive information such as username and token using environmental variables,
-                and run Synopsys Bridge and pass the JSON file using the <codeph>--input
-                </codeph>command line option.</p>
-            <p>Here is a command line example for Black
-                Duck:<codeblock id="codeblock_vnq_jgn_gyb">export BRIDGE_BLACKDUCK_TOKEN=&lt;BLACKDUCK_TOKEN>
-synopsys-bridge --stage blackduck --input input.json </codeblock></p>
-            <p>The above example uses the following:<ul id="ul_b31_lgn_gyb">
-                    <li><codeph>BRIDGE_BLACKDUCK_TOKEN</codeph> environment variable to pass
-                        sensitive information such as password or access token to Synopsys Bridge
-                        (recommended for security purposes). Note that Synopsys Bridge automatically
-                        picks up values passed thru these environment variables.</li>
-                    <li><codeph>--stage</codeph> argument to specify the Synopsys security product
-                        in use.</li>
-                </ul></p>
-            <p>Here is the <codeph>input.json</codeph> file:<pre>{
+            <p>You can invoke a JSON file from your project root directory containing common
+                arguments to run scans.</p>
+            <p>After setting your access token as an environmental variable
+                    (<codeph>BRIDGE_BLACKDUCK_TOKEN</codeph>), here's an example command loading the
+                    <codeph>input.json</codeph>
+                file:<codeblock>synopsys-bridge --stage blackduck --input input.json --verbose</codeblock></p>
+            <p> This command loads the following <codeph>input.json</codeph>
+                file:<pre>{
     "data": {
         "blackduck": {
             "url": <varname>&lt;BLACKDUCK_URL></varname>,
@@ -49,52 +39,73 @@ synopsys-bridge --stage blackduck --input input.json </codeblock></p>
         }
     }
 }</pre></p>
-            <p>The above JSON file uses the following:<ul id="ul_l25_sgn_gyb">
-                    <li><codeph>blackduck.url</codeph> for Black Duck URL.</li>
-                    <li><codeph>blackduck.scan.full</codeph> should be set to <codeph>true</codeph>
-                        so that a full /intelligent scan is run by Synopsys Bridge. For pull request
-                        scans, this should be set to <codeph>false</codeph>.</li>
-                    <li><codeph>blackduck.scan.failure.severities</codeph> is a list of severities
-                        that is used by Synopsys Bridge to decide if the CI pipeline should be
-                        failed or not.</li>
-                </ul></p>
-            <p>For the required minimum set of arguments that you need to pass to integrate Synopsys
-                Bridge with Polaris, refer to the Polaris specific resources page under <xref
-                    href="c_schema.dita"/>.</p>
-            <p>For a complete list of environment variables and command line arguments, see <xref
-                    href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
-                    Synopsys Bridge Arguments</xref>.</p>
         </section>
         <section id="section_x5p_nbw_qxb">
             <title>Running Black Duck scans on the command line</title>
-            <p>Instead of using a JSON file, you can pass all arguments on the command line. </p>
-            <p>Here is a command line example for Black
-                Duck:<codeblock id="codeblock_z1f_22t_gyb">export BRIDGE_BLACKDUCK_TOKEN=<varname>&lt;BLACKDUCK_TOKEN></varname>
+            <p>Instead of using a JSON file, you can pass all arguments on the command line. The
+                JSON example above is the same as passing the following arguments written out on the
+                command
+                line:<codeblock>export BRIDGE_BLACKDUCK_TOKEN=<varname>&lt;BLACKDUCK_TOKEN></varname>
 synopsys-bridge --stage blackduck \
 blackduck.url=<varname>&lt;BLACKDUCK_URL></varname> \
-blackduck.scan.failure.severities=CRITICAL,HIGH \
-blackduck.scan.full=true</codeblock></p>
-            <p>The above example uses the following:<ul id="ul_sxv_chn_gyb">
-                    <li><codeph>BRIDGE_BLACKDUCK_TOKEN></codeph> environment variable to pass
-                        sensitive information such as password or access token to Synopsys Bridge
-                        (recommended for security purposes). Note that Synopsys Bridge automatically
-                        picks up values passed thru these environment variables.</li>
-                    <li><codeph>--stage</codeph> argument to specify the Synopsys security product
-                        in use.</li>
-                    <li><codeph>blackduck.url</codeph> for Black Duck URL.</li>
-                    <li><codeph>blackduck.scan.full</codeph> shouldbe set to <codeph>true</codeph>
-                        so that a full/intelligent scan is run by Synopsys Bridge. For pull request
-                        scans, this should be set to <codeph>false</codeph>.</li>
-                    <li><codeph>blackduck.scan.failure.severities</codeph> is a comma separated list
-                        of severities that is used by Synopsys Bridge to decide if the CI pipeline
-                        should be failed or not.</li>
-                </ul></p>
-            <p>For the required minimum set of arguments that you need to pass to integrate Synopsys
-                Bridge with Black Duck, refer to the Polaris specific resources page under <xref
-                    href="c_schema.dita"/>.</p>
-            <p>For a complete list of environment variables and command line arguments, see <xref
+blackduck.scan.failure.severities='["CRITICAL"]' \
+--verbose</codeblock></p>
+            <p><codeph>BRIDGE_BLACKDUCK_TOKEN</codeph> indicates the token is passed as an
+                environmental variable.</p>
+            <p><codeph>synopsys-bridge</codeph> indicates you're running the Synopsys Bridge CLI.
+                The <codeph>--stage</codeph> flag specifies a group of adapters to run. Each adapter
+                has a stage assigned in its configuration. More complex use cases require a few more
+                arguments.</p>
+            <p><codeph>blackduck</codeph> launches Black Duck scans.</p>
+            <p><codeph>blackduck.scan.failure.severities</codeph> indicates what level of problem
+                breaks the build. </p>
+            <p><codeph>--verbose</codeph>  sets logs to verbose mode, recording additional
+                information that can be useful for debugging or understanding why you may not be
+                getting expected results.</p>
+            <p>You can run Black Duck scans as either Full (intelligent) or Rapid. When invoking
+                Black Duck from Bridge, the default scan type is Rapid. To carry out a Full scan,
+                you must set<codeph>blackduck.scan.full</codeph> as <codeph>true</codeph>.</p>
+            <p>You can set any resource known to Synopsys Bridge as a command line argument. Simply
+                provide the entire namespace of the resource and its corresponding value in the
+                format <codeph>key=value</codeph>. The command example above sets the
+                    <codeph>project.name</codeph> resource to the value
+                    <codeph>central-scm-proj</codeph>, loads the proper adapters to run scans with,
+                and lists the proper scanning server URL.</p>
+            <p>For more details, see the <xref
                     href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
-                    Synopsys Bridge Arguments</xref>.</p>
+                    Synopsys Bridge Arguments</xref>. </p>
+        </section>
+        <section id="section_znt_mwb_rxb">
+            <title>Using Environmental Variables</title>
+            <p>Some Black Duck resources can be set as environmental variables, eliminating the need
+                to pass them on the command line or referenced in a JSON file. The following
+                resources can be set as environmental variables.</p>
+            <table id="table_txw_vwb_rxb">
+                <tgroup cols="3">
+                    <colspec colnum="1" colname="col1" colwidth="1.12*"/>
+                    <colspec colnum="2" colname="col2" colwidth="1*"/>
+                    <colspec colnum="3" colname="col3" colwidth="2.02*"/>
+                    <thead>
+                        <row>
+                            <entry>Variable</entry>
+                            <entry>Description</entry>
+                            <entry>Example</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry><codeph><b>BLACKDUCK_URL</b></codeph></entry>
+                            <entry>Black Duck URL</entry>
+                            <entry><codeph><varname>&lt;BLACKDUCK_URL></varname></codeph></entry>
+                        </row>
+                        <row>
+                            <entry><codeph><b>BLACKDUCK_API_TOKEN</b></codeph></entry>
+                            <entry>Black Duck API token</entry>
+                            <entry><codeph>THIS_IS_NOT_MY_TOKEN</codeph></entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
         </section>
     </body>
 </topic>

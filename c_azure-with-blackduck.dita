@@ -4,13 +4,11 @@
     <title>Using Azure DevOps Extension with Black Duck</title>
     <body>
         <p>Synopsys Security Scan supports both self-hosted (e.g. on-prem) and Synopsys-hosted Black
-            Duck Hub instances.</p>
-        <p>In the default Black Duck Hub permission model, projects and project versions are created
-            on the fly and as needed. Ensure that permissions needed to create projects and project
-            versions are granted on Black Duck Hub.</p>
-        <p>Configure sensitive data like usernames, passwords and URLs using pipeline variables. </p>
-        <p>Here is an example <codeph>azure-pipelines.yml</codeph> that you can use with Black
-            Duck:<codeblock id="codeblock_nxt_q54_gyb">trigger:
+            Duck Hub instances. In the default Black Duck Hub permission model, projects and project
+            versions are created on the fly as needed. Configure sensitive data like usernames,
+            passwords and URLs using pipeline variables. An example of additions to
+                <codeph>azure-pipelines.yml</codeph> to run Black Duck is shown
+            below.<codeblock>trigger:
 - main
 
 pool:
@@ -53,90 +51,41 @@ steps:
     AZURE_TOKEN: <varname>$(System.AccessToken)</varname> # Mandatory when BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT is set to 'true'
     ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
     # INCLUDE_DIAGNOSTICS: true    </codeblock></p>
-        <table id="table_ulr_fv4_gyb">
-            <title>List of mandatory and optional parameters for Black Duck below:</title>
-            <tgroup cols="3">
-                <colspec colnum="1" colname="col1"/>
-                <colspec colnum="2" colname="col2"/>
-                <colspec colnum="3" colname="col3"/>
-                <thead>
-                    <row>
-                        <entry><b>Input Parameter</b></entry>
-                        <entry><b>Description</b></entry>
-                        <entry><b>Mandatory / Optional</b></entry>
-                    </row>
-                </thead>
-                <tbody>
-                    <row>
-                        <entry><codeph>BRIDGE_BLACKDUCK_URL</codeph></entry>
-                        <entry>Black Duck URL</entry>
-                        <entry>Mandatory</entry>
-                    </row>
-                    <row>
-                        <entry><codeph>BRIDGE_BLACKDUCK_TOKEN</codeph></entry>
-                        <entry>Black Duck API token</entry>
-                        <entry>Mandatory</entry>
-                    </row>
-                    <row>
-                        <entry><codeph>BRIDGE_BLACKDUCK_INSTALL_DIRECTORY</codeph></entry>
-                        <entry>Installation directory for Black Duck</entry>
-                        <entry>Optional</entry>
-                    </row>
-                    <row>
-                        <entry><codeph>BRIDGE_BLACKDUCK_SCAN_FULL</codeph></entry>
-                        <entry><p>Specifies whether full scan is required or not. </p><p> Must be
-                                set to <codeph>true</codeph> for push events and
-                                    <codeph>false</codeph> for pull request events.</p> Default:
-                                <codeph>false</codeph></entry>
-                        <entry>Optional</entry>
-                    </row>
-                    <row>
-                        <entry><codeph>BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES</codeph></entry>
-                        <entry>
-                            <p>Black Duck scan failure severities used to decide if build should be
-                                broken.</p>
-                            <p> Supported values: <codeph>ALL, NONE, BLOCKER, CRITICAL, MAJOR,
-                                    MINOR, OK, TRIVIAL, UNSPECIFIED</codeph>
-                            </p>
-                        </entry>
-                        <entry>Optional</entry>
-                    </row>
-                    <row>
-                        <entry><codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph></entry>
-                        <entry><p>Option to enable automatic creation pull request comments for new
-                                issues found in the pull request.</p><p> Baseline full scan results
-                                must exist on the server for this feature to work.</p>Default:
-                                <codeph>false</codeph><p> </p><p><b>Note</b> - Feature is supported
-                                only through yaml configuration</p></entry>
-                        <entry>Optional</entry>
-                    </row>
-                    <row>
-                        <entry><codeph>BRIDGE_BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph></entry>
-                        <entry>
-                            <p>Option to enable automatic creation for fix pull requests for
-                                vulnerable direct dependencies. </p>
-                            <p> </p>
-                            <p> Default: false </p>
-                            <p>Note - Black Duck automation fix pull request is currently supported
-                                for npm projects only.</p>
-                            <p>Note - Feature is supported only through yaml configuration.</p>
-                        </entry>
-                        <entry>Optional</entry>
-                    </row>
-                    <row>
-                        <entry><codeph>AZURE_TOKEN</codeph></entry>
-                        <entry>
-                            <p>Azure Access Token </p>
-                            <p> Example: <codeph>AZURE_TOKEN: $(System.AccessToken)</codeph> or
-                                    <codeph>AZURE_TOKEN: $(PAT_TOKEN)</codeph>
-                            </p>
-                        </entry>
-                        <entry>Mandatory if
-                                <codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph>or<codeph>BRIDGE_BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph>
-                            is set true.</entry>
-                    </row>
-                </tbody>
-            </tgroup>
-        </table>
+        <section id="section_ipy_x4y_fyb">
+            <title>Optional Parameters for Black Duck</title>
+            <p>
+                <ul id="ul_snw_t3f_nxb">
+                    <li><codeph>BRIDGE_BLACKDUCK_SCAN_FULL</codeph>: To enable full scan set it as
+                            <codeph>true</codeph>. By default, pushes will initiate a full
+                        "intelligent" scan and pull requests will initiate a rapid scan.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_INSTALL_DIRECTORY</codeph>: Pass the directory path
+                        to install Black Duck on the runner.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_SCAN_FAILURE_SEVERITIES</codeph>: Values are
+                            <codeph>ALL|NONE|BLOCKER|CRITICAL|MAJOR|MINOR|OK|TRIVIAL|UNSPECIFIED</codeph>.
+                        Single parameter as <codeph>ALL</codeph> and multiple parameters as
+                            <codeph>BLOCKER</codeph>, <codeph>CRITICAL</codeph>,
+                            <codeph>TRIVIAL</codeph>.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_AUTOMATION_PRCOMMENT</codeph>: Set
+                            <codeph>true</codeph> to enable feedback from Black Duck testing as pull
+                        request comment.</li>
+                    <li><codeph>BRIDGE_BLACKDUCK_AUTOMATION_FIXPR</codeph>: Set
+                            <codeph>true</codeph> to enable automatc fix pull request creation.</li>
+                </ul>
+                <note><b>About Detect command line parameters</b>. Any command line parameters
+                    passed to detect can be passed through variables. This is a standard capability
+                    of Detect. For example, if you want to only report newly found policy violations
+                    on rapid scans, you would normally use the command line
+                        <codeph>--detect.blackduck.rapid.compare.mode=BOM_COMPARE_STRICT</codeph>.
+                    You can replace this by setting the
+                        <codeph>DETECT_BLACKDUCK_RAPID_COMPARE_MODE</codeph> variable to
+                        <codeph>BOM_COMPARE_STRICT</codeph>.</note>
+            </p>
+        </section>
+        <p>See the <xref href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of
+                Synopsys Bridge Arguments</xref> for details of Black Duck arguments.</p>
+        <p>If <codeph>bridge_blackduck_automation_prcomment</codeph> or
+                <codeph>bridge_blackduck_automation_fixpr</codeph> is set to <codeph>true</codeph>,
+            you must also pass <codeph>azure_token</codeph> with the required permissions. (Example:
+                <codeph>azure_token: <varname>(System.AccessToken)</varname></codeph>.)</p>
     </body>
 </topic>

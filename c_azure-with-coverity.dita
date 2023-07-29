@@ -4,20 +4,15 @@
     <title>Using Azure DevOps Extension with Coverity Connect with Thin Client</title>
     <body>
         <section id="section_u5k_1qz_wxb">
-            <p>Synopsys Security Scan only supports the Coverity Connect with thin client deployment
-                model.</p>
-            <p>On push events, a full Coverity scan will be run and results are committed to the
-                Coverity server database.</p>
-            <p> On pull request events, comments are added to pull requests for new issues found by
-                the scan if <codeph>BRIDGE_COVERITY_AUTOMATION_PRCOMMENT</codeph> is set to
-                    <codeph>true</codeph> (see example below). Note that scan results are not
-                committed to Coverity server database in this case.</p>
-            <p>Before running the pipeline with Synopsys Security Scan, make sure the specified
-                project and stream exist in your Coverity server. Configure sensitive data such as
-                usernames and passwords using pipeline variables.</p>
-            <p>Here is an example <codeph>azure-pipelines.yml</codeph> that you can use to
-                integration Coverity into your Azure
-                pipeline:<codeblock id="codeblock_bf2_nv4_gyb">trigger:
+            <p>Currently, Synopsys Security Scan only supports the Coverity Connect with thin client
+                deployment model, which removes the need for a large footprint installation in your
+                agent. Before running Coverity Connect using the Synopsys Security Scan for Azure
+                DevOps Extension, ensure the appropriate project and stream are set in your Coverity
+                Connect server environment. Configure sensitive data like usernames, passwords and
+                URLs using pipeline variables. An example of additions to
+                    <codeph>azure-pipelines.yml</codeph> to run Coverity Connect with Thin Client is
+                shown
+                below.<codeblock>trigger:
 - main
 
 pool:
@@ -54,91 +49,33 @@ steps:
     AZURE_TOKEN: $(System.AccessToken) # Mandatory when BRIDGE_COVERITY_AUTOMATION_PRCOMMENT is set to 'true'
     ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
     # include_diagnostics: true</codeblock></p>
-            <table id="table_yws_tv4_gyb">
-                <title>List of mandatory and optional parameters for Coverity below:</title>
-                <tgroup cols="3">
-                    <colspec colnum="1" colname="col1"/>
-                    <colspec colnum="2" colname="col2"/>
-                    <colspec colnum="3" colname="col3"/>
-                    <thead>
-                        <row>
-                            <entry><b>Input Parameter</b></entry>
-                            <entry><b>Description</b></entry>
-                            <entry><b>Mandatory / Optional</b></entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry><codeph>BRIDGE_COVERITY_CONNECT_URL</codeph></entry>
-                            <entry>Coverity URL</entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_COVERITY_CONNECT_USER_NAME</codeph></entry>
-                            <entry>Coverity Username</entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_COVERITY_CONNECT_USER_PASSWORD</codeph></entry>
-                            <entry>Coverity Password</entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_COVERITY_CONNECT_PROJECT_NAME</codeph></entry>
-                            <entry>Coverity Project Name</entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_COVERITY_CONNECT_STREAM_NAME</codeph></entry>
-                            <entry>Coverity Stream name</entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_COVERITY_INSTALL_DIRECTORY</codeph></entry>
-                            <entry>Installation directory of Coverity</entry>
-                            <entry>Optional</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW</codeph></entry>
-                            <entry>
-                                <p>ID or name of policy view to be used to enforce the “break the
-                                    build” policy.</p>
-                                <p> </p>
-                                <p>If issues are found in the specified this view, build will be
-                                    failed. </p>
-                                <p> Example: <codeph>coverity_policy_view: '100001'</codeph> or
-                                        <codeph>coverity_policy_view: 'Outstanding Issues'
-                                    </codeph></p>
-                            </entry>
-                            <entry>Optional</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_COVERITY_AUTOMATION_PRCOMMENT</codeph></entry>
-                            <entry>
-                                <p>Option to enable automatic creation pull request comments for new
-                                    issues found in the pull request.</p>
-                                <p>Merge Request must be created first from feature branch to main
-                                    branch to run Coverity PR Comment.</p>
-                                <p> </p>
-                                <p>Default: <codeph>false</codeph></p>
-                                <p>Note - Feature is supported only through yaml configuration</p>
-                            </entry>
-                            <entry>Optional</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>AZURE_TOKEN</codeph></entry>
-                            <entry>
-                                <p>Azure Access Token </p>
-                                <p> Example: <codeph>AZURE_TOKEN: $(System.AccessToken)</codeph> or
-                                        <codeph>AZURE_TOKEN: $(PAT_TOKEN)</codeph></p>
-                            </entry>
-                            <entry>Mandatory if
-                                    <codeph>BRIDGE_COVERITY_AUTOMATION_PRCOMMENT</codeph> is set
-                                true.</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
+        </section>
+        <section id="section_rv4_d34_cyb">
+            <title>Optional Parameters for Cloud Coverity</title>
+            <p>
+                <ul id="ul_fl1_3sd_nxb">
+                    <li><codeph>BRIDGE_COVERITY_INSTALL_DIRECTORY</codeph>: Specifies an install
+                        directory other than the default to install Coverity.</li>
+                    <li><codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW</codeph>: Policy view in
+                        Coverity. ID number/Name of a saved view to apply as a break the build
+                        policy. If any defects are found within this view when applied to the
+                        project, the build fails with an exit code. Example:
+                            <codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW: '100001'</codeph> or
+                            <codeph>BRIDGE_COVERITY_CONNECT_POLICY_VIEW:'Outstanding
+                            Issues'</codeph>.</li>
+                    <li><codeph>BRIDGE_COVERITY_AUTOMATION_PRCOMMENT</codeph>: Enables feedback from
+                        Coverity security testing as pull request comment. Merge request must be
+                        created first from feature branch to main branch to run Coverity PR Comment.
+                        Values are <codeph>true</codeph> or <codeph>false</codeph>.</li>
+                </ul>
+            </p>
+            <p>See the <xref href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List
+                    of Synopsys Bridge Arguments</xref> for details of Coverity Connect
+                arguments.</p>
+            <p>If <codeph>bridge_coverity_automation_prcomment</codeph> is set to
+                    <codeph>true</codeph>, you must also pass <codeph>azure_token</codeph> with the
+                required permissions. (Example: <codeph>azure_token:
+                        $<varname>(System.AccessToken)</varname></codeph>.)</p>
         </section>
     </body>
 </topic>

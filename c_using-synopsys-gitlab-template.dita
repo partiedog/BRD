@@ -3,9 +3,9 @@
 <topic id="topic_bc3_hsj_mxb">
     <title>GitLab – Synopsys Template  </title>
     <body>
-        <p>Synopsys GitLab Template can be used to integrate Synopsys security testing into your CI
-            pipeline.</p>
-        <p>You can download the Synopsys GitLab Template using the Gitlab Marketplace link is <xref
+        <p>The Synopsys GitLab Template leverages Synopsys Bridge, allowing you to configure your
+            GitLab pipeline to run Synopsys security testing and act on the results. </p>
+        <p>The Synopsys GitLab Template Marketplace link is  <xref
                 href="https://gitlab.com/synopsys/synopsys-template" format="html" scope="external"
                 >https://gitlab.com/synopsys/synopsys-template</xref>.</p>
         <section id="section_a13_gl4_cyb">

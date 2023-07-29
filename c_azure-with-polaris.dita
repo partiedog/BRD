@@ -3,19 +3,12 @@
 <topic id="topic_txm_53p_cyb">
     <title>Using Azure DevOps Extension with Polaris</title>
     <body>
-        <p>Before running a pipeline using the Synopsys Security Scan with Polaris, you must set the
-            appropriate applications and entitlements in your Polaris environment.</p>
-        <p>Using Synopsys Security Scan, you can perform scans on push events to main branches. Pull
-            request scanning is currently not supported for Polaris.</p>
-        <p> To use Synopsys Security Scan: <ol id="ul_g5h_fvv_gyb">
-                <li> Configure sensitive data such as usernames, passwords and URLs using pipeline
-                    variables. </li>
-                <li>Add <codeph>azure-pipelines.yml</codeph> to your project.</li>
-                <li>Push the changes and an agent will pick up the job and initiate the
-                    pipeline.</li>
-            </ol></p>
-        <p>Here is an example <codeph>azure-pipelines.yml</codeph> that you can use with
-            Polaris:<codeblock id="codeblock_rjd_45t_gyb">trigger:
+        <p>Before running a pipeline using the Synopsys Security Scan and Polaris, add
+                <codeph>azure-pipelines.yml</codeph> to your project. Configure sensitive data like
+            usernames, passwords and URLs using pipeline variables. Push those changes and agent
+            will pick up the job and initiate the pipeline. An example of the changes you need to
+            add to <codeph>azure-pipelines.yml</codeph> is shown
+            below.<codeblock>trigger:
 - main
 
 pool:
@@ -36,51 +29,8 @@ steps:
     BRIDGE_POLARIS_ASSESSMENT_TYPES: 'SCA,SAST'
     ### Uncomment below configuration if Synopsys Bridge diagnostic files needs to be uploaded
     # INCLUDE_DIAGNOSTICS: 'true'</codeblock></p>
-        <p>
-            <table id="table_im5_l54_gyb">
-                <title>List of mandatory and optional parameters for Polaris below:</title>
-                <tgroup cols="3">
-                    <colspec colnum="1" colname="col1"/>
-                    <colspec colnum="2" colname="col2"/>
-                    <colspec colnum="3" colname="col3"/>
-                    <thead>
-                        <row>
-                            <entry><b>Input Parameter</b></entry>
-                            <entry><b>Description</b></entry>
-                            <entry><b>Mandatory / Optional</b></entry>
-                        </row>
-                    </thead>
-                    <tbody>
-                        <row>
-                            <entry><codeph>BRIDGE_POLARIS_SERVERURL</codeph></entry>
-                            <entry>Polaris URL</entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_POLARIS_ACCESSTOKEN</codeph></entry>
-                            <entry>Polaris access token</entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_POLARIS_APPLICATION_NAME</codeph></entry>
-                            <entry>Polaris Application name </entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_POLARIS_PROJECT_NAME</codeph></entry>
-                            <entry>Polaris Project name</entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                        <row>
-                            <entry><codeph>BRIDGE_POLARIS_ASSESSMENT_TYPES</codeph></entry>
-                            <entry>Polaris assessment types. <p>Accepted values:
-                                        <codeph>SCA</codeph> or <codeph>SAST</codeph> or
-                                        <codeph>SAST,SCA</codeph></p></entry>
-                            <entry>Mandatory</entry>
-                        </row>
-                    </tbody>
-                </tgroup>
-            </table>
-        </p>
+        <p>Descriptions of these arguments are shown in the <xref
+                href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of Synopsys
+                Bridge Arguments</xref>. </p>
     </body>
 </topic>

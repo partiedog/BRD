@@ -3,8 +3,7 @@
 <topic id="topic_chr_mtw_cyb">
     <title>GitLab Prerequisites</title>
     <body>
-        <p>Before configuring Synopsys Template into your GitLab pipeline, you must meet the
-            following prerequisites.</p>
+        <p>Before configuring Synopsys Template into your GitLab pipeline, set up the following.</p>
         <section id="section_izv_t2h_2yb">
             <title>GitLab Runner Setup</title>
             <p>
@@ -37,7 +36,7 @@
                         self-managed GitLab instances only). </li>
                     <li>To add variables, go to <b>Settings</b> → <b>CI/CD</b> → <b>Variables</b>.
                         Be sure to mask passwords and tokens to avoid them being exposed in logs.
-                        For more details, see <xref href="https://docs.gitlab.com/ee/ci/variables"
+                        For more details see <xref href="https://docs.gitlab.com/ee/ci/variables"
                             format="html" scope="external">GitLab CI/CD variables</xref>.</li>
                 </ul>
             </p>
@@ -52,14 +51,14 @@
                             →<b> Access Tokens</b>) and store it as secret variable or store and
                         fetch it from vault. </li>
                     <li>PAT must have <b>api</b> scope to perform Black Duck Fix PR or Black
-                        Duck/Coverity PR Comment. For more details, see <xref
+                        Duck/Coverity PR Comment. For more details, see: <xref
                             href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html"
-                            format="html" scope="external">Personal access tokens</xref>.</li>
+                            format="html" scope="external">Personal access tokens</xref></li>
                 </ul>
             </p>
         </section>
         <section id="section_ddv_nlh_2yb">
-            <title>Create a <codeph>.gitlab-ci.yml</codeph> file</title>
+            <title>Create a .gitlab-ci.yml file</title>
             <p>
                 <ul id="ul_bhm_qlh_2yb">
                     <li>Before running a pipeline using the Synopsys Template, add a

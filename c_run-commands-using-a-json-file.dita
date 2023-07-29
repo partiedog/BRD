@@ -3,28 +3,17 @@
 <topic id="topic_ed2_y3f_lxb">
     <title>Passing Arguments using a JSON file</title>
     <body>
-		<p>Passing arguments using a JSON file greatly simplifies the command line and promotes
-			reuse. Here are the steps:<ol id="ol_jcz_stm_gyb">
-				<li>Create an access token in the web interface of the Synopsys security product you
-					are integrating with.</li>
-				<li>Use environment variable(s) to pass sensitive information such as password or access token
-					to Synopsys Bridge (recommended for security purposes). Synopsys Bridge
-					automatically picks up values passed through these variables. <ul
-						id="ul_h21_5xs_gyb">
-						<li>Example: <codeph>export
-									BRIDGE_POLARIS_ACCESSTOKEN=<i>&lt;POLARIS_ACCESSTOKEN></i></codeph>.</li>
-					</ul></li>
-				<li>Pass the JSON file to Synopsys Bridge using the <codeph>--input </codeph>command
-					line option.</li>
-				<li>Pass the Synopsys security product you are integrating with using the
-						<codeph>--stage</codeph> option.</li>
-			</ol></p>
-		<p>Here are the example
-				commands:<codeblock>export BRIDGE_POLARIS_ACCESSTOKEN=&lt;POLARIS_ACCESSTOKEN>
-synopsys-bridge --stage polaris --input input.json</codeblock><note
-				id="note_k2q_yxs_gyb"> Depending on your OS, you will need to use appropriate
-				mechanism to set environment variables.</note></p>
-        <p>Here is the <codeph>input.json</codeph> file:<codeblock>{
+        <p>Run Synopsys Bridge scans using just a few arguments by invoking a JSON file containing
+			common arguments. This saves you from having to output all arguments on the command line
+			for every scan.</p>
+		<p>After passing sensitive access token and password information using environmental variables
+			(for example, <codeph>export
+					BRIDGE_POLARIS_ACCESSTOKEN=<varname>POLARIS_ACCESSTOKEN</varname></codeph>),
+			pass in your JSON file. Here's an example command loading the
+				<codeph>input.json</codeph>
+			file:<codeblock>synopsys-bridge --stage polaris --input input.json</codeblock></p>
+        <p>That command loads the following <codeph>input.json</codeph>
+				file:<codeblock>{
 	"data": {
 		"polaris": {
 			"application": {
@@ -40,11 +29,14 @@ synopsys-bridge --stage polaris --input input.json</codeblock><note
 			"serverUrl": "&lt;SERVER_URL>"
 		}
 	}
-}</codeblock><note id="note_a1y_qys_gyb">It is recommended that you save the JSON file at
-				the root of the project directory being scanned. The JSON file can have any name as
-				long as it has a <codeph>.json</codeph> extension.</note><note id="note_rkz_tys_gyb"
-				>You can use different JSON files for different use cases.</note></p>
-		<p>For a complete list of environment variables and command line arguments, see <xref
+}</codeblock><note>Save
+				the JSON file in the directory of the project scanned. Give the file any name you
+				want and pass the name as an argument on the command line. </note><note>The JSON
+				file can have any name as long as it has a <codeph>.json</codeph> extension and you
+				reference it in your command. </note></p>
+		<p>You can use different <codeph>.json</codeph> files for different use cases as long as the file
+			name is unique.</p>
+		<p>For a complete list of Synopsys Bridge arguments, see <xref
 				href="c_complete-list-of-synopsys-bridge-commands.dita">Complete List of Synopsys
 				Bridge Arguments</xref>.</p>
 		<p>For tool specific information and examples, see:<ul id="ul_v3q_rnh_cyb">
